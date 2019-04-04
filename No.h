@@ -12,9 +12,9 @@ class No
         int getGrau();
         void setGrau(int val);
         int getVisitado();
-        void setVisitado(int val);
-        int * getProx();
-        void setProx(int val);
+        void setVisitado(bool val);
+        No* getProx();
+        void setProx(No* val);
 
     private:
         int id;

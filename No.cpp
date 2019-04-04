@@ -45,12 +45,12 @@ void No::setVisitado(bool val)
     visitado = val;
 }
 
-int No::getProx()
+No* No::getProx()
 {
     return prox;
 }
 
-void No::setProx(int val)
+void No::setProx(No* val)
 {
     prox = val;
 }
