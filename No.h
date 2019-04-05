@@ -22,6 +22,8 @@ class No
         void setVisitado(bool val);
         No* getProx();
         void setProx(No* val);
+        vector<No *> getAdjacentes();
+
 
     private:
         int peso;

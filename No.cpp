@@ -46,3 +46,6 @@ void No::setVisitado(bool val)
     visitado = val;
 }
 
+vector<No *> No::getAdjacentes() {
+    return this->nosAdjacentes;
+}
