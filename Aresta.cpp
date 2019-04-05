@@ -23,10 +23,10 @@ void Aresta::setNoAdj(int val)
 
 Aresta Aresta::getProx()
 {
-    return prox;
+    return *prox;
 }
 
 void Aresta::setProx(Aresta aresta)
 {
-    prox = aresta;
+    *prox = aresta;
 }

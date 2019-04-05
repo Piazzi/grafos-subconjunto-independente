@@ -1,12 +1,19 @@
 #ifndef NO_H_INCLUDED
 #define NO_H_INCLUDED
 
+#include "Aresta.h"
+#include "Aresta.cpp"
+#include <vector>
+
+using namespace std;
 
 class No
 {
     public:
         No(int id);
         ~No();
+
+        int id;
         int getPeso();
         void setPeso(int val);
         int getGrau();
@@ -17,10 +24,10 @@ class No
         void setProx(No* val);
 
     private:
-        int id;
         int peso;
         int grau;
-        No *prox;
+        vector<No *> nosAdjacentes;
+        vector<Aresta *> arestas;
         bool visitado;
 
 };

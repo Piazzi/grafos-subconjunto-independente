@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <math.h>
+#include <vector>
 
 No::No(int i)
 {
@@ -45,12 +46,3 @@ void No::setVisitado(bool val)
     visitado = val;
 }
 
-No* No::getProx()
-{
-    return prox;
-}
-
-void No::setProx(No* val)
-{
-    prox = val;
-}

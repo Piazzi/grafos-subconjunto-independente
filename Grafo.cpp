@@ -1,23 +1,12 @@
 #include "Grafo.h"
 #include "stdio.h"
+#include <vector>
 
 using namespace std;
 
-Grafo::Grafo(int representacao, int qntVertices)
+Grafo::Grafo()
 {
-    qntVertices = qntVertices;
-    representacao = representacao;
-    if(representacao == 1)
-    {
-        int matriz[qntVertices][qntVertices];
-        for(int i = 0; i< qntVertices; i++)
-        {
-            for(int j = 0; j<qntVertices; j++)
-            {
-                matriz[i][j] = 0;
-            }
-        }
-    }
+
 }
 
 Grafo::~Grafo()
@@ -55,27 +44,57 @@ void Grafo::setNoPonderado(bool val)
     noPonderado = val;
 }
 
-void Grafo::printMatrizAdjacente()
+void Grafo::printMatrizAdjacencia()
 {
-    /*
-    for(int i = 0; i< qntVertices; i++)
+    int tam = listaNo.size();
+    int matriz[tam][tam];
+    for(int i = 0; i < tam;i++)
+        for(int j = 0; j < tam; j++)
+            matriz[i][j] = 0;
+
+    for(int i = 0; i< tam; i++)
     {
         if(i == 0)
         {
-            cout << "\t";
-            for(int j = 0; j < qntVertices; j++)
-                cout << j << "\t";
+            cout << "   ";
+            for(int i = 0; i < tam; i++)
+            cout << "[" << listaNo[i]->id << "]";
             cout << endl;
         }
 
-        for(int j = 0; j < qntVertices; j++)
+        for(int j = 0; j < tam; j++)
         {
             if(j == 0)
-                cout << i << "\t";
-            cout << matriz[i][j] + "\t";
+                cout << "[" << listaNo[i]->id << "] ";
+            matriz[i][j] = 0;
+            cout << matriz[i][j] << "  ";
         }
         cout << endl;
     }
-    */
+
 }
+
+void Grafo::adicionaVertice(No *no)
+{
+    if(verificaId(no->id))
+    {
+        cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
+    }
+    else
+    listaNo.push_back(no);
+}
+
+bool Grafo::verificaId(int id)
+{
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        if(listaNo[i]->id == id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
