@@ -46,6 +46,7 @@ int noMenu()
     cout << "[1] Adicionar No" << endl;
     cout << "[2] Adicionar vizinhos a um No" << endl;
     cout << "[3] Adicionar arestas a um no" << endl;
+    cout << "[4] Lista de vertices do grafo" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -53,6 +54,7 @@ int noMenu()
 int main()
 {
     int id = 0;
+    int idAdj = 0;
     int opcao = 0;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
@@ -86,7 +88,16 @@ int main()
                     break;
                 }
                 cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
-                cin >> id;
+                cin >> idAdj;
+                grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj));
+            }
+            else if(opcao == 3)
+            {
+
+            }
+            else if(opcao == 4)
+            {
+                grafo->printNos();
             }
             else
                 cout << "Digite uma opcao valida" << endl;

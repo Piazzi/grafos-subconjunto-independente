@@ -23,6 +23,7 @@ class Grafo
         void setNoPonderado(bool val);
         void printMatrizAdjacencia();
         void printListaAdjacencia();
+        void printNos();
         void adicionaVertice(No *no);
         No *getVertice(int id);
         bool possuiAresta(int id1, int id2);

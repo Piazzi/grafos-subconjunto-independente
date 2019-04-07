@@ -67,6 +67,12 @@ void Grafo::printMatrizAdjacencia()
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
             matriz[i][j] = 0;
+            for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
+            {
+                if(listaNo[j]->id == listaNo[j]->nosAdjacentes[j]->id)
+                    matriz[i][j] == 1;
+            }
+
             cout << matriz[i][j] << "  ";
         }
         cout << endl;
@@ -130,4 +136,13 @@ No * Grafo::getNo(int id)
     }
 }
 
+void Grafo::printNos()
+{
+    cout << "Lista de vertices do grafo: " << endl;
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        cout << listaNo[i]->id << " ";
+    }
+        cout << endl;
+}
 

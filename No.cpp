@@ -49,3 +49,8 @@ void No::setVisitado(bool val)
 vector<No *> No::getAdjacentes() {
     return this->nosAdjacentes;
 }
+
+void No::adicionaNoAdjacente(No *no)
+{
+    nosAdjacentes.push_back(no);
+}
