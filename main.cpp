@@ -14,28 +14,40 @@
 
 using namespace std;
 
-void printMatrizAdjacencia(int qntVertices)
+int lerOuConstruirMenu()
 {
-    int matriz[qntVertices][qntVertices];
-    for(int i = 0; i< qntVertices; i++)
-    {
-        if(i == 0)
-        {
-            cout << "   ";
-            for(int i = 0; i < qntVertices; i++)
-            cout << "[" << i << "]";
-            cout << endl;
-        }
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Voce deseja ler um arquivo de grafos ou montar seu proprio grafo?" << endl;
+    cout << "[1] Ler" << endl;
+    cout << "[2] Construir" << endl;
+    cin >> opcao;
+    return opcao;
+}
 
-        for(int j = 0; j < qntVertices; j++)
-        {
-            if(j == 0)
-                cout << "[" << i << "] ";
-            matriz[i][j] = 0;
-            cout << matriz[i][j] << "  ";
-        }
-        cout << endl;
-    }
+int tipoDeRepresentacaoMenu()
+{
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Escolha o tipo de representacao: " << endl;
+    cout << "[1] Matriz de Adjacencia" << endl;
+    cout << "[2] Lista de Adjacencia" << endl;
+    cout << "[-1] Para encerrar o programa" << endl;
+    cout << endl;
+    cin >> opcao;
+    return opcao;
+}
+
+int noMenu()
+{
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Selecione uma opcao: " << endl;
+    cout << "[1] Adicionar No" << endl;
+    cout << "[2] Adicionar vizinhos a um No" << endl;
+    cout << "[3] Adicionar arestas a um no" << endl;
+    cin >> opcao;
+    return opcao;
 }
 
 int main()
@@ -45,25 +57,43 @@ int main()
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
-    cout << "-------------------------------------------------------MENU-------------------------------------------------------" << endl;
-    cout << "Escolha o tipo de representacao: " << endl;
-    cout << "[1] Matriz de Adjacencia" << endl;
-    cout << "[2] Lista de Adjacencia" << endl;
-    cout << "[-1] Para encerrar o programa" << endl;
-    cout << endl;
-
-    cout << "Criando seu Grafo " << endl;
-    while(id != -1)
+    if(lerOuConstruirMenu() == 2)
     {
-        cout << "Adicione um vertice informando seu id: " << endl;
-        cin >> id;
-        if(id == -1)
-            break;
-        No *vertice = new No(id);
-        grafo->adicionaVertice(vertice);
+        cout << "Criando seu Grafo " << endl;
+        while(id != -1)
+        {
+            if(noMenu()== 1)
+            {
+                cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
+                cin >> id;
+                if(id == -1)
+                    break;
+                No *vertice = new No(id);
+                grafo->adicionaVertice(vertice);
+            }
+            else if(noMenu() == 2)
+            {
+                cout << "Digite o id do no que voce quer acessar: " << endl;
+                cin >> id;
+                while(!grafo->verificaId(id))
+                {
+                    cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
+                    cin >> id;
+                }
+            }
+            else
+                cout << "Digite uma opcao valida" << endl;
+        }
+        if(tipoDeRepresentacaoMenu() == 1)
+        {
+           cout << "Matriz de adjacencia" << endl;
+            grafo->printMatrizAdjacencia();
+        }
+        else
+        {
+
+        }
     }
 
-    cout << "Matriz de adjacência" << endl;
-    grafo->printMatrizAdjacencia();
     return 0;
 }

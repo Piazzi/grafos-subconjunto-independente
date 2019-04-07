@@ -74,6 +74,7 @@ void Grafo::printMatrizAdjacencia()
 
 }
 
+/*
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
@@ -90,6 +91,7 @@ void Grafo::printListaAdjacencia()
         }
     }
 }
+*/
 
 void Grafo::adicionaVertice(No *no)
 {
@@ -98,7 +100,10 @@ void Grafo::adicionaVertice(No *no)
         cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
     }
     else
-    listaNo.push_back(no);
+    {
+        listaNo.push_back(no);
+        cout << "No adicionado com sucesso" << endl;
+    }
 }
 
 bool Grafo::verificaId(int id)
