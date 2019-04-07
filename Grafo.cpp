@@ -1,6 +1,7 @@
 #include "Grafo.h"
 #include "stdio.h"
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ void Grafo::printMatrizAdjacencia()
 {
     int tam = listaNo.size();
     int matriz[tam][tam];
-    for(int i = 0; i < tam;i++)
+    for(int i = 0; i < tam; i++)
         for(int j = 0; j < tam; j++)
             matriz[i][j] = 0;
 
@@ -58,7 +59,7 @@ void Grafo::printMatrizAdjacencia()
         {
             cout << "   ";
             for(int i = 0; i < tam; i++)
-            cout << "[" << listaNo[i]->id << "]";
+                cout << "[" << listaNo[i]->id << "]";
             cout << endl;
         }
 
@@ -67,13 +68,14 @@ void Grafo::printMatrizAdjacencia()
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
             matriz[i][j] = 0;
-            for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
+            for(j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
             {
                 if(listaNo[j]->id == listaNo[j]->nosAdjacentes[j]->id)
                     matriz[i][j] == 1;
             }
 
             cout << matriz[i][j] << "  ";
+
         }
         cout << endl;
     }
@@ -83,15 +85,19 @@ void Grafo::printMatrizAdjacencia()
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
+    int aux = 0 ;
     for(int i = 0; i < tam; i++)
     {
-        No elemento = listaNo[i];
+        cout<<endl;
+        No *elemento = listaNo[i];
         vector<No*> adjacentes = elemento->getAdjacentes();
         cout << elemento->id;
         for(int j = 0; j < tam; j++)
         {
+
             int contador = count(adjacentes.begin(), adjacentes.end(), listaNo[j]); // verifica as adjacencias do 'elemento'
-            if(contador != 0){
+            if(contador != 0)
+            {
                 cout << " -> " << listaNo[j]->id;
             }
         }
@@ -142,6 +148,6 @@ void Grafo::printNos()
     {
         cout << listaNo[i]->id << " ";
     }
-        cout << endl;
+    cout << endl;
 }
 

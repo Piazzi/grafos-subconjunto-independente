@@ -109,7 +109,8 @@ int main()
         }
         else
         {
-
+            cout<<"Lista de adjacencia: "<<endl;
+            grafo->printListaAdjacencia();
         }
     }
 
