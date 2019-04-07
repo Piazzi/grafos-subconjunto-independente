@@ -62,7 +62,8 @@ int main()
         cout << "Criando seu Grafo " << endl;
         while(id != -1)
         {
-            if(noMenu()== 1)
+            opcao = noMenu();
+            if(opcao == 1)
             {
                 cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
                 cin >> id;
@@ -71,22 +72,28 @@ int main()
                 No *vertice = new No(id);
                 grafo->adicionaVertice(vertice);
             }
-            else if(noMenu() == 2)
+            else if(opcao == 2)
             {
                 cout << "Digite o id do no que voce quer acessar: " << endl;
                 cin >> id;
+                if(id == -1)
+                    break;
                 while(!grafo->verificaId(id))
                 {
                     cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
                     cin >> id;
+                    if(id == -1)
+                    break;
                 }
+                cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
+                cin >> id;
             }
             else
                 cout << "Digite uma opcao valida" << endl;
         }
         if(tipoDeRepresentacaoMenu() == 1)
         {
-           cout << "Matriz de adjacencia" << endl;
+           cout << "Matriz de adjacencia: " << endl;
             grafo->printMatrizAdjacencia();
         }
         else

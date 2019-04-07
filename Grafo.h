@@ -28,6 +28,7 @@ class Grafo
         bool possuiAresta(int id1, int id2);
         Aresta *getAresta(int id1, int id2);
         bool verificaId(int id);
+        No * getNo(int id);
 
     private:
        int ordem;

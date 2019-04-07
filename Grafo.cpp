@@ -118,5 +118,16 @@ bool Grafo::verificaId(int id)
     return false;
 }
 
+No * Grafo::getNo(int id)
+{
+    if(verificaId(id))
+    {
+        for(int i = 0; i < listaNo.size(); i++)
+        {
+            if(listaNo[i]->id == id)
+                return listaNo[i];
+        }
+    }
+}
 
 
