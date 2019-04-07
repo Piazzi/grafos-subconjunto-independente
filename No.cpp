@@ -50,7 +50,22 @@ vector<No *> No::getAdjacentes() {
     return this->nosAdjacentes;
 }
 
+bool No::verificaAdjacencia(No *no)
+{
+    vector<No*> adjacentes = this->getAdjacentes();
+    int contador = count(adjacentes.begin(), adjacentes.end(), listaNo[j]);
+    return (contador == 1);
+}
+
 void No::adicionaNoAdjacente(No *no)
 {
-    nosAdjacentes.push_back(no);
+    if(!this->verificaAdjacencia(no)){
+        nosAdjacentes.push_back(no);
+        no->adicionaNoAdjacente(this);
+    }
+    else {
+        cout << "Este no ja eh adjacente!" << endl;
+        return;
+    }
+
 }
