@@ -80,24 +80,23 @@ void Grafo::printMatrizAdjacencia()
 
 }
 
-/*
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
     for(int i = 0; i < tam; i++)
     {
         No elemento = listaNo[i];
-        vector<No *> adjacentes = elemento.getAdjacentes()
-        cout << elemento->id
+        vector<No*> adjacentes = elemento->getAdjacentes();
+        cout << elemento->id;
         for(int j = 0; j < tam; j++)
         {
-            if(find(adjacentes.begin(), adjacentes.end(), listaNo[j])){
+            int contador = count(adjacentes.begin(), adjacentes.end(), listaNo[j]); // verifica as adjacencias do 'elemento'
+            if(contador != 0){
                 cout << " -> " << listaNo[j]->id;
             }
         }
     }
 }
-*/
 
 void Grafo::adicionaVertice(No *no)
 {
