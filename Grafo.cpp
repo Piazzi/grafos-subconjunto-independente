@@ -68,7 +68,7 @@ void Grafo::printMatrizAdjacencia()
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
             matriz[i][j] = 0;
-            for(j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
+            for(int k = 0; k < listaNo[j]->nosAdjacentes.size(); k++)
             {
                 if(listaNo[j]->id == listaNo[j]->nosAdjacentes[j]->id)
                     matriz[i][j] == 1;

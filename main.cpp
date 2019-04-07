@@ -85,11 +85,19 @@ int main()
                     cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
                     cin >> id;
                     if(id == -1)
-                    break;
+                        break;
                 }
                 cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
                 cin >> idAdj;
-                grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj));
+                if(id == idAdj)
+                {
+                    cout<<"Nao e permitido self-loop"<<endl;
+                }
+                else
+                {
+                    grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj));
+                }
+
             }
             else if(opcao == 3)
             {
@@ -104,7 +112,7 @@ int main()
         }
         if(tipoDeRepresentacaoMenu() == 1)
         {
-           cout << "Matriz de adjacencia: " << endl;
+            cout << "Matriz de adjacencia: " << endl;
             grafo->printMatrizAdjacencia();
         }
         else
