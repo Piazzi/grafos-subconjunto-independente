@@ -23,7 +23,7 @@ class No
         No* getProx();
         void setProx(No* val);
         vector<No *> getAdjacentes();
-        void adicionaNoAdjacente(No *no);
+        void adicionaNoAdjacente(No *no,bool val);
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;
 
@@ -33,6 +33,7 @@ class No
         int grau;
         vector<Aresta *> arestas;
         bool visitado;
+        bool direcionado;
 
 };
 

@@ -61,11 +61,17 @@ bool No::verificaAdjacencia(No *no)
     return (contador == 1);
 }
 
-void No::adicionaNoAdjacente(No *no)
+void No::adicionaNoAdjacente(No *no , bool direcionado)
 {
     if(!this->verificaAdjacencia(no)){
+        if(direcionado)
+        {
+        nosAdjacentes.push_back(no);
+        }
+        else{
         nosAdjacentes.push_back(no);
         no->nosAdjacentes.push_back(this);
+        }
         cout << "No adjacente adicionado!" << endl;
     }
     else {
