@@ -118,6 +118,9 @@ int main()
                 {
                     cout<<"Lista de adjacencia: "<<endl;
                     grafo->printListaAdjacencia();
+                }else if(opcaorepresenta == -1)
+                {
+                    break;
                 }
 
             }
