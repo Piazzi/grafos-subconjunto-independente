@@ -112,7 +112,7 @@ int main()
                 if(opcaorepresenta == 1)
                 {
                     cout << "Matriz de adjacencia: " << endl;
-                    grafo->printMatrizAdjacencia();
+                    grafo->matrizAdjacencia();
                 }
                 else if(opcaorepresenta == 2)
                 {
