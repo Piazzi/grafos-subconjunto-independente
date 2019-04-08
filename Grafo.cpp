@@ -115,18 +115,16 @@ void Grafo::matrizAdjacencia(bool direcionado)
                 {
                     matriz[i][j] = 0;
                 }
-
             }
-
         }
     }
     for(int i = 0; i < tam; i++)
     {
         if(i == 0)
         {
-            cout << "     ";
+            cout << "    ";
             for(int i = 0; i < tam; i++)
-                cout << "  [" << listaNo[i]->id << "]  ";
+                cout << " [" << listaNo[i]->id << "] ";
             cout << endl;
         }
 
@@ -134,7 +132,7 @@ void Grafo::matrizAdjacencia(bool direcionado)
         {
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
-            cout << "[" << matriz[i][j] << "] ";
+            cout << " [" << matriz[i][j] << "] ";
         }
         cout << endl;
     }
