@@ -1,6 +1,7 @@
 #include "Grafo.h"
 #include "stdio.h"
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -44,11 +45,11 @@ void Grafo::setNoPonderado(bool val)
     noPonderado = val;
 }
 
-void Grafo::printMatrizAdjacencia()
+/*void Grafo::printMatrizAdjacencia()
 {
     int tam = listaNo.size();
     int matriz[tam][tam];
-    for(int i = 0; i < tam;i++)
+    for(int i = 0; i < tam; i++)
         for(int j = 0; j < tam; j++)
             matriz[i][j] = 0;
 
@@ -58,7 +59,7 @@ void Grafo::printMatrizAdjacencia()
         {
             cout << "   ";
             for(int i = 0; i < tam; i++)
-            cout << "[" << listaNo[i]->id << "]";
+                cout << "[" << listaNo[i]->id << "]";
             cout << endl;
         }
 
@@ -69,33 +70,72 @@ void Grafo::printMatrizAdjacencia()
             matriz[i][j] = 0;
             for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
             {
-                if(listaNo[j]->id == listaNo[j]->nosAdjacentes[j]->id)
+                if(listaNo[j]->id == listaNo[j]->id)
                     matriz[i][j] == 1;
             }
 
             cout << matriz[i][j] << "  ";
+
+        }
+    }
+
+} */
+
+void Grafo::matrizAdjacencia()
+{
+    int tam = listaNo.size();
+    int matriz[tam][tam];
+    for(int i = 0; i < tam; i++)
+    {
+        No *elementoi = listaNo[i];
+        for(int j = 0; j < tam; j++)
+        {
+            No *elementoj = listaNo[j];
+            if(elementoi->verificaAdjacencia(elementoj))
+                matriz[i][j] = 1;
+            else
+                matriz[i][j] = 0;
+        }
+    }
+    for(int i = 0; i < tam; i++)
+    {
+        if(i == 0)
+        {
+            cout << "    ";
+            for(int i = 0; i < tam; i++)
+                cout << "[" << listaNo[i]->id << "] ";
+            cout << endl;
+        }
+
+        for(int j = 0; j < tam; j++)
+        {
+            if(j == 0)
+                cout << "[" << listaNo[i]->id << "] ";
+        cout << "[" << matriz[i][j] << "] ";
         }
         cout << endl;
     }
-
 }
-
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
+    int aux = 0 ;
     for(int i = 0; i < tam; i++)
     {
-        No elemento = listaNo[i];
+        cout << endl;
+        No *elemento = listaNo[i];
         vector<No*> adjacentes = elemento->getAdjacentes();
         cout << elemento->id;
         for(int j = 0; j < tam; j++)
         {
-            int contador = count(adjacentes.begin(), adjacentes.end(), listaNo[j]); // verifica as adjacencias do 'elemento'
-            if(contador != 0){
+            if(elemento->verificaAdjacencia(listaNo[j]))
+
+            {
                 cout << " -> " << listaNo[j]->id;
             }
         }
     }
+    cout << endl;
 }
 
 void Grafo::adicionaVertice(No *no)
@@ -142,6 +182,6 @@ void Grafo::printNos()
     {
         cout << listaNo[i]->id << " ";
     }
-        cout << endl;
+    cout << endl;
 }
 
