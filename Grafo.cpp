@@ -81,10 +81,13 @@ void Grafo::setNoPonderado(bool val)
 
 } */
 
-void Grafo::matrizAdjacencia()
+void Grafo::matrizAdjacencia(bool direcionado)
 {
     int tam = listaNo.size();
     int matriz[tam][tam];
+    for(int l = 0 ; l < tam ; l++)
+        for(int t = 0 ; t < tam ; t++)
+            matriz[l][t] = 0;
     for(int i = 0; i < tam; i++)
     {
         No *elementoi = listaNo[i];
@@ -92,18 +95,38 @@ void Grafo::matrizAdjacencia()
         {
             No *elementoj = listaNo[j];
             if(elementoi->verificaAdjacencia(elementoj))
-                matriz[i][j] = 1;
+            {
+                matriz[i][j]=1;
+                if(direcionado == 1)
+                {
+                    matriz[j][i] = -1;
+                }
+            }
             else
-                matriz[i][j] = 0;
+            {
+                if( i > j )
+                {
+                    if(matriz[j][i] == 0)
+                    {
+                        matriz[i][j]=0;
+                    }
+                }
+                else
+                {
+                    matriz[i][j] = 0;
+                }
+
+            }
+
         }
     }
     for(int i = 0; i < tam; i++)
     {
         if(i == 0)
         {
-            cout << "    ";
+            cout << "     ";
             for(int i = 0; i < tam; i++)
-                cout << "[" << listaNo[i]->id << "] ";
+                cout << "  [" << listaNo[i]->id << "]  ";
             cout << endl;
         }
 
@@ -111,7 +134,7 @@ void Grafo::matrizAdjacencia()
         {
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
-        cout << "[" << matriz[i][j] << "] ";
+            cout << "[" << matriz[i][j] << "] ";
         }
         cout << endl;
     }

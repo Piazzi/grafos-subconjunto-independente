@@ -22,7 +22,7 @@ class Grafo
         bool getNoPonderado();
         void setNoPonderado(bool val);
         void printMatrizAdjacencia();
-        void matrizAdjacencia();
+        void matrizAdjacencia(bool val);
         void printListaAdjacencia();
         void printNos();
         void adicionaVertice(No *no);
