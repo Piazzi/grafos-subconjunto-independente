@@ -99,9 +99,20 @@ void Grafo::matrizAdjacencia()
     }
     for(int i = 0; i < tam; i++)
     {
+        if(i == 0)
+        {
+            cout << "    ";
+
+            for(int i = 0; i < tam; i++)
+                cout << "[" << listaNo[i]->id << "] ";
+            cout << endl;
+        }
+
         for(int j = 0; j < tam; j++)
         {
-            cout << "[" << matriz[i][j] << "] ";
+            if(j == 0)
+                cout << "[" << listaNo[i]->id << "] ";
+        cout << "[" << matriz[i][j] << "] ";
         }
         cout << endl;
     }
