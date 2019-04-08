@@ -68,9 +68,9 @@ void Grafo::printMatrizAdjacencia()
             if(j == 0)
                 cout << "[" << listaNo[i]->id << "] ";
             matriz[i][j] = 0;
-            for(int k = 0; k < listaNo[j]->nosAdjacentes.size(); k++)
+            for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
             {
-                if(listaNo[j]->id == listaNo[j]->nosAdjacentes[j]->id)
+                if(listaNo[j]->id == listaNo[j]->id)
                     matriz[i][j] == 1;
             }
 
@@ -78,6 +78,7 @@ void Grafo::printMatrizAdjacencia()
 
         }
     }
+
 
 }
 
@@ -94,6 +95,7 @@ void Grafo::printListaAdjacencia()
         for(int j = 0; j < tam; j++)
         {
             if(elemento->verificaAdjacencia(listaNo[j]))
+
             {
                 cout << " -> " << listaNo[j]->id;
             }
