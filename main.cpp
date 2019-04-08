@@ -55,6 +55,7 @@ int main()
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
+    bool direcionado = false;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
@@ -94,7 +95,7 @@ int main()
                 }
                 else
                 {
-                    grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj));
+                    grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado);
                 }
 
             }
@@ -112,7 +113,7 @@ int main()
                 if(opcaorepresenta == 1)
                 {
                     cout << "Matriz de adjacencia: " << endl;
-                    grafo->matrizAdjacencia();
+                    grafo->matrizAdjacencia(direcionado);
                 }
                 else if(opcaorepresenta == 2)
                 {
