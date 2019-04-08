@@ -2,7 +2,7 @@
 #define NO_H_INCLUDED
 
 #include "Aresta.h"
-#include "Aresta.cpp"
+
 #include <vector>
 
 using namespace std;
