@@ -94,12 +94,8 @@ void Grafo::printListaAdjacencia()
         cout << elemento->id;
         for(int j = 0; j < tam; j++)
         {
-<<<<<<< HEAD
-            int contador = count(adjacentes.begin(), adjacentes.end(), listaNo[j]); // verifica as adjacencias do 'elemento'
-            if(contador != 0)
-=======
             if(elemento->verificaAdjacencia(listaNo[j]))
->>>>>>> master
+
             {
                 cout << " -> " << listaNo[j]->id;
             }
