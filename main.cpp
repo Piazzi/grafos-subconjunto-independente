@@ -3,10 +3,8 @@
 #include <sstream>
 #include <stdlib.h>
 #include "No.h"
-#include "No.cpp"
 #include "Aresta.h"
 #include "Grafo.h"
-#include "Grafo.cpp"
 #include <vector>
 #include <fstream>
 #include <cstdio>
@@ -47,6 +45,7 @@ int noMenu()
     cout << "[2] Adicionar vizinhos a um No" << endl;
     cout << "[3] Adicionar arestas a um no" << endl;
     cout << "[4] Lista de vertices do grafo" << endl;
+    cout << "[5] Representar o grafo" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -107,18 +106,23 @@ int main()
             {
                 grafo->printNos();
             }
+            else if(opcao == 5)
+            {
+                int opcaorepresenta = tipoDeRepresentacaoMenu();
+                if(opcaorepresenta == 1)
+                {
+                    cout << "Matriz de adjacencia: " << endl;
+                    grafo->printMatrizAdjacencia();
+                }
+                else if(opcaorepresenta == 2)
+                {
+                    cout<<"Lista de adjacencia: "<<endl;
+                    grafo->printListaAdjacencia();
+                }
+
+            }
             else
                 cout << "Digite uma opcao valida" << endl;
-        }
-        if(tipoDeRepresentacaoMenu() == 1)
-        {
-            cout << "Matriz de adjacencia: " << endl;
-            grafo->printMatrizAdjacencia();
-        }
-        else
-        {
-            cout<<"Lista de adjacencia: "<<endl;
-            grafo->printListaAdjacencia();
         }
     }
 

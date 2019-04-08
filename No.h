@@ -2,7 +2,6 @@
 #define NO_H_INCLUDED
 
 #include "Aresta.h"
-#include "Aresta.cpp"
 #include <vector>
 
 using namespace std;
@@ -12,8 +11,6 @@ class No
     public:
         No(int id);
         ~No();
-
-        vector<No *> nosAdjacentes;
 
         int id;
         int getPeso();
@@ -26,6 +23,8 @@ class No
         void setProx(No* val);
         vector<No *> getAdjacentes();
         void adicionaNoAdjacente(No *no);
+        bool verificaAdjacencia(No *no);
+        vector<No *> nosAdjacentes;
 
 
     private:
