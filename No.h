@@ -2,7 +2,6 @@
 #define NO_H_INCLUDED
 
 #include "Aresta.h"
-#include "Aresta.cpp"
 #include <vector>
 
 using namespace std;
@@ -25,6 +24,7 @@ class No
         vector<No *> getAdjacentes();
         void adicionaNoAdjacente(No *no);
         bool verificaAdjacencia(No *no);
+        vector<No *> nosAdjacentes;
 
 
     private:
@@ -32,7 +32,6 @@ class No
         int grau;
         vector<Aresta *> arestas;
         bool visitado;
-        vector<No *> nosAdjacentes;
 
 };
 
