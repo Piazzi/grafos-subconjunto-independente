@@ -3,10 +3,8 @@
 #include <sstream>
 #include <stdlib.h>
 #include "No.h"
-#include "No.cpp"
 #include "Aresta.h"
 #include "Grafo.h"
-#include "Grafo.cpp"
 #include <vector>
 #include <fstream>
 #include <cstdio>
