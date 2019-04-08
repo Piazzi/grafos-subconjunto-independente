@@ -56,6 +56,8 @@ int main()
     int idAdj = 0;
     int opcao = 0;
     bool direcionado = false;
+    cout << "Digite 1 para grafos direcionados ou 0 para grafos não direcionado: " << endl;
+    cin >> direcionado;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
