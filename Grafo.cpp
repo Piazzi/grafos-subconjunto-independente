@@ -77,7 +77,6 @@ void Grafo::printMatrizAdjacencia()
             cout << matriz[i][j] << "  ";
 
         }
-        cout << endl;
     }
 
 }
@@ -100,6 +99,7 @@ void Grafo::printListaAdjacencia()
             }
         }
     }
+    cout << endl;
 }
 
 void Grafo::adicionaVertice(No *no)
