@@ -26,6 +26,7 @@ class Grafo
         void printListaAdjacencia();
         void printNos();
         void adicionaVertice(No *no);
+        //void caminhaProfundidade(int id); // ainda em construção
         No *getVertice(int id);
         bool possuiAresta(int id1, int id2);
         Aresta *getAresta(int id1, int id2);

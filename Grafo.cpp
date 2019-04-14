@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include <vector>
 #include <algorithm>
+#include <stack> //Biblioteca para pilhas
 
 using namespace std;
 
@@ -205,4 +206,55 @@ void Grafo::printNos()
     }
     cout << endl;
 }
+/*
+void Grafo::caminhaProfundidade(int id)
+{
+    stack<No*> pilha;
+    No *no = getNo(id); // nó com o id passado
+    vector<No*> visitados[listaNo.size()]; // vetor de nós visitados
+
+    //marcando todos como não visitados
+    for(int i = 0; i < listaNo.size(); i++)
+        visitados[i].setVisitado(false);
+
+    while(true)
+    {
+        if(!visitados[i].getVisitado())
+        {
+            cout << "Visitando vertice " << visitados[i].id << endl;
+            visitados[i].setVisitado(true); // marcando nó como visitado
+            pilha.push(no);
+
+            bool achou = false;
+            vector<No*>::iterator it;
+
+            //nessa parte eu quero fazer um vetor que analisa os visinhos  de cada vertice e veja se ele fou visitado ou não
+            for(it = no.getAdjacentes().begin(); it != no.getAdjacentes().end(); it++)
+            {
+                if(!it.getVisitado())
+                {
+                    achou = true;
+                    break;
+                }
+            }
+            if (achou)
+                no = it; //atualiza do vertice em análise
+
+            else
+            {
+                // se todos os visinhos estão visitados ou não existem visinhos (folha)
+                //remove da pilja
+                pilha.pop();
+                // se a pilha ficar vazia, então terminou a busca
+                if (pilha.empty())
+                    break;
+                //se chegar aqui , pode pegar o elemento do topo
+                no = pilha.top();
+            }
+
+
+        }
+    }
+}
+*/
 
