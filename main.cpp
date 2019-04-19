@@ -49,20 +49,41 @@ int noMenu()
     cin >> opcao;
     return opcao;
 }
+int tipodeGrafo()
+{
 
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Selecione uma opcao: " << endl;
+    cout << "[1] Grafo ponderado" << endl;
+    cout << "[2] Grafo direcionado" << endl;
+    cout << "[-1] Para encerrar o programa" << endl;
+    cin >> opcao;
+    return opcao;
+}
 int main()
 {
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
-    bool direcionado = false;
-    cout << "Digite 1 para grafos direcionados ou 0 para grafos não direcionado: " << endl;
-    cin >> direcionado;
+    bool direcionado;
+    bool ponderado;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
     if(lerOuConstruirMenu() == 2)
     {
+        int opcaorepresenta = tipodeGrafo();
+        if(opcaorepresenta == 1 )
+        {
+            cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl ;
+            cin >> ponderado;
+        }
+        if(opcaorepresenta == 2 )
+        {
+            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+            cin >>direcionado;
+        }
         cout << "Criando seu Grafo " << endl;
         while(id != -1)
         {
@@ -121,7 +142,8 @@ int main()
                 {
                     cout<<"Lista de adjacencia: "<<endl;
                     grafo->printListaAdjacencia();
-                }else if(opcaorepresenta == -1)
+                }
+                else if(opcaorepresenta == -1)
                 {
                     break;
                 }
