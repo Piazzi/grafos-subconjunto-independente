@@ -46,10 +46,21 @@ int noMenu()
     cout << "[3] Adicionar arestas a um no" << endl;
     cout << "[4] Lista de vertices do grafo" << endl;
     cout << "[5] Representar o grafo" << endl;
+    cout << "[6] Tipos de grafos" << endl;
     cin >> opcao;
     return opcao;
 }
+int tipodeGrafo()
+{
 
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Selecione uma opcao: " << endl;
+    cout << "[1] Grafo ponderado" << endl;
+    cout << "[2] Grafo direcionado" << endl;
+    cin >> opcao;
+    return opcao;
+}
 int main()
 {
     int id = 0;
@@ -57,10 +68,6 @@ int main()
     int opcao = 0;
     bool direcionado;
     bool ponderado;
-    cout << "Digite 1 para grafos direcionados ou 0 para grafos nao direcionado: " << endl;
-    cin >> direcionado;
-    cout << "Digite 1 para grafos ponderados ou 0 para grafos nao ponderado: " << endl;
-    cin >> ponderado;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
@@ -129,6 +136,20 @@ int main()
                     break;
                 }
 
+            }
+            else if(opcao == 6 )
+            {
+                int opcaorepresenta = tipodeGrafo();
+                if(opcaorepresenta == 1 )
+                {
+                    cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl ;
+                    cin >> ponderado;
+                }
+                if(opcaorepresenta == 2 )
+                {
+                    cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+                    cin >>direcionado;
+                }
             }
             else
                 cout << "Digite uma opcao valida" << endl;
