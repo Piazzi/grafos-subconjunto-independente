@@ -58,6 +58,7 @@ int tipodeGrafo()
     cout << "Selecione uma opcao: " << endl;
     cout << "[1] Grafo ponderado" << endl;
     cout << "[2] Grafo direcionado" << endl;
+    cout << "[-1 Para encerrar o programa" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -142,13 +143,17 @@ int main()
                 int opcaorepresenta = tipodeGrafo();
                 if(opcaorepresenta == 1 )
                 {
-                    cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl ;
+                    cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl it ;
                     cin >> ponderado;
                 }
                 if(opcaorepresenta == 2 )
                 {
                     cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
                     cin >>direcionado;
+                }
+                if( opcaorepresenta == -1 )
+                {
+                    break;
                 }
             }
             else
