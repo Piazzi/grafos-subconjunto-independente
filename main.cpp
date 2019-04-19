@@ -46,7 +46,6 @@ int noMenu()
     cout << "[3] Adicionar arestas a um no" << endl;
     cout << "[4] Lista de vertices do grafo" << endl;
     cout << "[5] Representar o grafo" << endl;
-    cout << "[6] Tipos de grafos" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -58,7 +57,7 @@ int tipodeGrafo()
     cout << "Selecione uma opcao: " << endl;
     cout << "[1] Grafo ponderado" << endl;
     cout << "[2] Grafo direcionado" << endl;
-    cout << "[-1 Para encerrar o programa" << endl;
+    cout << "[-1] Para encerrar o programa" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -74,6 +73,17 @@ int main()
 
     if(lerOuConstruirMenu() == 2)
     {
+        int opcaorepresenta = tipodeGrafo();
+        if(opcaorepresenta == 1 )
+        {
+            cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl ;
+            cin >> ponderado;
+        }
+        if(opcaorepresenta == 2 )
+        {
+            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+            cin >>direcionado;
+        }
         cout << "Criando seu Grafo " << endl;
         while(id != -1)
         {
@@ -132,29 +142,12 @@ int main()
                 {
                     cout<<"Lista de adjacencia: "<<endl;
                     grafo->printListaAdjacencia();
-                }else if(opcaorepresenta == -1)
+                }
+                else if(opcaorepresenta == -1)
                 {
                     break;
                 }
 
-            }
-            else if(opcao == 6 )
-            {
-                int opcaorepresenta = tipodeGrafo();
-                if(opcaorepresenta == 1 )
-                {
-                    cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl it ;
-                    cin >> ponderado;
-                }
-                if(opcaorepresenta == 2 )
-                {
-                    cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
-                    cin >>direcionado;
-                }
-                if( opcaorepresenta == -1 )
-                {
-                    break;
-                }
             }
             else
                 cout << "Digite uma opcao valida" << endl;
