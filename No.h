@@ -27,6 +27,7 @@ class No
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;
         void printAdjacentes();
+        void removeAdjacente(No* adjacente);
 
 
     private:

@@ -182,10 +182,21 @@ void Grafo::printAdjacentesAoNo()
 
 void Grafo::removeAresta()
 {
-    printNos();
     cout << "Digite o id do vertice de uma das extremidades da aresta a ser excluida: " << endl;
-    int idNoExtremidade1;
-    cin >> idNoExtremidade1;
+
+    int idNo1;
+    cin >> idNo1;
+    No *no1 = getNo(idNo1);
+
+    cout << "Digite o id da outra extremidade da aresta que voce quer remover: " << endl;
+
+    int idNo2;
+    cin >> idNo2;
+    No* no2 = getNo(idNo2);
+    no1->removeAdjacente(no2);
+    no2->removeAdjacente(no1);
+
+    cout << "Aresta removida com sucesso!" << endl;
 
 }
 /*
