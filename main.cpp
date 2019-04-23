@@ -46,6 +46,7 @@ int noMenu()
     cout << "[3] Adicionar arestas a um no" << endl;
     cout << "[4] Lista de vertices do grafo" << endl;
     cout << "[5] Representar o grafo" << endl;
+    cout << "[6] Lista de adjacentes a um no" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -149,6 +150,11 @@ int main()
                 }
 
             }
+            else if(opcao == 6)
+            {
+                grafo->printAdjacentesAoNo();
+            }
+
             else
                 cout << "Digite uma opcao valida" << endl;
         }
