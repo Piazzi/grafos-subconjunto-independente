@@ -46,7 +46,7 @@ void Grafo::setNoPonderado(bool val)
     noPonderado = val;
 }
 
-void Grafo::printMatrizAdjacencia(bool direcionado)
+void Grafo::matrizAdjacencia(bool direcionado)
 {
     int tam = listaNo.size();
     int matriz[tam][tam];
@@ -169,6 +169,24 @@ void Grafo::printNos()
         cout << listaNo[i]->id << " ";
     }
     cout << endl;
+}
+
+void Grafo::printAdjacentesAoNo()
+{
+    cout << "Digite o id do no desejado: ";
+    int id;
+    cin >> id;
+    No* noDesejado = getNo(id);
+    noDesejado->printAdjacentes();
+}
+
+void Grafo::removeAresta()
+{
+    printNos();
+    cout << "Digite o id do vertice de uma das extremidades da aresta a ser excluida: " << endl;
+    int idNoExtremidade1;
+    cin >> idNoExtremidade1;
+
 }
 /*
 void Grafo::caminhaProfundidade(int id)

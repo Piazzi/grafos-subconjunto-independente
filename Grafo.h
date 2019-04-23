@@ -26,12 +26,15 @@ class Grafo
         void printListaAdjacencia();
         void printNos();
         void adicionaVertice(No *no);
+        void removeVertice();
+        void removeAresta();
         //void caminhaProfundidade(int id); // ainda em construção
         No *getVertice(int id);
         bool possuiAresta(int id1, int id2);
         Aresta *getAresta(int id1, int id2);
         bool verificaId(int id);
         No * getNo(int id);
+        void printAdjacentesAoNo();
 
     private:
        int ordem;
