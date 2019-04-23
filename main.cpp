@@ -48,6 +48,8 @@ int noMenu()
     cout << "[5] Representar o grafo" << endl;
     cout << "[6] Lista de adjacentes a um no" << endl;
     cout << "[7] Remover uma aresta" << endl;
+    cout << "[8] Remover um vertice" << endl;
+
     cin >> opcao;
     return opcao;
 }
@@ -159,6 +161,11 @@ int main()
             else if(opcao == 7)
             {
                 grafo->removeAresta();
+            }
+
+            else if(opcao == 8)
+            {
+                grafo->removeVertice();
             }
 
             else

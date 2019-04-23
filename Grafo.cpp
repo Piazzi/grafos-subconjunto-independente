@@ -188,16 +188,62 @@ void Grafo::removeAresta()
     cin >> idNo1;
     No *no1 = getNo(idNo1);
 
+    no1->printAdjacentes();
+
     cout << "Digite o id da outra extremidade da aresta que voce quer remover: " << endl;
 
     int idNo2;
     cin >> idNo2;
     No* no2 = getNo(idNo2);
+
     no1->removeAdjacente(no2);
     no2->removeAdjacente(no1);
 
     cout << "Aresta removida com sucesso!" << endl;
 
+    if(no1->nosAdjacentes.size() == 0)
+    {
+        auxRemoveVertice(no1);
+        cout << "Como o vertice de id " << no1->id
+        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+    }
+
+    if(no2->nosAdjacentes.size() == 0)
+    {
+        auxRemoveVertice(no2);
+        cout << "Como o vertice de id " << no2->id
+        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+    }
+}
+
+void Grafo::removeVertice()
+{
+    cout << "Digite o id do vertice a ser removido: ";
+    int id;
+    cin >> id;
+    No* noASerRemovido = getNo(id);
+    removeTodasAdjacenciasDeUmNo(noASerRemovido);
+
+    auxRemoveVertice(noASerRemovido);
+}
+
+void Grafo::auxRemoveVertice(No* noASerRemovido)
+{
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        if(listaNo[i] == noASerRemovido)
+        {
+            listaNo.erase(listaNo.begin() + i);
+        }
+    }
+}
+
+void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
+{
+    while(!noASerRemovido->nosAdjacentes.empty())   /// vai retirando os nos adjacentes ate o vetor nosAdjacentes estiver vazio
+    {
+        noASerRemovido->nosAdjacentes.pop_back();
+    }
 }
 /*
 void Grafo::caminhaProfundidade(int id)
