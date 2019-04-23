@@ -27,6 +27,8 @@ class Grafo
         void printNos();
         void adicionaVertice(No *no);
         void removeVertice();
+        void auxRemoveVertice(No* noASerRemovido);
+        void removeTodasAdjacenciasDeUmNo(No* noASerRemovido);
         void removeAresta();
         //void caminhaProfundidade(int id); // ainda em construção
         No *getVertice(int id);

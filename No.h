@@ -29,7 +29,6 @@ class No
         void printAdjacentes();
         void removeAdjacente(No* adjacente);
 
-
     private:
         int peso;
         int grau;
