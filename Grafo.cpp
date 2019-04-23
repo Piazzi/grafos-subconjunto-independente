@@ -46,43 +46,7 @@ void Grafo::setNoPonderado(bool val)
     noPonderado = val;
 }
 
-/*void Grafo::printMatrizAdjacencia()
-{
-    int tam = listaNo.size();
-    int matriz[tam][tam];
-    for(int i = 0; i < tam; i++)
-        for(int j = 0; j < tam; j++)
-            matriz[i][j] = 0;
-
-    for(int i = 0; i< tam; i++)
-    {
-        if(i == 0)
-        {
-            cout << "   ";
-            for(int i = 0; i < tam; i++)
-                cout << "[" << listaNo[i]->id << "]";
-            cout << endl;
-        }
-
-        for(int j = 0; j < tam; j++)
-        {
-            if(j == 0)
-                cout << "[" << listaNo[i]->id << "] ";
-            matriz[i][j] = 0;
-            for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
-            {
-                if(listaNo[j]->id == listaNo[j]->id)
-                    matriz[i][j] == 1;
-            }
-
-            cout << matriz[i][j] << "  ";
-
-        }
-    }
-
-} */
-
-void Grafo::matrizAdjacencia(bool direcionado)
+void Grafo::printMatrizAdjacencia(bool direcionado)
 {
     int tam = listaNo.size();
     int matriz[tam][tam];
