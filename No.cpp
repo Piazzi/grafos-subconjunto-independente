@@ -88,5 +88,19 @@ void No::printAdjacentes()
     {
         cout << nosAdjacentes[i]->id << " ";
     }
-    cout  << endl;
+    cout << endl;
+}
+
+void No::removeAdjacente(No* adjacente)
+{
+    if(!verificaAdjacencia(adjacente))
+    {
+        cout << "Este no nao eh adjacente!" << endl;
+        return;
+    }
+    for(int i = 0; i < nosAdjacentes.size(); i++)
+    {
+        if(nosAdjacentes[i] == adjacente)
+            nosAdjacentes.erase(nosAdjacentes.begin() + i);
+    }
 }

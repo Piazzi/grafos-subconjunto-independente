@@ -47,6 +47,7 @@ int noMenu()
     cout << "[4] Lista de vertices do grafo" << endl;
     cout << "[5] Representar o grafo" << endl;
     cout << "[6] Lista de adjacentes a um no" << endl;
+    cout << "[7] Remover uma aresta" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -153,6 +154,11 @@ int main()
             else if(opcao == 6)
             {
                 grafo->printAdjacentesAoNo();
+            }
+
+            else if(opcao == 7)
+            {
+                grafo->removeAresta();
             }
 
             else
