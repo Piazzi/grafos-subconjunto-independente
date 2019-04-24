@@ -49,6 +49,8 @@ int noMenu()
     cout << "[6] Lista de adjacentes a um no" << endl;
     cout << "[7] Remover uma aresta" << endl;
     cout << "[8] Remover um vertice" << endl;
+    cout << "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia" << endl;
+    cout << "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia" << endl;
 
     cin >> opcao;
     return opcao;
@@ -65,6 +67,34 @@ int tipodeGrafo()
     cin >> opcao;
     return opcao;
 }
+
+Grafo* criaGrafoComplementar(Grafo* grafo)
+{
+    bool direcionado = false; /// grafo->ehDirecionado();
+    Grafo* grafoComplementar = new Grafo();
+    for(int i = 0; i < grafo->listaNo.size(); i++)
+    {
+        No* noOriginal = grafo->listaNo[i];
+        No* noComplementar = noOriginal;
+        for(int j = 0; j < grafo->listaNo.size() && i!=j; j++)
+        {
+            if(noOriginal->verificaAdjacencia(grafo->listaNo[j]))
+            {
+                noComplementar->removeAdjacente(grafo->listaNo[j]);
+                grafo->listaNo[j]->removeAdjacente(noComplementar);
+
+            }
+            else
+            {
+                noComplementar->adicionaNoAdjacente(grafo->listaNo[j], direcionado);
+            }
+        }
+        grafoComplementar->adicionaVertice(noComplementar);
+    }
+
+    return grafoComplementar;
+}
+
 int main()
 {
     int id = 0;
@@ -166,6 +196,16 @@ int main()
             else if(opcao == 8)
             {
                 grafo->removeVertice();
+            }
+
+            else if(opcao == 9)
+            {
+                criaGrafoComplementar(grafo)->printListaAdjacencia();
+            }
+
+            else if(opcao == 10)
+            {
+                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
             }
 
             else
