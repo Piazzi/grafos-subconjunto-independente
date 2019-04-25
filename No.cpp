@@ -67,16 +67,43 @@ void No::adicionaNoAdjacente(No *no , bool direcionado)
         if(direcionado)
         {
         nosAdjacentes.push_back(no);
+
         }
         else{
         nosAdjacentes.push_back(no);
         no->nosAdjacentes.push_back(this);
         }
-        cout << "No adjacente adicionado!" << endl;
+        cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
     }
     else {
         cout << "Este no ja eh adjacente!" << endl;
         return;
     }
 
+}
+
+void No::printAdjacentes()
+{
+    cout << "Nos adjacentes ao no " << this->id << ": ";
+    for(int i = 0; i< nosAdjacentes.size(); i++)
+    {
+        cout << nosAdjacentes[i]->id << " ";
+    }
+    cout << endl;
+}
+
+void No::removeAdjacente(No* adjacente)
+{
+    if(!verificaAdjacencia(adjacente))
+    {
+        cout << "Este no nao eh adjacente!" << endl;
+        return;
+    }
+    for(int i = 0; i < nosAdjacentes.size(); i++)
+    {
+        if(nosAdjacentes[i] == adjacente)
+            nosAdjacentes.erase(nosAdjacentes.begin() + i);
+        cout << "O no " << adjacente->id << " nao eh mais adjacente ao no " << this->id << "!" << endl;
+        return;
+    }
 }

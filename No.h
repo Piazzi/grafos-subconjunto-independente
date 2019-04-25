@@ -2,7 +2,7 @@
 #define NO_H_INCLUDED
 
 #include "Aresta.h"
-
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -26,7 +26,9 @@ class No
         void adicionaNoAdjacente(No *no,bool val);
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;
-
+        list<int> nosAdjacentesLista;
+        void printAdjacentes();
+        void removeAdjacente(No* adjacente);
 
     private:
         int peso;

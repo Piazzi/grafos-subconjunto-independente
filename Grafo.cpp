@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <stack> //Biblioteca para pilhas
+#include <queue> // fila para filas
+#include <list>
 
 using namespace std;
 
@@ -45,42 +47,6 @@ void Grafo::setNoPonderado(bool val)
 {
     noPonderado = val;
 }
-
-/*void Grafo::printMatrizAdjacencia()
-{
-    int tam = listaNo.size();
-    int matriz[tam][tam];
-    for(int i = 0; i < tam; i++)
-        for(int j = 0; j < tam; j++)
-            matriz[i][j] = 0;
-
-    for(int i = 0; i< tam; i++)
-    {
-        if(i == 0)
-        {
-            cout << "   ";
-            for(int i = 0; i < tam; i++)
-                cout << "[" << listaNo[i]->id << "]";
-            cout << endl;
-        }
-
-        for(int j = 0; j < tam; j++)
-        {
-            if(j == 0)
-                cout << "[" << listaNo[i]->id << "] ";
-            matriz[i][j] = 0;
-            for(int j = 0; j < listaNo[j]->nosAdjacentes.size(); j++)
-            {
-                if(listaNo[j]->id == listaNo[j]->id)
-                    matriz[i][j] == 1;
-            }
-
-            cout << matriz[i][j] << "  ";
-
-        }
-    }
-
-} */
 
 void Grafo::matrizAdjacencia(bool direcionado)
 {
@@ -138,6 +104,7 @@ void Grafo::matrizAdjacencia(bool direcionado)
         cout << endl;
     }
 }
+
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
@@ -206,55 +173,148 @@ void Grafo::printNos()
     }
     cout << endl;
 }
-/*
-void Grafo::caminhaProfundidade(int id)
+
+void Grafo::printAdjacentesAoNo()
 {
-    stack<No*> pilha;
-    No *no = getNo(id); // nó com o id passado
-    vector<No*> visitados[listaNo.size()]; // vetor de nós visitados
+    cout << "Digite o id do no desejado: ";
+    int id;
+    cin >> id;
+    No* noDesejado = getNo(id);
+    noDesejado->printAdjacentes();
+}
 
-    //marcando todos como não visitados
-    for(int i = 0; i < listaNo.size(); i++)
-        visitados[i].setVisitado(false);
+void Grafo::removeAresta()
+{
+    cout << "Digite o id do vertice de uma das extremidades da aresta a ser excluida: " << endl;
 
-    while(true)
+    int idNo1;
+    cin >> idNo1;
+    No *no1 = getNo(idNo1);
+
+    no1->printAdjacentes();
+
+    cout << "Digite o id da outra extremidade da aresta que voce quer remover: " << endl;
+
+    int idNo2;
+    cin >> idNo2;
+    No* no2 = getNo(idNo2);
+
+    no1->removeAdjacente(no2);
+    no2->removeAdjacente(no1);
+
+    cout << "Aresta removida com sucesso!" << endl;
+
+    if(no1->nosAdjacentes.size() == 0)
     {
-        if(!visitados[i].getVisitado())
+        auxRemoveVertice(no1);
+        cout << "Como o vertice de id " << no1->id
+        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+    }
+
+    if(no2->nosAdjacentes.size() == 0)
+    {
+        auxRemoveVertice(no2);
+        cout << "Como o vertice de id " << no2->id
+        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+    }
+}
+
+void Grafo::removeVertice()
+{
+    cout << "Digite o id do vertice a ser removido: ";
+    int id;
+    cin >> id;
+    No* noASerRemovido = getNo(id);
+    removeTodasAdjacenciasDeUmNo(noASerRemovido);
+
+    auxRemoveVertice(noASerRemovido);
+}
+
+void Grafo::auxRemoveVertice(No* noASerRemovido)
+{
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        if(listaNo[i] == noASerRemovido)
         {
-            cout << "Visitando vertice " << visitados[i].id << endl;
-            visitados[i].setVisitado(true); // marcando nó como visitado
-            pilha.push(no);
-
-            bool achou = false;
-            vector<No*>::iterator it;
-
-            //nessa parte eu quero fazer um vetor que analisa os visinhos  de cada vertice e veja se ele fou visitado ou não
-            for(it = no.getAdjacentes().begin(); it != no.getAdjacentes().end(); it++)
-            {
-                if(!it.getVisitado())
-                {
-                    achou = true;
-                    break;
-                }
-            }
-            if (achou)
-                no = it; //atualiza do vertice em análise
-
-            else
-            {
-                // se todos os visinhos estão visitados ou não existem visinhos (folha)
-                //remove da pilja
-                pilha.pop();
-                // se a pilha ficar vazia, então terminou a busca
-                if (pilha.empty())
-                    break;
-                //se chegar aqui , pode pegar o elemento do topo
-                no = pilha.top();
-            }
-
-
+            listaNo.erase(listaNo.begin() + i);
         }
     }
 }
+
+void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
+{
+    while(!noASerRemovido->nosAdjacentes.empty())   /// vai retirando os nos adjacentes ate o vetor nosAdjacentes estiver vazio
+    {
+        noASerRemovido->nosAdjacentes.pop_back();
+    }
+}
+
+void Grafo::buscaProfundidade_recursiva(int ini, int *visitado, int cont){
+    visitado[ini] = cont;
+    No *NoInicial = getNo(ini);
+
+    int numAdjacentes = NoInicial->nosAdjacentes.size();
+
+    for(int i=0; i<numAdjacentes; i++){
+
+        if(!visitado[NoInicial->nosAdjacentes[i]->id])
+            buscaProfundidade_recursiva(NoInicial->nosAdjacentes[i]->id,visitado,cont+1);
+    }
+}
+
+void Grafo::buscaProfundidade(int idInicial){
+    int i, cont = 1;
+    int *visitado;
+    for(int i=0; i<getGrau(); i++)
+        visitado[i] = 0;
+    buscaProfundidade_recursiva(idInicial,visitado,cont);
+
+    for(int i=0; i < getGrau(); i++)
+        cout << i << " -> " << visitado[i] << endl;
+}
+/*
+void Grafo::caminhaLargura(int id)
+{
+    int V = listaNo.size();
+    int v = id;
+    No *NoInicio = getVertice(id);
+    queue<int> fila;
+	bool visitados[V]; // vetor de visitados
+
+	vector<No *> adj;
+    adj = NoInicio->nosAdjacentes;
+
+
+	for(int i = 0; i < V; i++)
+		visitados[i] = false;
+
+	cout << "Visitando vertice " << v << " ...\n";
+	visitados[v] = true; // marca como visitado
+
+
+	while(true)
+	{
+		list<No>::iterator it;
+		for(it = adj[v].begin(); it != adj[v].id.end(); it)
+		{
+			if(!visitados[*it])
+			{
+				cout << "Visitando vertice " << *it << " ...\n";
+				visitados[*it] = true; // marca como visitado
+				fila.push(*it); // insere na fila
+			}
+		}
+
+		// verifica se a fila NÃO está vazia
+		if(!fila.empty())
+		{
+			v = fila.front(); // obtém o primeiro elemento
+			fila.pop(); // remove da fila
+		}
+		else
+			break;
+	}
+}
+
 */
 

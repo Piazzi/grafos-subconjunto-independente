@@ -10,6 +10,7 @@
 #include <cstdio>
 
 
+
 using namespace std;
 
 int lerOuConstruirMenu()
@@ -46,8 +47,56 @@ int noMenu()
     cout << "[3] Adicionar arestas a um no" << endl;
     cout << "[4] Lista de vertices do grafo" << endl;
     cout << "[5] Representar o grafo" << endl;
+    cout << "[6] Lista de adjacentes a um no" << endl;
+    cout << "[7] Remover uma aresta" << endl;
+    cout << "[8] Remover um vertice" << endl;
+    cout << "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia" << endl;
+    cout << "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia" << endl;
+    cout << "[11] Fazer Busca em Profundidade" << endl;
+    cout << "[12] Fazer Busca em Largura (ainda n implementado)" << endl;
+
+
     cin >> opcao;
     return opcao;
+}
+int tipodeGrafo()
+{
+
+    int opcao = 0;
+    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
+    cout << "Selecione uma opcao: " << endl;
+    cout << "[1] Grafo ponderado" << endl;
+    cout << "[2] Grafo direcionado" << endl;
+    cout << "[-1] Para encerrar o programa" << endl;
+    cin >> opcao;
+    return opcao;
+}
+
+Grafo* criaGrafoComplementar(Grafo* grafo)
+{
+    bool direcionado = false; /// grafo->ehDirecionado();
+    Grafo* grafoComplementar = new Grafo();
+    for(int i = 0; i < grafo->listaNo.size(); i++)
+    {
+        No* noOriginal = grafo->listaNo[i];
+        No* noComplementar = noOriginal;
+        for(int j = 0; j < grafo->listaNo.size() && i!=j; j++)
+        {
+            if(noOriginal->verificaAdjacencia(grafo->listaNo[j]))
+            {
+                noComplementar->removeAdjacente(grafo->listaNo[j]);
+                grafo->listaNo[j]->removeAdjacente(noComplementar);
+
+            }
+            else
+            {
+                noComplementar->adicionaNoAdjacente(grafo->listaNo[j], direcionado);
+            }
+        }
+        grafoComplementar->adicionaVertice(noComplementar);
+    }
+
+    return grafoComplementar;
 }
 
 int main()
@@ -55,14 +104,26 @@ int main()
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
-    bool direcionado = false;
-    cout << "Digite 1 para grafos direcionados ou 0 para grafos não direcionado: " << endl;
-    cin >> direcionado;
+    bool direcionado;
+    bool ponderado;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
 
+
+
     if(lerOuConstruirMenu() == 2)
     {
+        int opcaorepresenta = tipodeGrafo();
+        if(opcaorepresenta == 1 )
+        {
+            cout<< "Digite [1] para grafo podenrado ou [0] para grafo nao podenrado" << endl ;
+            cin >> ponderado;
+        }
+        if(opcaorepresenta == 2 )
+        {
+            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+            cin >>direcionado;
+        }
         cout << "Criando seu Grafo " << endl;
         while(id != -1)
         {
@@ -121,12 +182,55 @@ int main()
                 {
                     cout<<"Lista de adjacencia: "<<endl;
                     grafo->printListaAdjacencia();
-                }else if(opcaorepresenta == -1)
+                }
+                else if(opcaorepresenta == -1)
                 {
                     break;
                 }
 
             }
+            else if(opcao == 6)
+            {
+                grafo->printAdjacentesAoNo();
+            }
+
+            else if(opcao == 7)
+            {
+                grafo->removeAresta();
+            }
+
+            else if(opcao == 8)
+            {
+                grafo->removeVertice();
+            }
+
+            else if(opcao == 9)
+            {
+                criaGrafoComplementar(grafo)->printListaAdjacencia();
+            }
+
+            else if(opcao == 10)
+            {
+                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+            }
+            else if(opcao == 11)
+            {
+                int idBusca=-2;
+                cout << "Digite o id do no que voce quer acessar: " << endl;
+                cin >> id;
+                if(id == -1)
+                    break;
+                while(!grafo->verificaId(id))
+                {
+                    cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
+                    cin >> id;
+                    if(id == -1)
+                        break;
+                }
+                grafo->buscaProfundidade(idBusca);
+
+            }
+
             else
                 cout << "Digite uma opcao valida" << endl;
         }

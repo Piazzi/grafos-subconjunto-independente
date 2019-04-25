@@ -26,17 +26,23 @@ class Grafo
         void printListaAdjacencia();
         void printNos();
         void adicionaVertice(No *no);
-        //void caminhaProfundidade(int id); // ainda em construção
+        void removeVertice();
+        void auxRemoveVertice(No* noASerRemovido);
+        void removeTodasAdjacenciasDeUmNo(No* noASerRemovido);
+        void removeAresta();
+        void buscaProfundidade(int idInicial);
         No *getVertice(int id);
         bool possuiAresta(int id1, int id2);
         Aresta *getAresta(int id1, int id2);
         bool verificaId(int id);
         No * getNo(int id);
+        void printAdjacentesAoNo();
 
     private:
        int ordem;
-       int grau;
        bool noPonderado;
+       int grau;
+       void buscaProfundidade_recursiva(int ini, int *visitado, int cont);
 
 };
 
