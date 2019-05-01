@@ -51,6 +51,8 @@ int noMenu()
     cout << "[8] Remover um vertice" << endl;
     cout << "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia" << endl;
     cout << "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia" << endl;
+    cout << "[11] Busca em profundidade" << endl;
+
 
     cin >> opcao;
     return opcao;
@@ -206,6 +208,11 @@ int main()
             else if(opcao == 10)
             {
                 criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+            }
+
+            else if(opcao == 11)
+            {
+                grafo->caminhamentoEmProfundidade(1);
             }
 
             else
