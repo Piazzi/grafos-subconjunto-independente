@@ -37,6 +37,9 @@ class Grafo
         bool verificaId(int id);
         No * getNo(int id);
         void printAdjacentesAoNo();
+        void caminhamentoEmProfundidade(int id);
+        void aprofunda(No* no);
+
 
     private:
        int ordem;

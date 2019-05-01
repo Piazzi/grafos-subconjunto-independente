@@ -245,6 +245,44 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
         noASerRemovido->nosAdjacentes.pop_back();
     }
 }
+
+void Grafo::caminhamentoEmProfundidade(int id)
+{
+    No *no = getNo(id);
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        listaNo[i]->setVisitado(false);
+    }
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        if(!listaNo[i]->getVisitado())
+        {
+            aprofunda(listaNo[i]);
+        }
+    }
+
+}
+
+void Grafo::aprofunda(No* no)
+{
+    no->setVisitado(true);
+    cout << "Visitando o no  " << no->id << endl;
+    for(int i = 0; i < no->nosAdjacentes.size() ; i++)
+    {
+        No* adjacenteAtual = no->nosAdjacentes[i];
+        if(!adjacenteAtual->getVisitado())
+        {
+            cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl;
+            aprofunda(adjacenteAtual);
+        }
+        else
+        {
+            cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl;
+        }
+
+    }
+}
+
 /*
 void Grafo::caminhaProfundidade(int id)
 {
