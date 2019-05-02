@@ -40,7 +40,8 @@ class Grafo
         void caminhamentoEmProfundidade(int id);
         void aprofunda(No* no);
         void caminhamentoEmLargura(int id);
-
+        void setVisitadoEmTodosNos(bool visitado);
+        void caminhaEmLargura(vector<No*> fila);
 
 
     private:

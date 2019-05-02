@@ -246,13 +246,9 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
     }
 }
 
-void Grafo::caminhamentoEmProfundidade(int id)
+void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
-    No *no = getNo(id);
-    for(int i = 0; i < listaNo.size(); i++)
-    {
-        listaNo[i]->setVisitado(false);
-    }
+    setVisitadoEmTodosNos(false);
     for(int i = 0; i < listaNo.size(); i++)
     {
         if(!listaNo[i]->getVisitado())
@@ -266,7 +262,7 @@ void Grafo::caminhamentoEmProfundidade(int id)
 void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
-    cout << "Visitando o no  " << no->id << endl;
+    cout << "Visitando o no " << no->id << endl;
     for(int i = 0; i < no->nosAdjacentes.size() ; i++)
     {
         No* adjacenteAtual = no->nosAdjacentes[i];
@@ -283,21 +279,22 @@ void Grafo::aprofunda(No* no)
     }
 }
 
-void Grafo::caminhamentoEmLargura(int id)
+void Grafo::caminhamentoEmLargura(int id)   ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
+    setVisitadoEmTodosNos(false);
+
     No *noInicial = getNo(id);
-    for(int i = 0; i < listaNo.size(); i++)
-    {
-        listaNo[i]->setVisitado(false);
-    }
-
     vector<No*> *fila = new vector<No*>;
-
     fila->push_back(noInicial);
 
-    while(!fila->empty())
+    caminhaEmLargura(*fila); ///chama funcao auxiliar, que faz o caminhamento em largura
+}
+
+void Grafo::caminhaEmLargura(vector<No*> fila)
+{
+    while(!fila.empty())
     {
-        No *noAtual = fila->front();
+        No *noAtual = fila.front();
         cout << "Visitando o no " << noAtual->id << endl;
         noAtual->setVisitado(true);
 
@@ -305,15 +302,23 @@ void Grafo::caminhamentoEmLargura(int id)
         {
             if(!noAtual->nosAdjacentes[i]->getVisitado())
             {
-                int contador = count(fila->begin(), fila->end(), noAtual->nosAdjacentes[i]);
+                int contador = count(fila.begin(), fila.end(), noAtual->nosAdjacentes[i]);
                 if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
                 {
-                    fila->push_back(noAtual->nosAdjacentes[i]);
+                    fila.push_back(noAtual->nosAdjacentes[i]);
                     cout << "Adicionando na fila o no " << noAtual->nosAdjacentes[i]->id << endl;
                 }
             }
         }
-        fila->erase(fila->begin());
+        fila.erase(fila.begin());
+    }
+}
+
+void Grafo::setVisitadoEmTodosNos(bool visitado)
+{
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        listaNo[i]->setVisitado(visitado);
     }
 }
 
