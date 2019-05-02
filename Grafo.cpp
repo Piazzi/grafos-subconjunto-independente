@@ -283,6 +283,40 @@ void Grafo::aprofunda(No* no)
     }
 }
 
+void Grafo::caminhamentoEmLargura(int id)
+{
+    No *noInicial = getNo(id);
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        listaNo[i]->setVisitado(false);
+    }
+
+    vector<No*> *fila = new vector<No*>;
+
+    fila->push_back(noInicial);
+
+    while(!fila->empty())
+    {
+        No *noAtual = fila->front();
+        cout << "Visitando o no " << noAtual->id << endl;
+        noAtual->setVisitado(true);
+
+        for(int i = 0; i < noAtual->nosAdjacentes.size(); i++)
+        {
+            if(!noAtual->nosAdjacentes[i]->getVisitado())
+            {
+                int contador = count(fila->begin(), fila->end(), noAtual->nosAdjacentes[i]);
+                if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
+                {
+                    fila->push_back(noAtual->nosAdjacentes[i]);
+                    cout << "Adicionando na fila o no " << noAtual->nosAdjacentes[i]->id << endl;
+                }
+            }
+        }
+        fila->erase(fila->begin());
+    }
+}
+
 /*
 void Grafo::caminhaProfundidade(int id)
 {
