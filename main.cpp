@@ -52,7 +52,7 @@ int noMenu()
     cout << "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia" << endl;
     cout << "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia" << endl;
     cout << "[11] Busca em profundidade" << endl;
-
+    cout << "[12] Busca em largura" << endl;
 
     cin >> opcao;
     return opcao;
@@ -213,6 +213,11 @@ int main()
             else if(opcao == 11)
             {
                 grafo->caminhamentoEmProfundidade(1);
+            }
+
+            else if(opcao == 12)
+            {
+                grafo->caminhamentoEmLargura(1);
             }
 
             else

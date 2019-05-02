@@ -39,6 +39,8 @@ class Grafo
         void printAdjacentesAoNo();
         void caminhamentoEmProfundidade(int id);
         void aprofunda(No* no);
+        void caminhamentoEmLargura(int id);
+
 
 
     private:
