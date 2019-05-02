@@ -262,18 +262,18 @@ void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a 
 void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
-    cout << "Visitando o no " << no->id << endl;
+    cout << no->id << " "; ///para busca em profundidade normal, descomentar as linhas com a tag BUSCANORMAL
     for(int i = 0; i < no->nosAdjacentes.size() ; i++)
     {
         No* adjacenteAtual = no->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
         {
-            cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl;
+           /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
             aprofunda(adjacenteAtual);
         }
         else
         {
-            cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl;
+           /// cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl; *BUSCANORMAL*
         }
 
     }
@@ -320,6 +320,20 @@ void Grafo::setVisitadoEmTodosNos(bool visitado)
     {
         listaNo[i]->setVisitado(visitado);
     }
+}
+
+void Grafo::componentesConexas()
+{
+    cout << "Componentes conexas: " << endl;
+    for(int i = 0; i < listaNo.size(); i++)
+    {
+        if(!listaNo[i]->getVisitado())
+        {
+            cout << endl << "Componente conexa comencando em " << listaNo[i]->id << " : ";
+            aprofunda(listaNo[i]);
+        }
+    }
+    cout << endl;
 }
 
 /*

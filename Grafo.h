@@ -42,6 +42,7 @@ class Grafo
         void caminhamentoEmLargura(int id);
         void setVisitadoEmTodosNos(bool visitado);
         void caminhaEmLargura(vector<No*> fila);
+        void componentesConexas();
 
 
     private:
