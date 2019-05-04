@@ -30,3 +30,4 @@ void Aresta::setProx(Aresta aresta)
 {
     *prox = aresta;
 }
+

@@ -99,6 +99,7 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 
 int main()
 {
+    int pesoVertice;
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
@@ -135,8 +136,17 @@ int main()
                         cin >> id;
                         if(id == -1)
                         break;
+                        if(ponderado)
+                        {
+                        No *vertice = new No(id);
+                        cout<< "Adiciono um peso ao vertice " <<id<<endl;
+                        cin>>pesoVertice;
+                        grafo->adicionaVerticePonderado(vertice,pesoVertice);
+                        }
+                        else{
                         No *vertice = new No(id);
                         grafo->adicionaVertice(vertice);
+                        }
                     }
                     break;
                 /// Adicionar vizinho a um No

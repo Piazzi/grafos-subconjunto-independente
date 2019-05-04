@@ -205,14 +205,14 @@ void Grafo::removeAresta()
     {
         auxRemoveVertice(no1);
         cout << "Como o vertice de id " << no1->id
-        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+             << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
     }
 
     if(no2->nosAdjacentes.size() == 0)
     {
         auxRemoveVertice(no2);
         cout << "Como o vertice de id " << no2->id
-        << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
+             << " nao tem mais arestas, ele foi removido! (O grafo nao suporta subgrafos desconexos)" << endl;
     }
 }
 
@@ -268,12 +268,12 @@ void Grafo::aprofunda(No* no)
         No* adjacenteAtual = no->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
         {
-           /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
+            /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
             aprofunda(adjacenteAtual);
         }
         else
         {
-           /// cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl; *BUSCANORMAL*
+            /// cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl; *BUSCANORMAL*
         }
 
     }
@@ -336,3 +336,19 @@ void Grafo::componentesConexas()
     cout << endl;
 }
 
+void Grafo::adicionaVerticePonderado(No *no, int peso)
+{
+
+    if(verificaId(no->id))
+    {
+        cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
+    }
+    else
+    {
+        listaNo.push_back(no);
+        cout << "****** No adicionado com sucesso *****" << endl;
+        no->setPeso(peso);
+        cout << "****** Peso no vertice adicionado com sucesso *****"<<endl;
+
+    }
+}
