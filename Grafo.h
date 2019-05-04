@@ -11,7 +11,6 @@ class Grafo
     public:
         Grafo();
         ~Grafo();
-
         vector<No*> listaNo;
         vector<Aresta *> arestas;
         void adicionaVerticePonderado(No *no, int peso);
@@ -42,8 +41,8 @@ class Grafo
         void setVisitadoEmTodosNos(bool visitado);
         void caminhaEmLargura(vector<No*> fila);
         void componentesConexas();
-
-
+        void imprimePesoVertice();
+        void imprimePesoAresta();
     private:
        int ordem;
        int grau;

@@ -12,10 +12,11 @@ class No
     public:
         No(int id);
         ~No();
-
         int id;
         int getPeso();
         void setPeso(int val);
+        int getPesoAresta();
+        void setPesoAresta(int val);
         int getGrau();
         void setGrau(int val);
         int getVisitado();
@@ -23,7 +24,7 @@ class No
         No* getProx();
         void setProx(No* val);
         vector<No *> getAdjacentes();
-        void adicionaNoAdjacente(No *no,bool val);
+        void adicionaNoAdjacente(No *no,bool val,int peso);
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;
         void printAdjacentes();
@@ -31,6 +32,7 @@ class No
 
     private:
         int peso;
+        int pesoAresta;
         int grau;
         vector<Aresta *> arestas;
         bool visitado;

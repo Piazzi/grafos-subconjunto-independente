@@ -179,7 +179,6 @@ void Grafo::printAdjacentesAoNo()
     No* noDesejado = getNo(id);
     noDesejado->printAdjacentes();
 }
-
 void Grafo::removeAresta()
 {
     cout << "Digite o id do vertice de uma das extremidades da aresta a ser excluida: " << endl;
@@ -223,7 +222,6 @@ void Grafo::removeVertice()
     cin >> id;
     No* noASerRemovido = getNo(id);
     removeTodasAdjacenciasDeUmNo(noASerRemovido);
-
     auxRemoveVertice(noASerRemovido);
 }
 
@@ -237,7 +235,6 @@ void Grafo::auxRemoveVertice(No* noASerRemovido)
         }
     }
 }
-
 void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
 {
     while(!noASerRemovido->nosAdjacentes.empty())   /// vai retirando os nos adjacentes ate o vetor nosAdjacentes estiver vazio
@@ -351,4 +348,43 @@ void Grafo::adicionaVerticePonderado(No *no, int peso)
         cout << "****** Peso no vertice adicionado com sucesso *****"<<endl;
 
     }
+}
+
+void Grafo::imprimePesoVertice()
+{
+    No *peso;
+    int conferePeso;
+    cout<<"Digite o vertice que deseja saber o peso"<<endl;
+    cin>> conferePeso;
+    if(verificaId(conferePeso))
+    {
+        peso = getVertice(conferePeso);
+        cout<<"O peso do vertice "<<conferePeso<<" e: "<<endl;
+    }
+    else
+    {
+        cout<<"O Vertice inserido nao existe no grafo"<<endl;
+    }
+}
+void Grafo::imprimePesoAresta()
+{
+    int confereIdADj = 0;
+    int confereId = 0 ;
+    cout<<"Digite o primeiro vertice"<<endl;
+    cin>>confereId;
+    cout<<"Digite o segundo vertice"<<endl;
+    cin>>confereIdADj;
+ /*   if(possuiAresta(confereId, confereIdADj))
+    {
+        cout<<"A aresta existe"<<endl;
+        //getAresta(confereId,confereIdADj);
+    }  else
+    {
+        cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
+    }*/
+}
+
+No * Grafo::getVertice(int id){
+
+
 }
