@@ -99,6 +99,7 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 
 int main()
 {
+    int peso = 0;
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
@@ -113,12 +114,12 @@ int main()
         // Menu do tipo de representação do grafo
         switch(opcaorepresenta)
         {
-            case 1:
-                cout<< "Digite [1] para grafo ponderado ou [0] para grafo nao ponderado" << endl ;
-                cin >> ponderado;
-            case 2:
-                cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
-                cin >>direcionado;
+        case 1:
+            cout<< "Digite [1] para grafo ponderado ou [0] para grafo nao ponderado" << endl ;
+            cin >> ponderado;
+        case 2:
+            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+            cin >>direcionado;
         }
 
         // Menu de opções para o grafo
@@ -128,90 +129,102 @@ int main()
             opcao = noMenu();
             switch(opcao)
             {
-                case 1:
-                    {
-                        cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
-                        cin >> id;
-                        if(id == -1)
-                        break;
-                        No *vertice = new No(id);
-                        grafo->adicionaVertice(vertice);
-                    }
+            case 1:
+            {
+                cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
+                cin >> id;
+                if(id == -1)
                     break;
-                case 2:
-                    cout << "Digite o id do no que voce quer acessar: " << endl;
+                if(ponderado)
+                {
+                    cout << "Adicione o peso do vertice" << endl;
+                    cin >> peso;
+                    No *vertice = new No(id);
+                    No *peso = new No(peso);
+                    grafo->adicionaVerticePonderado(vertice, peso);
+                }
+                else
+                {
+                    No *vertice = new No(id);
+                    grafo->adicionaVertice(vertice);
+                }
+
+            }
+            break;
+            case 2:
+                cout << "Digite o id do no que voce quer acessar: " << endl;
+                cin >> id;
+                if(id == -1)
+                    break;
+                while(!grafo->verificaId(id))
+                {
+                    cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
                     cin >> id;
                     if(id == -1)
-                    break;
-                    while(!grafo->verificaId(id))
-                    {
-                        cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
-                        cin >> id;
-                        if(id == -1)
                         break;
-                    }
-                    cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
-                    cin >> idAdj;
-                    if(id == idAdj)
-                    {
-                        cout<<"Nao e permitido self-loop"<<endl;
-                    }
-                    else
-                    {
-                        grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado);
-                    }
+                }
+                cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
+                cin >> idAdj;
+                if(id == idAdj)
+                {
+                    cout<<"Nao e permitido self-loop"<<endl;
+                }
+                else
+                {
+                    grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado);
+                }
+                break;
+            case 3:
+                break;
+            case 4:
+                grafo->printNos();
+                break;
+            case 5:
+            {
+                int opcaorepresenta = tipoDeRepresentacaoMenu();
+                if(opcaorepresenta == 1)
+                {
+                    cout << "Matriz de adjacencia: " << endl;
+                    grafo->matrizAdjacencia(direcionado);
+                }
+                else if(opcaorepresenta == 2)
+                {
+                    cout<<"Lista de adjacencia: "<<endl;
+                    grafo->printListaAdjacencia();
+                }
+                else if(opcaorepresenta == -1)
+                {
                     break;
-                case 3:
-                    break;
-                case 4:
-                    grafo->printNos();
-                    break;
-                case 5:
-                    {
-                       int opcaorepresenta = tipoDeRepresentacaoMenu();
-                        if(opcaorepresenta == 1)
-                        {
-                            cout << "Matriz de adjacencia: " << endl;
-                            grafo->matrizAdjacencia(direcionado);
-                        }
-                        else if(opcaorepresenta == 2)
-                        {
-                            cout<<"Lista de adjacencia: "<<endl;
-                            grafo->printListaAdjacencia();
-                        }
-                        else if(opcaorepresenta == -1)
-                        {
-                            break;
-                        }
-                    }
-                    break;
-                case 6:
-                    grafo->printAdjacentesAoNo();
-                    break;
-                case 7:
-                    grafo->removeAresta();
-                    break;
-                case 8:
-                    grafo->removeVertice();
-                    break;
-                case 9:
-                    criaGrafoComplementar(grafo)->printListaAdjacencia();
-                    break;
-                case 10:
-                    criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
-                    break;
-                case 11:
-                    grafo->caminhamentoEmProfundidade(1);
-                    break;
-                case 12:
-                    grafo->caminhamentoEmLargura(1);
-                    break;
-                case 13:
-                     grafo->componentesConexas();
-                     break;
-                default:
-                    cout << "Digite uma opcao valida" << endl;
-                    break;
+                }
+            }
+            break;
+            case 6:
+                grafo->printAdjacentesAoNo();
+                break;
+            case 7:
+                grafo->removeAresta();
+                break;
+            case 8:
+                grafo->removeVertice();
+                break;
+            case 9:
+                criaGrafoComplementar(grafo)->printListaAdjacencia();
+                break;
+            case 10:
+                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+                break;
+            case 11:
+                grafo->caminhamentoEmProfundidade(1);
+                break;
+            case 12:
+                grafo->caminhamentoEmLargura(1);
+                break;
+            case 13:
+                grafo->componentesConexas();
+                break;
+            default:
+                cout << "Digite uma opcao valida" << endl;
+                break;
             }
         }
     }
