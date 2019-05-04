@@ -78,6 +78,7 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         if(direcionado)
         {
             nosAdjacentes.push_back(no);
+            no->setGrau(no->getGrau()+1);
         }
         else
         {
@@ -88,12 +89,12 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
                 no->nosAdjacentes.push_back(this);
 
             }
-            else{
+            else
+            {
                 nosAdjacentes.push_back(no);
                 no->nosAdjacentes.push_back(this);
-
             }
-                       }
+        }
         cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
     }
     else
