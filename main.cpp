@@ -110,7 +110,7 @@ int main()
     if(lerOuConstruirMenu() == 2)
     {
         int opcaorepresenta = tipodeGrafo();
-        // Menu do tipo de representação do grafo
+        /// Menu do tipo de representação do grafo
         switch(opcaorepresenta)
         {
             case 1:
@@ -121,13 +121,14 @@ int main()
                 cin >>direcionado;
         }
 
-        // Menu de opções para o grafo
+        /// Menu de opções para o grafo
         cout << "Criando seu Grafo " << endl;
         while(id != -1)
         {
             opcao = noMenu();
             switch(opcao)
             {
+                /// Adicionar Nó
                 case 1:
                     {
                         cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
@@ -138,6 +139,7 @@ int main()
                         grafo->adicionaVertice(vertice);
                     }
                     break;
+                /// Adicionar vizinho a um No
                 case 2:
                     cout << "Digite o id do no que voce quer acessar: " << endl;
                     cin >> id;
@@ -161,11 +163,14 @@ int main()
                         grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado);
                     }
                     break;
+                /// Adicionar Aresta a um no
                 case 3:
                     break;
+                /// Imprime lista de vértices do no
                 case 4:
                     grafo->printNos();
                     break;
+                /// Menu de Representação do Grafo
                 case 5:
                     {
                        int opcaorepresenta = tipoDeRepresentacaoMenu();
@@ -185,27 +190,35 @@ int main()
                         }
                     }
                     break;
+                /// Imprime nos adjacentes
                 case 6:
                     grafo->printAdjacentesAoNo();
                     break;
+                /// Remove uma aresta
                 case 7:
                     grafo->removeAresta();
                     break;
+                /// Remover um vértice
                 case 8:
                     grafo->removeVertice();
                     break;
+                /// Cria um grafo complementar e representa o mesmo em lista de adjacência
                 case 9:
                     criaGrafoComplementar(grafo)->printListaAdjacencia();
                     break;
+                /// Cria um grafo complementar e representa o mesmo em matriz de adjacência
                 case 10:
                     criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
                     break;
+                /// Aplica um algortimo de busca em profundidade
                 case 11:
                     grafo->caminhamentoEmProfundidade(1);
                     break;
+                /// Aplica um algortimo de busca em largura
                 case 12:
                     grafo->caminhamentoEmLargura(1);
                     break;
+                /// Imprime as componentes conexas do grafo
                 case 13:
                      grafo->componentesConexas();
                      break;
