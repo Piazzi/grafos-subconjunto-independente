@@ -352,3 +352,15 @@ void Grafo::adicionaVerticePonderado(No *no, int peso)
 
     }
 }
+
+void Grafo::imprimePesoVertice(){
+    int conferePeso;
+    cout<<"Digite o vertice que deseja saber o peso"<<endl;
+    cin>>conferePeso;
+    if(verificaId(conferePeso)){
+        cout<<"O peso do vertice "<<conferePeso<<" e: "<<endl;
+    }
+    else{
+        cout<<"O Vertice inserido nao existe no grafo"<<endl;
+    }
+}

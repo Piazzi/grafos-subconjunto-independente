@@ -54,6 +54,7 @@ int noMenu()
     cout << "[11] Busca em profundidade" << endl;
     cout << "[12] Busca em largura" << endl;
     cout << "[13] Componentes Conexas" << endl;
+    cout << "[14] Imprimir peso do vertice" <<endl;
     cin >> opcao;
     return opcao;
 }
@@ -231,6 +232,9 @@ int main()
                 /// Imprime as componentes conexas do grafo
                 case 13:
                      grafo->componentesConexas();
+                     break;
+                case 14:
+                     grafo->imprimePesoVertice();
                      break;
                 default:
                     cout << "Digite uma opcao valida" << endl;

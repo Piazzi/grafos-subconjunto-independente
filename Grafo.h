@@ -42,7 +42,7 @@ class Grafo
         void setVisitadoEmTodosNos(bool visitado);
         void caminhaEmLargura(vector<No*> fila);
         void componentesConexas();
-
+        void imprimePesoVertice();
 
     private:
        int ordem;
