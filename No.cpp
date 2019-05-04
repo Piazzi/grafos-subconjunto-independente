@@ -39,6 +39,15 @@ void No::setPeso(int val)
 {
     peso = val;
 }
+int No::getPesoAresta()
+{
+    return pesoAresta;
+}
+
+void No::setPesoAresta(int val)
+{
+    pesoAresta = val;
+}
 
 int No::getVisitado()
 {
@@ -50,7 +59,8 @@ void No::setVisitado(bool val)
     this->visitado = val;
 }
 
-vector<No*> No::getAdjacentes() {
+vector<No*> No::getAdjacentes()
+{
     return this->nosAdjacentes;
 }
 
@@ -61,20 +71,33 @@ bool No::verificaAdjacencia(No *no)
     return (contador == 1);
 }
 
-void No::adicionaNoAdjacente(No *no , bool direcionado)
+void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 {
-    if(!this->verificaAdjacencia(no)){
+    if(!this->verificaAdjacencia(no))
+    {
         if(direcionado)
         {
-        nosAdjacentes.push_back(no);
+            nosAdjacentes.push_back(no);
         }
-        else{
-        nosAdjacentes.push_back(no);
-        no->nosAdjacentes.push_back(this);
-        }
+        else
+        {
+            if(peso!= 0 )
+            {
+                no->setPesoAresta(peso);
+                nosAdjacentes.push_back(no);
+                no->nosAdjacentes.push_back(this);
+
+            }
+            else{
+                nosAdjacentes.push_back(no);
+                no->nosAdjacentes.push_back(this);
+
+            }
+                       }
         cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
     }
-    else {
+    else
+    {
         cout << "Este no ja eh adjacente!" << endl;
         return;
     }
@@ -106,3 +129,4 @@ void No::removeAdjacente(No* adjacente)
         return;
     }
 }
+
