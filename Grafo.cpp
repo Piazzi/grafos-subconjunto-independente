@@ -133,7 +133,6 @@ void Grafo::adicionaVertice(No *no)
     else
     {
         listaNo.push_back(no);
-        no->setGrau(no->getGrau()+1);
         cout << "****** No adicionado com sucesso *****" << endl;
     }
 }
