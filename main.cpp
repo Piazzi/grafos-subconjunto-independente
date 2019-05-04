@@ -140,7 +140,6 @@ int main()
                     cout << "Adicione o peso do vertice" << endl;
                     cin >> peso;
                     No *vertice = new No(id);
-                    No *peso = new No(peso);
                     grafo->adicionaVerticePonderado(vertice, peso);
                 }
                 else

@@ -336,8 +336,9 @@ void Grafo::componentesConexas()
     cout << endl;
 }
 
-void Grafo::adicionaVerticePonderado(No *no, No *peso)
+void Grafo::adicionaVerticePonderado(No *no, int peso)
 {
+
     if(verificaId(no->id))
     {
         cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
@@ -346,8 +347,7 @@ void Grafo::adicionaVerticePonderado(No *no, No *peso)
     {
         listaNo.push_back(no);
         cout << "****** No adicionado com sucesso *****" << endl;
-        cout <<" Digite o peso do vertice" <<endl;
-        listaNo.push_back(peso);
+        no->setPeso(peso);
         cout << "****** Peso no vertice adicionado com sucesso *****"<<endl;
 
     }

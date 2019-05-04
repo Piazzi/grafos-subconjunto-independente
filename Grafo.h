@@ -14,7 +14,7 @@ class Grafo
 
         vector<No*> listaNo;
         vector<Aresta *> arestas;
-        void adicionaVerticePonderado(No *no, No *peso);
+        void adicionaVerticePonderado(No *no, int peso);
         int getOrdem();
         void setOrdem(int val);
         int getGrau();
