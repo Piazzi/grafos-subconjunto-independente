@@ -358,7 +358,7 @@ void Grafo::imprimePesoVertice()
     cin>> conferePeso;
     if(verificaId(conferePeso))
     {
-        peso = getVertice(conferePeso);
+        peso = getNo(conferePeso);
         cout<<"O peso do vertice "<<conferePeso<<" e: "<<peso->getPeso()<<endl;
     }
     else
@@ -389,12 +389,6 @@ int Grafo::auxImprimePesoAresta(int id1)
 {
    // No *elemento = getNo(id1);
  //   return elemento->getPesoAresta();
-}
-
-No * Grafo::getVertice(int id)
-{
-    No *elemento = getNo(id);
-    return elemento;
 }
 
 bool Grafo::possuiAresta(int id1, int id2)
