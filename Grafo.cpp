@@ -16,8 +16,7 @@ Grafo::~Grafo()
 
 }
 
-int Grafo::getGrau()
-{
+int Grafo::getGrau(){
     return grau;
 }
 
@@ -374,17 +373,30 @@ void Grafo::imprimePesoAresta()
     cin>>confereId;
     cout<<"Digite o segundo vertice"<<endl;
     cin>>confereIdADj;
- /*   if(possuiAresta(confereId, confereIdADj))
+    if(possuiAresta(confereId, confereIdADj))
     {
-        cout<<"A aresta existe"<<endl;
         //getAresta(confereId,confereIdADj);
-    }  else
+    }/*  else
     {
         cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
     }*/
 }
 
 No * Grafo::getVertice(int id){
+
+
+}
+
+bool Grafo::possuiAresta(int id1 , int id2){
+    No *elemento = getNo(id1);
+    int confereAdjacente;
+    for(int i = 0; i< elemento->nosAdjacentes.size(); i++)
+    {
+        if(elemento->nosAdjacentes[i]->id == id2){
+            return true;
+        }
+    }
+    return false;
 
 
 }
