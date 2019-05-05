@@ -43,6 +43,7 @@ class Grafo
         void componentesConexas();
         void imprimePesoVertice();
         void imprimePesoAresta();
+        int auxImprimePesoAresta(int val);
     private:
        int ordem;
        int grau;

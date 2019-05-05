@@ -16,7 +16,8 @@ Grafo::~Grafo()
 
 }
 
-int Grafo::getGrau(){
+int Grafo::getGrau()
+{
     return grau;
 }
 
@@ -358,7 +359,7 @@ void Grafo::imprimePesoVertice()
     if(verificaId(conferePeso))
     {
         peso = getVertice(conferePeso);
-        cout<<"O peso do vertice "<<conferePeso<<" e: "<<endl;
+        cout<<"O peso do vertice "<<conferePeso<<" e: "<<peso->getPeso()<<endl;
     }
     else
     {
@@ -375,28 +376,37 @@ void Grafo::imprimePesoAresta()
     cin>>confereIdADj;
     if(possuiAresta(confereId, confereIdADj))
     {
-        //getAresta(confereId,confereIdADj);
-    }/*  else
+        cout<<"O peso da aresta entra os vertices ["<<confereId
+            <<"] ["<<confereIdADj<<"] e: "<<auxImprimePesoAresta(confereId)<<endl;
+    }
+    else
     {
-        cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
-    }*/
+        cout<<"Um dos vertices inseridos no programa nao possui aresta"<<endl;
+    }
 }
 
-No * Grafo::getVertice(int id){
-
-
+int Grafo::auxImprimePesoAresta(int id1)
+{
+   // No *elemento = getNo(id1);
+ //   return elemento->getPesoAresta();
 }
 
-bool Grafo::possuiAresta(int id1 , int id2){
+No * Grafo::getVertice(int id)
+{
+    No *elemento = getNo(id);
+    return elemento;
+}
+
+bool Grafo::possuiAresta(int id1, int id2)
+{
     No *elemento = getNo(id1);
     int confereAdjacente;
     for(int i = 0; i< elemento->nosAdjacentes.size(); i++)
     {
-        if(elemento->nosAdjacentes[i]->id == id2){
+        if(elemento->nosAdjacentes[i]->id == id2)
+        {
             return true;
         }
     }
     return false;
-
-
 }

@@ -16,7 +16,7 @@ class No
         int getPeso();
         void setPeso(int val);
         int getPesoAresta();
-        void setPesoAresta(int val);
+        void setPesoAresta(int val, int val2);
         int getGrau();
         void setGrau(int val);
         int getVisitado();

@@ -39,16 +39,6 @@ void No::setPeso(int val)
 {
     peso = val;
 }
-int No::getPesoAresta()
-{
-    return pesoAresta;
-}
-
-void No::setPesoAresta(int val)
-{
-    pesoAresta = val;
-}
-
 int No::getVisitado()
 {
     return visitado;
@@ -84,7 +74,7 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         {
             if(peso!= 0 )
             {
-                no->setPesoAresta(peso);
+//                no->setPesoAresta(peso);
                 nosAdjacentes.push_back(no);
                 no->nosAdjacentes.push_back(this);
 
