@@ -1,5 +1,6 @@
 #include "No.h"
 #include "Aresta.h"
+#include <iostream>
 
 Aresta::Aresta()
 {

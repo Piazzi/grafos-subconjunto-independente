@@ -29,7 +29,6 @@ class Grafo
         void auxRemoveVertice(No* noASerRemovido);
         void removeTodasAdjacenciasDeUmNo(No* noASerRemovido);
         void removeAresta();
-        No *getVertice(int id);
         bool possuiAresta(int id1, int id2);
         Aresta *getAresta(int id1, int id2);
         bool verificaId(int id);

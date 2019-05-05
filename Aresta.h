@@ -1,6 +1,8 @@
 #ifndef ARESTA_H_INCLUDED
 #define ARESTA_H_INCLUDED
 #include "No.h"
+#include <vector>
+#include <iostream>
 
 class Aresta
 {
