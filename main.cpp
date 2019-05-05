@@ -56,6 +56,7 @@ int noMenu()
     cout << "[13] Componentes Conexas" << endl;
     cout << "[14] Imprimir peso do vertice" <<endl;
     cout << "[15] Imprimir peso da aresta" <<endl;
+    cout << "[16] Ordenacao topologia" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -255,8 +256,12 @@ int main()
                 grafo->imprimePesoVertice();
                 break;
             case 15:
-            ///Imprime peso da aresta
+                ///Imprime peso da aresta
                 grafo->imprimePesoAresta();
+                break;
+            case 16:
+                /// Ordenação Topológica
+                grafo->ordenacaoTopologica();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
