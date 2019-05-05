@@ -2,7 +2,10 @@
 #define GRAFO_H_INCLUDED
 #include "No.h"
 #include <vector>
+#include <stack>
 #include <iostream>
+#include <list>
+#define NIL-1
 
 using namespace std;
 
@@ -12,6 +15,7 @@ class Grafo
         Grafo();
         ~Grafo();
         vector<No*> listaNo;
+        list<int> *adj;
         vector<Aresta *> arestas;
         void adicionaVerticePonderado(No *no, int peso);
         int getOrdem();
@@ -41,8 +45,13 @@ class Grafo
         void setVisitadoEmTodosNos(bool visitado);
         void caminhaEmLargura(vector<No*> fila);
         void componentesConexas();
+        void componenteFortementeConexas();
         void imprimePesoVertice();
         void imprimePesoAresta();
+        void SCCUtil(int u, int disc[], int low[], stack<int> *st, bool stackMember[]);
+        void SCC();
+
+
     private:
        int ordem;
        int grau;

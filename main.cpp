@@ -56,6 +56,7 @@ int noMenu()
     cout << "[13] Componentes Conexas" << endl;
     cout << "[14] Imprimir peso do vertice" <<endl;
     cout << "[15] Imprimir peso da aresta" <<endl;
+    cout << "[16] Componente fortemente conexa" <<endl;
     cin >> opcao;
     return opcao;
 }
@@ -253,10 +254,14 @@ int main()
             /// Imprime peso do vertice
             case 14:
                 grafo->imprimePesoVertice();
-                break;
+                break;*/
             case 15:
             ///Imprime peso da aresta
                 grafo->imprimePesoAresta();
+                break;*/
+            case 16:
+            ///Imprime peso da aresta
+                grafo->SCC();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
