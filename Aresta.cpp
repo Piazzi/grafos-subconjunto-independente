@@ -3,7 +3,7 @@
 
 Aresta::Aresta()
 {
-
+    peso = 0 ;
 }
 
 Aresta::~Aresta()
@@ -30,3 +30,11 @@ void Aresta::setProx(Aresta aresta)
 {
     *prox = aresta;
 }
+/*
+void Aresta::setPeso(int val){
+    peso = val;
+}
+
+int Aresta::getPeso(){
+    return peso;
+}*/
