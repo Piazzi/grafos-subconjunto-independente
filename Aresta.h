@@ -11,10 +11,13 @@ class Aresta
         Aresta getProx();
         void setNoAdj(int val);
         int getNoAdj();
+        //int getPeso();
+        //void setPeso(int val);
 
     private:
         Aresta *prox;
         int noAdj;
+        int peso;
 
 };
 
