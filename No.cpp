@@ -63,6 +63,7 @@ bool No::verificaAdjacencia(No *no)
 
 void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 {
+    Aresta *novaAresta = setAresta(no->id , this->id);
     if(!this->verificaAdjacencia(no))
     {
         if(direcionado)
@@ -74,10 +75,9 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         {
             if(peso!= 0 )
             {
-//                no->setPesoAresta(peso);
+                novaAresta->setPeso(peso);
                 nosAdjacentes.push_back(no);
                 no->nosAdjacentes.push_back(this);
-
             }
             else
             {
