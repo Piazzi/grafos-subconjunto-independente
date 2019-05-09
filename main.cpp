@@ -60,19 +60,6 @@ int noMenu()
     cin >> opcao;
     return opcao;
 }
-int tipodeGrafo()
-{
-
-    int opcao = 0;
-    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
-    cout << "Selecione uma opcao: " << endl;
-    cout << "[1] Grafo ponderado no vertice" << endl;
-    cout << "[2] Grafo ponderado na aresta" << endl;
-    cout << "[3] Grafo direcionado" << endl;
-    cout << "[-1] Para encerrar o programa" << endl;
-    cin >> opcao;
-    return opcao;
-}
 
 Grafo* criaGrafoComplementar(Grafo* grafo)
 {
@@ -116,20 +103,16 @@ int main()
 
     if(lerOuConstruirMenu() == 2)
     {
-        int opcaorepresenta = tipodeGrafo();
-        /// Menu do tipo de representação do grafo
-        switch(opcaorepresenta)
-        {
-        case 1:
-            cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoVertice;
-        case 2:
-            cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoAresta;
-        case 3:
-            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
-            cin >>direcionado;
-        }
+
+        cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
+        cin >> ponderadoVertice;
+
+        cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
+        cin >> ponderadoAresta;
+
+        cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+        cin >>direcionado;
+
 
         /// Menu de opções para o grafo
         cout << "Criando seu Grafo " << endl;
@@ -188,7 +171,7 @@ int main()
                     }
                     else
                     {
-                        grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta);
+                        grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,0);
                     }
                 }
                 break;

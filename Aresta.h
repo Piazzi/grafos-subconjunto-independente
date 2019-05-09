@@ -5,6 +5,8 @@
 class Aresta
 {
     public:
+        Aresta(No *cabeca , No *cauda , int pesoAresta);
+        Aresta(No *cabeca, No *cauda);
         Aresta();
         ~Aresta();
         void setProx(Aresta aresta);
@@ -18,7 +20,9 @@ class Aresta
         Aresta *prox;
         int noAdj;
         int peso;
-
+        No* cabeca;
+        No* cauda;
+        int pesoAresta;
 };
 
 #endif // ARESTA_H_INCLUDED

@@ -1,11 +1,19 @@
 #include "No.h"
 #include "Aresta.h"
 
-Aresta::Aresta()
+Aresta::Aresta(No *cabeca , No* cauda , int pesoAresta)
 {
-    peso = 0 ;
+    this.cabeca = cabeca;
+    this.cauda = cauda;
+    this.pesoAresta = pesoAresta;
 }
-
+Aresta::Aresta(No *cabeca , No* cauda)
+{
+    this.cabeca = cabeca;
+    this.cauda = cauda;
+}
+Aresta::Aresta(){
+}
 Aresta::~Aresta()
 {
 

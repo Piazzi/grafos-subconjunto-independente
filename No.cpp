@@ -71,7 +71,7 @@ bool No::verificaAdjacencia(No *no)
     return (contador == 1);
 }
 
-void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
+void No::adicionaNoAdjacente(No *no, bool direcionado,int pesoAresta )
 {
     if(!this->verificaAdjacencia(no))
     {
@@ -79,6 +79,14 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         {
             nosAdjacentes.push_back(no);
             no->setGrau(no->getGrau()+1);
+            if(arestaPonderada)
+            {
+            Aresta aresta = new Aresta(this->id, no->id, arestaPonderada);
+            }
+            else{
+            Aresta aresta = new Aresta(this->id, no->id);
+            }
+
         }
         else
         {
