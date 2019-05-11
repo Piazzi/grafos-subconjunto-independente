@@ -256,11 +256,11 @@ int main()
                 grafo->imprimePesoVertice();
                 break;
             case 15:
-            ///Imprime peso da aresta
+                ///Imprime peso da aresta
                 grafo->imprimePesoAresta();
                 break;
             case 16:
-            /// Ordenação Topológica
+                /// Ordenação Topológica
                 grafo->ordenacaoTopologica();
                 break;
             default:
