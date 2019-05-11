@@ -518,7 +518,10 @@ void Grafo::imprimeSequenciaDeGraus()
         {
             cout << graus[j] << ", ";
         }
+
     }
+
+
 }
 
 
@@ -529,24 +532,17 @@ void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, par
 
     while(!nosCandidatos.empty())
     {
+        cout << "nos candidatos: " << endl;
+        for(int i = 0; i < nosCandidatos.size(); i++)
+        {
+            cout << nosCandidatos[i]->id << " ";
+        }
         No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
         solucaoGulosa->push_back(candidatoAtual);
-        atualizaGrauDosAdjacentes(candidatoAtual);
         nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
-
-        cout << candidatoAtual->id << " ";
+        cout << "solucao: " << candidatoAtual->id << " " << endl;
     }
 
-}
-
-void Grafo::atualizaGrauDosAdjacentes(No* noMenorGrau)       ///diminui em 1 o grau de todos os nos adjacentes
-{
-    vector<No*> adjacentes = noMenorGrau->getAdjacentes();
-    for(int i = 0; i < adjacentes.size(); i++)
-    {
-        No* noAdjacenteCorrente = noMenorGrau->nosAdjacentes[i];
-        noAdjacenteCorrente->setGrau(noAdjacenteCorrente->getGrau()-1);
-    }
 }
 
 /// remove da lista de candidatos aqueles que sao adjacentes ao ultimo selecionado
@@ -557,25 +553,28 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
     {
         for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
         {
-            if(nosCandidatos[i] == adjacentesAoSelecionado[j])
+            if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id || nosCandidatos[i]->id == candidatoSelecionado->id)
+            {
+                nosCandidatos.erase(nosCandidatos.begin() + i);
+            }
+            else if(nosCandidatos[i]->id == candidatoSelecionado->id)
             {
                 nosCandidatos.erase(nosCandidatos.begin() + i);
             }
         }
-
     }
-
+    return nosCandidatos;
 }
 
 No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 {
-    vector<int> graus;
-    for(int i = 0; i < nosCandidatos.size(); i++) ///preenche o vector graus com o grau de cada no
+    No* noMenorGrau = nosCandidatos[0];
+    for(int i = 0; i < nosCandidatos.size(); i++)
     {
-        graus.push_back(listaNo[i]->getGrau());
+        if(nosCandidatos[i]->getGrau() < noMenorGrau->getGrau())
+            noMenorGrau = nosCandidatos[i];
     }
-    sort(graus.begin(), graus.end()); ///ordena o vector graus
-    return getNo(graus[0]);
+    return noMenorGrau;
 }
 
 
