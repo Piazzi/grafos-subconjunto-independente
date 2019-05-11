@@ -527,37 +527,39 @@ void Grafo::imprimeSequenciaDeGraus()
 
 void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, para minimizar a reducao da lista de possiveis vertices
 {
-    vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar a solucao
+    vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar os nos da solucao
     vector<No*> nosCandidatos = listaNo;
+    vector<int> idsDosNosSolucao;
 
     while(!nosCandidatos.empty())
     {
-        cout << "nos candidatos: " << endl;
-        for(int i = 0; i < nosCandidatos.size(); i++)
-        {
-            cout << nosCandidatos[i]->id << " ";
-        }
+        cout << endl;
         No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
         solucaoGulosa->push_back(candidatoAtual);
         nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
-        cout << "solucao: " << candidatoAtual->id << " " << endl;
+        idsDosNosSolucao.push_back(candidatoAtual->id);
     }
 
+    printSolucaoGulosa(idsDosNosSolucao);
 }
 
 /// remove da lista de candidatos aqueles que sao adjacentes ao ultimo selecionado
 vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
 {
+    for(int a = 0; a < nosCandidatos.size(); a++)
+    {
+        if(nosCandidatos[a]->id == candidatoSelecionado->id)
+            nosCandidatos.erase(nosCandidatos.begin()+a);
+    }
+
+
+
     vector<No*> adjacentesAoSelecionado = candidatoSelecionado->nosAdjacentes;
     for(int i = 0; i < nosCandidatos.size(); i++)
     {
         for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
         {
-            if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id || nosCandidatos[i]->id == candidatoSelecionado->id)
-            {
-                nosCandidatos.erase(nosCandidatos.begin() + i);
-            }
-            else if(nosCandidatos[i]->id == candidatoSelecionado->id)
+            if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id)
             {
                 nosCandidatos.erase(nosCandidatos.begin() + i);
             }
@@ -575,6 +577,22 @@ No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
             noMenorGrau = nosCandidatos[i];
     }
     return noMenorGrau;
+}
+
+void Grafo::printSolucaoGulosa(vector<int> solucao)
+{
+    cout << "Solucao atraves do Algoritmo Guloso: ";
+    for(int i = 0; i < solucao.size(); i++)
+    {
+        if(i == solucao.size()-1)
+        {
+            cout << solucao[i] << endl;
+            return;
+        }
+        cout << solucao[i] << ", ";
+    }
+
+    cout << endl;
 }
 
 
