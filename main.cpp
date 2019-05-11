@@ -1,6 +1,7 @@
 #include <istream>
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <stdlib.h>
 #include "No.h"
 #include "Aresta.h"
@@ -39,25 +40,32 @@ int tipoDeRepresentacaoMenu()
 int noMenu()
 {
     int opcao = 0;
-    cout << "-------------------------------------------------------MENU--------------------------------------------------" << endl;
-    cout << "Selecione uma opcao: " << endl;
-    cout << "[1] Adicionar No" << endl;
-    cout << "[2] Adicionar vizinhos a um No" << endl;
-    cout << "[3] Adicionar arestas a um no" << endl;
-    cout << "[4] Lista de vertices do grafo" << endl;
-    cout << "[5] Representar o grafo" << endl;
-    cout << "[6] Lista de adjacentes a um no" << endl;
-    cout << "[7] Remover uma aresta" << endl;
-    cout << "[8] Remover um vertice" << endl;
-    cout << "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia" << endl;
-    cout << "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia" << endl;
-    cout << "[11] Busca em profundidade" << endl;
-    cout << "[12] Busca em largura" << endl;
-    cout << "[13] Componentes Conexas" << endl;
-    cout << "[14] Imprimir peso do vertice" <<endl;
-    cout << "[15] Imprimir peso da aresta" <<endl;
-    cout << "[16] Ordenacao topologia" << endl;
-    cout << "[17] Obter solucao pelo algoritmo guloso" << endl;
+    string opcoesMenu[] = {
+        "[1] Adicionar No",
+        "[2] Adicionar vizinhos a um No",
+        "[3] Adicionar arestas a um no",
+        "[4] Lista de vertices do grafo",
+        "[5] Representar o grafo",
+        "[6] Lista de adjacentes a um no",
+        "[7] Remover uma aresta",
+        "[8] Remover um vertice",
+        "[9] Criar grafo complementar e representa-lo por Lista de Adjacencia",
+        "[10] Criar grafo complementar e representa-lo por Matriz de Adjacencia",
+        "[11] Busca em profundidade",
+        "[12] Busca em largura",
+        "[13] Componentes Conexas",
+        "[14] Imprimir peso do vertice",
+        "[15] Imprimir peso da aresta",
+        "[16] Ordenacao topologia",
+        "[17] Obter solucao pelo algoritmo guloso",
+        "[18] Imprimir sequencia de grau"
+    };
+
+    cout << endl << "Selecione uma das opcoes: " << endl;
+    for(op : opcoesMenu)
+    {
+        cout << op << endl;
+    }
     cin >> opcao;
     return opcao;
 }
@@ -267,6 +275,10 @@ int main()
             case 17:
                 /// Algoritmo guloso
                 grafo->algoritmoGuloso();
+                break;
+            case 18:
+                /// Algoritmo guloso
+                grafo->printSequenciaDeGraus();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;

@@ -110,9 +110,9 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 void No::printAdjacentes()
 {
     cout << "Nos adjacentes ao no " << this->id << ": ";
-    for(int i = 0; i< nosAdjacentes.size(); i++)
+    for(adjacente : nosAdjacentes)
     {
-        cout << nosAdjacentes[i]->id << " ";
+        cout << adjacente->id << " ";
     }
     cout << endl;
 }

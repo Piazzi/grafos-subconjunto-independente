@@ -45,8 +45,7 @@ public:
     void imprimePesoAresta();
     void ordenacaoTopologica();
     int grauMinimo(int graus[], int n);
-
-    void imprimeSequenciaDeGraus();
+    void printSequenciaDeGraus();
 
     void algoritmoGuloso();
     void printSolucaoGulosa(vector<int> solucao);
