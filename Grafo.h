@@ -46,7 +46,12 @@ public:
     void ordenacaoTopologica();
     int grauMinimo(int graus[], int n);
 
+    void imprimeSequenciaDeGraus();
+
     void algoritmoGuloso();
+    void atualizaGrauDosAdjacentes(No* noMenorGrau);
+    vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
+    No* getNoDeMenorGrau(vector<No*>);
 private:
     int ordem;
     int grau;
