@@ -505,7 +505,7 @@ void Grafo::imprimeSequenciaDeGraus()
     }
     sort(graus.begin(), graus.end(), greater<int>());
 
-    cout << "Ordenacao Topologica: " << endl;
+    cout << "Sequencia de graus: " << endl;
 
     cout << "<";
     for(int j = 0; j < graus.size(); j++)
