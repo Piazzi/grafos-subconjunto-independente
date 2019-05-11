@@ -57,6 +57,7 @@ int noMenu()
     cout << "[14] Imprimir peso do vertice" <<endl;
     cout << "[15] Imprimir peso da aresta" <<endl;
     cout << "[16] Ordenacao topologia" << endl;
+    cout << "[17] Obter solucao pelo algoritmo guloso" << endl;
     cin >> opcao;
     return opcao;
 }
@@ -262,6 +263,10 @@ int main()
             case 16:
                 /// Ordenação Topológica
                 grafo->ordenacaoTopologica();
+                break;
+            case 17:
+                /// Algoritmo guloso
+                grafo->algoritmoGuloso();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;

@@ -49,6 +49,7 @@ public:
     void imprimeSequenciaDeGraus();
 
     void algoritmoGuloso();
+
     void atualizaGrauDosAdjacentes(No* noMenorGrau);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);

@@ -518,10 +518,7 @@ void Grafo::imprimeSequenciaDeGraus()
         {
             cout << graus[j] << ", ";
         }
-
     }
-
-
 }
 
 
@@ -536,13 +533,16 @@ void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, par
         solucaoGulosa->push_back(candidatoAtual);
         atualizaGrauDosAdjacentes(candidatoAtual);
         nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
+
+        cout << candidatoAtual->id << " ";
     }
 
 }
 
 void Grafo::atualizaGrauDosAdjacentes(No* noMenorGrau)       ///diminui em 1 o grau de todos os nos adjacentes
 {
-    for(int i = 0; i < noMenorGrau->nosAdjacentes().size(); i++)
+    vector<No*> adjacentes = noMenorGrau->getAdjacentes();
+    for(int i = 0; i < adjacentes.size(); i++)
     {
         No* noAdjacenteCorrente = noMenorGrau->nosAdjacentes[i];
         noAdjacenteCorrente->setGrau(noAdjacenteCorrente->getGrau()-1);
@@ -559,7 +559,7 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
         {
             if(nosCandidatos[i] == adjacentesAoSelecionado[j])
             {
-                nosCandidatos.erase(i);
+                nosCandidatos.erase(nosCandidatos.begin() + i);
             }
         }
 
@@ -567,15 +567,15 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
 
 }
 
-No* Grafo::getNoDeMenorGrau(vector<No*>)
+No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 {
     vector<int> graus;
-    for(int i = 0; i < numNos; i++) ///preenche o vector graus com o grau de cada no
+    for(int i = 0; i < nosCandidatos.size(); i++) ///preenche o vector graus com o grau de cada no
     {
         graus.push_back(listaNo[i]->getGrau());
     }
     sort(graus.begin(), graus.end()); ///ordena o vector graus
-    return graus[0];
+    return getNo(graus[0]);
 }
 
 
