@@ -96,6 +96,8 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
             }
         }
         cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
+        this->setGrau(this->getGrau()+1);
+        no->setGrau(no->getGrau()+1);
     }
     else
     {
@@ -127,6 +129,7 @@ void No::removeAdjacente(No* adjacente)
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);
         cout << "O no " << adjacente->id << " nao eh mais adjacente ao no " << this->id << "!" << endl;
+        this->setGrau(this->getGrau()-1);
         return;
     }
 }

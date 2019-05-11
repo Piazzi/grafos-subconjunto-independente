@@ -390,7 +390,7 @@ No * Grafo::getVertice(int id)
 
 }
 
-void Grafo::ordenacaoTopologica()
+/*void Grafo::ordenacaoTopologica()
 {
     int n = listaNo.size(); //vertices
     int m =0; // arestas
@@ -493,8 +493,42 @@ int Grafo::grauMinimo(int graus[], int n)
     }
 
     return grauMin;
+} */
+
+void Grafo::ordenacaoTopologica()
+{
+    int numNos = listaNo.size();
+    vector<int> graus;
+    for(int i = 0; i < numNos; i++) ///preenche o vector graus com o grau de cada no
+    {
+        graus.push_back(listaNo[i]->getGrau());
+    }
+    sort(graus.begin(), graus.end(), greater<int>());
+
+    cout << "Ordenacao Topologica: " << endl;
+
+    cout << "<";
+    for(int j = 0; j < graus.size(); j++)
+    {
+        if(j == graus.size()-1)
+        {
+            cout << graus[j] << ">" << endl;
+        }
+        else
+        {
+            cout << graus[j] << ", ";
+        }
+
+    }
+
+
 }
 
+
+void Grafo::algoritmoGuloso() ///iremos buscar os vertices de menores graus
+{
+
+}
 
 
 
