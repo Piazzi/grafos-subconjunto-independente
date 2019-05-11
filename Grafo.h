@@ -44,6 +44,7 @@ public:
     void imprimePesoVertice();
     void imprimePesoAresta();
     void ordenacaoTopologica();
+    int grauMinimo(int graus[], int n);
 private:
     int ordem;
     int grau;

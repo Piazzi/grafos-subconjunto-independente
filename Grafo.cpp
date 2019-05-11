@@ -412,24 +412,57 @@ void Grafo::ordenacaoTopologica()
 
     while(listaPos < n)
     {
+        ///--------------------------------quando o grau minimo não é 0 -------------------------------------------///
+        while(grauMinimo(grau,n)!= 0 && grauMinimo(grau,n)>0)
+        {
+            for(int i = 0; i< n; i++)
+            {
+                if(grau[i] == grauMinimo(grau,n))  /// se o grau for o grau minimo
+                {
+                    lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
+                    listaPos++; /// atualizo listaPos para a proxima inserção
+                    for(int t = 0; t < n; t++)
+                    {
+                        if(listaNo[t]->id == grafo[i])
+                            atual = listaNo[t]; /// No atual recebe o No com o id
+                    }
+
+                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mínimo
+                    {
+                        for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
+                        {
+                            if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
+                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                        }
+
+                    }
+
+                    grafo[i] = -1; // retiro o vertice do grafo[]
+                    grau[i] = -1; // coloco um grau nulo para as proximas iterações
+                }
+            }
+        }
+
+
+        ///--------------------------------quando o grau minimo é 0 -------------------------------------------///
         for(int i = 0; i< n; i++)
         {
-            if(grau[i] == 0)  // se o grau for 0
+            if(grau[i] == 0)  /// se o grau for 0
             {
-                lista[listaPos] = grafo[i];// coloco o vertice na posição listaPos da lista
-                listaPos++; // atualizo listaPos para a proxima inserção
+                lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
+                listaPos++; /// atualizo listaPos para a proxima inserção
                 for(int t = 0; t < n; t++)
                 {
                     if(listaNo[t]->id == grafo[i])
-                        atual = listaNo[t]; // No atual recebe o No com o id
+                        atual = listaNo[t]; /// No atual recebe o No com o id
                 }
 
-                for(int j = 0; j< atual->nosAdjacentes.size(); j++) // para todos os adjacentes ao no com grau 0
+                for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
                 {
-                    for(int k =0; k<n; k++)  //percorro todos os vevrtices do grafo[] procurando alguem com aquele id
+                    for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                     {
-                        if(grafo[k] == atual->nosAdjacentes[j]->id)// se o vetice tiver aquele id
-                            grau[k] = grau[k]- 1;// diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                        if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
+                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
                     }
 
                 }
@@ -438,12 +471,9 @@ void Grafo::ordenacaoTopologica()
                 grafo[i] = -1; // retiro o vertice do grafo[]
                 grau[i] = -1; // coloco um grau nulo para as proximas iterações
             }
-
-
-
         }
     }
-    cout<<"lista em ordenacao topologica: [ ";
+    cout << "lista em ordenacao topologica: [ ";
     for(int i =0; i<n; i++)
     {
         cout << lista[i] << " ";
@@ -451,6 +481,21 @@ void Grafo::ordenacaoTopologica()
     cout << "]"<<endl;
 
 }
+
+int Grafo::grauMinimo(int graus[], int n)
+{
+    int grauMin =9999999999;
+
+    for (int i =0; i<n ; i++)
+    {
+        if(graus[i]<grauMin)
+            grauMin = graus[i];
+    }
+
+    return grauMin;
+}
+
+
 
 
 
