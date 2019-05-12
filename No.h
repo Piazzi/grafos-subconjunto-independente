@@ -25,10 +25,12 @@ class No
         void setProx(No* val);
         vector<No *> getAdjacentes();
         void adicionaNoAdjacente(No *no,bool val,int peso);
+        void adicionaNoAdjacenteSemMsg(No *no,bool direcionado,int peso);
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;
         void printAdjacentes();
         void removeAdjacente(No* adjacente);
+        void removeAdjacenteSemMsg(No* adjacente);
 
     private:
         int peso;

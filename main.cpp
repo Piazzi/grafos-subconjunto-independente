@@ -58,7 +58,8 @@ int noMenu()
         "[15] Imprimir peso da aresta",
         "[16] Ordenacao topologia",
         "[17] Obter solucao pelo algoritmo guloso",
-        "[18] Imprimir sequencia de grau"
+        "[18] Imprimir sequencia de grau",
+        "[19] Componentes fortemente conexas"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -279,6 +280,10 @@ int main()
             case 18:
                 /// Algoritmo guloso
                 grafo->printSequenciaDeGraus();
+                break;
+            case 19:
+                ///Componente fortemente conexa
+                grafo->imprimirComponentesFortementeConexas();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;

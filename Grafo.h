@@ -3,6 +3,7 @@
 #include "No.h"
 #include <vector>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -46,6 +47,10 @@ public:
     void ordenacaoTopologica();
     int grauMinimo(int graus[], int n);
     void printSequenciaDeGraus();
+    void preenche(No *v, stack<No*>& pilha);
+    void DFS(No *v);
+    Grafo *obterGrafoTransposto();
+    void imprimirComponentesFortementeConexas();
 
     void algoritmoGuloso();
     void printSolucaoGulosa(vector<int> solucao);
