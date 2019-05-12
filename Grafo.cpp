@@ -8,7 +8,7 @@ using namespace std;
 
 Grafo::Grafo()
 {
-    adj = new list<int>[getOrdem()];
+
 }
 
 Grafo::~Grafo()
@@ -139,9 +139,9 @@ void Grafo::adicionaVertice(No *no)
 
 bool Grafo::verificaId(int id)
 {
-    for(int i = 0; i < listaNo.size(); i++)
+    for(no : listaNo)
     {
-        if(listaNo[i]->id == id)
+        if(no->id == id)
         {
             return true;
         }
@@ -153,10 +153,10 @@ No * Grafo::getNo(int id)
 {
     if(verificaId(id))
     {
-        for(int i = 0; i < listaNo.size(); i++)
+        for(no : listaNo)
         {
-            if(listaNo[i]->id == id)
-                return listaNo[i];
+            if(no->id == id)
+                return no;
         }
     }
 }
@@ -164,9 +164,9 @@ No * Grafo::getNo(int id)
 void Grafo::printNos()
 {
     cout << "Lista de vertices do grafo: " << endl;
-    for(int i = 0; i < listaNo.size(); i++)
+    for(no : listaNo)
     {
-        cout << listaNo[i]->id << " ";
+        cout << no->id << " ";
     }
     cout << endl;
 }
@@ -246,23 +246,23 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
 void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
     setVisitadoEmTodosNos(false);
-    for(int i = 0; i < listaNo.size(); i++)
+    for(i : listaNo)
     {
-        if(!listaNo[i]->getVisitado())
+        if(!i->getVisitado())
         {
-            aprofunda(listaNo[i]);
+            aprofunda(i);
         }
     }
-
+    cout << endl;
 }
 
 void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
     cout << no->id << " "; ///para busca em profundidade normal, descomentar as linhas com a tag BUSCANORMAL
-    for(int i = 0; i < no->nosAdjacentes.size() ; i++)
+    for(adjacente : no->nosAdjacentes)
     {
-        No* adjacenteAtual = no->nosAdjacentes[i];
+        No* adjacenteAtual = adjacente;
         if(!adjacenteAtual->getVisitado())
         {
             /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
@@ -295,15 +295,15 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
         cout << "Visitando o no " << noAtual->id << endl;
         noAtual->setVisitado(true);
 
-        for(int i = 0; i < noAtual->nosAdjacentes.size(); i++)
+        for(adjacenteAoAtual : noAtual->nosAdjacentes)
         {
-            if(!noAtual->nosAdjacentes[i]->getVisitado())
+            if(!adjacenteAoAtual->getVisitado())
             {
-                int contador = count(fila.begin(), fila.end(), noAtual->nosAdjacentes[i]);
+                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual);
                 if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
                 {
-                    fila.push_back(noAtual->nosAdjacentes[i]);
-                    cout << "Adicionando na fila o no " << noAtual->nosAdjacentes[i]->id << endl;
+                    fila.push_back(adjacenteAoAtual);
+                    cout << "Adicionando na fila o no " << adjacenteAoAtual->id << endl;
                 }
             }
         }
@@ -313,29 +313,24 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
 
 void Grafo::setVisitadoEmTodosNos(bool visitado)
 {
-    for(int i = 0; i < listaNo.size(); i++)
+    for(no : listaNo)
     {
-        listaNo[i]->setVisitado(visitado);
+        no->setVisitado(visitado);
     }
 }
 
 void Grafo::componentesConexas()
 {
     cout << "Componentes conexas: " << endl;
-    for(int i = 0; i < listaNo.size(); i++)
+    for(no : listaNo)
     {
-        if(!listaNo[i]->getVisitado())
+        if(!no->getVisitado())
         {
-            cout << endl << "Componente conexa comencando em " << listaNo[i]->id << " : ";
-            aprofunda(listaNo[i]);
+            cout << endl << "Componente conexa comencando em " << no->id << " : ";
+            aprofunda(no);
         }
     }
     cout << endl;
-}
-
-void Grafo::componenteFortementeConexas()
-{
-
 }
 
 void Grafo::adicionaVerticePonderado(No *no, int peso)
@@ -371,7 +366,6 @@ void Grafo::imprimePesoVertice()
         cout<<"O Vertice inserido nao existe no grafo"<<endl;
     }
 }
-
 void Grafo::imprimePesoAresta()
 {
     int confereIdADj = 0;
@@ -380,87 +374,320 @@ void Grafo::imprimePesoAresta()
     cin>>confereId;
     cout<<"Digite o segundo vertice"<<endl;
     cin>>confereIdADj;
-    if(possuiAresta(confereId, confereIdADj))
-    {
-        cout<<"A aresta existe"<<endl;
-        //getAresta(confereId,confereIdADj);
-    }  else
-    {
-        cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
-    }
+    /*   if(possuiAresta(confereId, confereIdADj))
+       {
+           cout<<"A aresta existe"<<endl;
+           //getAresta(confereId,confereIdADj);
+       }  else
+       {
+           cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
+       }*/
 }
 
-void Grafo::SCCUtil(int u, int disc[], int low[], stack<int> *st, bool stackMember[])
+No * Grafo::getVertice(int id)
 {
-    // A static variable is used for simplicity, we can avoid use
-    // of static variable by passing a pointer.
-    static int time = 0;
 
-    // Initialize discovery time and low value
-    disc[u] = low[u] = ++time;
-    st->push(u);
-    stackMember[u] = true;
 
-    // Go through all vertices adjacent to this
-    list<int>::iterator i;
-    for (i = adj[u].begin(); i != adj[u].end(); ++i)
+}
+
+void Grafo::ordenacaoTopologica()
+{
+    int n = listaNo.size(); //vertices
+    int m =0; // arestas
+    int grafo[n];
+    int grau[n];
+    int lista[n]; // dos vértices de grau zero
+    int listaPos = 0; //posição de inserção na lista
+    No *atual;
+    atual = NULL;
+    int cont =0;
+
+    for(int i = 0; i<n; i++)
     {
-        int v = *i;  // v is current adjacent of 'u'
+        m = m+ listaNo[i]->getGrau();
+        grafo[i] = listaNo[i]->id;
+        grau[i]=listaNo[i]->getGrau();
+        lista[i]=0;
+    }
 
-        // If v is not visited yet, then recur for it
-        if (disc[v] == -1)
+    while(listaPos < n)
+    {
+        ///--------------------------------quando o grau minimo não é 0 -------------------------------------------///
+        while(grauMinimo(grau,n)!= 0 && grauMinimo(grau,n)>0)
         {
-            SCCUtil(v, disc, low, st, stackMember);
+            for(int i = 0; i< n; i++)
+            {
+                if(grau[i] == grauMinimo(grau,n))  /// se o grau for o grau minimo
+                {
+                    lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
+                    listaPos++; /// atualizo listaPos para a proxima inserção
+                    for(int t = 0; t < n; t++)
+                    {
+                        if(listaNo[t]->id == grafo[i])
+                            atual = listaNo[t]; /// No atual recebe o No com o id
+                    }
 
-            // Check if the subtree rooted with 'v' has a
-            // connection to one of the ancestors of 'u'
-            // Case 1 (per above discussion on Disc and Low value)
-            low[u]  = min(low[u], low[v]);
+                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mínimo
+                    {
+                        for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
+                        {
+                            if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
+                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                        }
+
+                    }
+
+                    grafo[i] = -1; // retiro o vertice do grafo[]
+                    grau[i] = -1; // coloco um grau nulo para as proximas iterações
+                }
+            }
         }
 
-        // Update low value of 'u' only of 'v' is still in stack
-        // (i.e. it's a back edge, not cross edge).
-        // Case 2 (per above discussion on Disc and Low value)
-        else if (stackMember[v] == true)
-            low[u]  = min(low[u], disc[v]);
-    }
 
-    // head node found, pop the stack and print an SCC
-    int w = 0;  // To store stack extracted vertices
-    if (low[u] == disc[u])
-    {
-        while (st->top() != u)
+        ///--------------------------------quando o grau minimo é 0 -------------------------------------------///
+        for(int i = 0; i< n; i++)
         {
-            w = (int) st->top();
-            cout << w << " ";
-            stackMember[w] = false;
-            st->pop();
+            if(grau[i] == 0)  /// se o grau for 0
+            {
+                lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
+                listaPos++; /// atualizo listaPos para a proxima inserção
+                for(int t = 0; t < n; t++)
+                {
+                    if(listaNo[t]->id == grafo[i])
+                        atual = listaNo[t]; /// No atual recebe o No com o id
+                }
+
+                for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
+                {
+                    for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
+                    {
+                        if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
+                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                    }
+
+                }
+
+
+                grafo[i] = -1; // retiro o vertice do grafo[]
+                grau[i] = -1; // coloco um grau nulo para as proximas iterações
+            }
         }
-        w = (int) st->top();
-        cout << w << "n";
-        stackMember[w] = false;
-        st->pop();
     }
-}
-
-void Grafo::SCC()
-{
-    int *disc = new int[getOrdem()];
-    int *low = new int[getOrdem()];
-    bool *stackMember = new bool[getOrdem()];
-    stack<int> *st = new stack<int>();
-
-    // Initialize disc and low, and stackMember arrays
-    for (int i = 0; i < getOrdem(); i++)
+    cout << "lista em ordenacao topologica: [ ";
+    for(int i =0; i<n; i++)
     {
-        disc[i] = NIL;
-        low[i] = NIL;
-        stackMember[i] = false;
+        cout << lista[i] << " ";
+    }
+    cout << "]"<<endl;
+
+}
+
+int Grafo::grauMinimo(int graus[], int n)
+{
+    int grauMin =9999999999;
+
+    for (int i =0; i<n ; i++)
+    {
+        if(graus[i]<grauMin)
+            grauMin = graus[i];
     }
 
-    // Call the recursive helper function to find strongly
-    // connected components in DFS tree with vertex 'i'
-    for (int i = 0; i < getOrdem(); i++)
-        if (disc[i] == NIL)
-            SCCUtil(i, disc, low, st, stackMember);
+    return grauMin;
 }
+
+void Grafo::printSequenciaDeGraus()
+{
+    vector<int> graus;
+
+    for(no : listaNo) ///preenche o vector graus com o grau de cada no
+    {
+        graus.push_back(no->getGrau());
+    }
+
+    sort(graus.begin(), graus.end(), greater<int>()); ///ordena o vector graus
+
+    cout << "Sequencia de graus: " << endl;
+
+    cout << "<";
+    for(grau : graus)
+    {
+        cout << grau << ", ";
+    }
+    cout << ">" << endl;
+}
+
+
+void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, para minimizar a reducao da lista de possiveis vertices
+{
+    vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar os nos da solucao
+    vector<No*> nosCandidatos = listaNo;
+    vector<int> idsDosNosSolucao;
+
+    while(!nosCandidatos.empty())
+    {
+        cout << endl;
+        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
+        solucaoGulosa->push_back(candidatoAtual);
+        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
+        idsDosNosSolucao.push_back(candidatoAtual->id);
+    }
+
+    printSolucaoGulosa(idsDosNosSolucao);
+}
+
+/// remove da lista de candidatos aqueles que sao adjacentes ao ultimo selecionado
+vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
+{
+    for(int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
+    {
+        if(nosCandidatos[a]->id == candidatoSelecionado->id)
+            nosCandidatos.erase(nosCandidatos.begin() + a);
+    }
+
+    vector<No*> adjacentesAoSelecionado = candidatoSelecionado->nosAdjacentes;
+    for(int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
+    {
+        for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
+        {
+            if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id)
+            {
+                nosCandidatos.erase(nosCandidatos.begin() + i);
+            }
+        }
+    }
+    return nosCandidatos;
+}
+
+No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
+{
+    No* noMenorGrau = nosCandidatos[0];
+    for(candidato : nosCandidatos)
+    {
+        if(candidato->getGrau() < noMenorGrau->getGrau())
+            noMenorGrau = candidato;
+    }
+    return noMenorGrau;
+}
+
+void Grafo::printSolucaoGulosa(vector<int> solucao)
+{
+    cout << "Solucao atraves do Algoritmo Guloso: ";
+
+    cout << "[ ";
+    for(noSolucao : solucao)
+    {
+        cout << noSolucao << ", ";
+    }
+    cout << "]" << endl;
+}
+
+void Grafo::preenche(No  *v, stack<No*>& pilha)
+{
+    v->setVisitado(true);
+    for(int i=0; i<v->nosAdjacentes.size(); i++)
+    {
+        No* adjacenteAtual = v->nosAdjacentes[i];
+        if(!adjacenteAtual->getVisitado())
+        {
+            /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
+            preenche(adjacenteAtual, pilha);
+        }
+
+    }
+    pilha.push(v);
+
+}
+
+void Grafo::DFS(No *v)
+{
+    v->setVisitado(true);
+    cout << "" << v->id << endl;
+
+    for(int i=0; i<v->nosAdjacentes.size(); i++)
+    {
+        No* adjacenteAtual = v->nosAdjacentes[i];
+        if(!adjacenteAtual->getVisitado())
+        {
+            /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
+            DFS(adjacenteAtual);
+
+        }
+
+    }
+}
+
+Grafo* Grafo::obterGrafoTransposto()
+{
+    Grafo *transposto = new Grafo();
+
+    transposto = this;
+
+    for(int i=0; i <(transposto->listaNo.size())-1; i++)
+    {
+        for(int j=0; j < listaNo[i]->nosAdjacentes.size(); j++)
+        {
+            transposto->listaNo[i]->nosAdjacentes[j]->adicionaNoAdjacenteSemMsg(transposto->listaNo[i], true, 0);
+            transposto->listaNo[i]->removeAdjacenteSemMsg((transposto->listaNo[i])->nosAdjacentes[j]);
+        }
+
+    }
+    return transposto;
+}
+
+void Grafo::imprimirComponentesFortementeConexas()
+{
+    stack<No*> pilha;
+
+    setVisitadoEmTodosNos(false);
+
+    // preenche a pilha
+   // for(int i = 0; i < listaNo.size(); i++)
+    //{
+       // if(visitados[i] == false)
+         //   preenche(i, visitados, pilha);
+    //}
+
+    for(int i=0; i < listaNo.size(); i++)
+    {
+        if(!listaNo[i]->getVisitado())
+
+        {
+            preenche(listaNo[i], pilha);
+
+        }
+    }
+
+    // cria o grafo transposto
+    Grafo *t = new Grafo();
+    t = obterGrafoTransposto();
+
+    // marca todos como n�o visitados novamente
+    setVisitadoEmTodosNos(false);
+
+    // processa os v�rtices de acordo com a pilha
+    while(!pilha.empty())
+    {
+
+        // obt�m o elemento do topo
+        No *v = pilha.top();
+
+        //remove o elemento
+        pilha.pop();
+
+        // imprime cada componente fortemente conexa
+        if(v->getVisitado() == false)
+        {
+            cout <<"Componente conexa: " << endl;
+            t->DFS(v);
+            cout << "\n";
+        }
+
+    }
+}
+
+
+
+
+
+
+
