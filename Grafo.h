@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <stack>
+#include <time.h>
 
 using namespace std;
 
@@ -54,9 +55,15 @@ public:
 
 
     void algoritmoGuloso();
+    void algoritmoGulosoRandomizado();
     void printSolucaoGulosa(vector<int> solucao);
+    void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
+    vector<No*> getVetorMenorGrau(vector<No*> nosCandidatos);
+    vector<No*> getPorcentagem(vector<No*> nosCandidatos);
+    int gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer);
+
 private:
     int ordem;
     int grau;

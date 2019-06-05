@@ -581,6 +581,86 @@ void Grafo::printSolucaoGulosa(vector<int> solucao)
     cout << "]" << endl;
 }
 
+void Grafo::algoritmoGulosoRandomizado()
+{
+    vector<No*> *solucaoGulosa = new vector<No*>;
+    vector<No*> nosCandidatos = listaNo;
+    vector<int> idsDosNosSolucao;
+    int aux;
+
+    while(!nosCandidatos.empty())
+    {
+        int timer = 0;
+        No* candidatoAtual = getPorcentagem(getVetorMenorGrau(nosCandidatos)).at(gerarNumeroAleatorio(0, getPorcentagem(getVetorMenorGrau(nosCandidatos)).size(), timer));
+        solucaoGulosa->push_back(candidatoAtual);
+        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
+        idsDosNosSolucao.push_back(candidatoAtual->id);
+        timer++;
+    }
+
+    printSolucaoGulosaRandomizada(idsDosNosSolucao);
+}
+
+int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
+{
+    srand(time(NULL)+timer);
+    return (limite_inf + (rand() % limite_sup));
+}
+
+void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
+{
+    cout << "Solucao atraves do Algoritmo Guloso Randomizado: ";
+
+    cout << "[ ";
+    for(noSolucao : solucao)
+    {
+        cout << noSolucao << ", ";
+    }
+    cout << "]" << endl;
+}
+
+vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
+{
+    vector<No*> vetorOrdenadoPeloGrau = nosCandidatos;
+    No* aux;
+    int i, j;
+
+    for(i = 1; i < vetorOrdenadoPeloGrau.size(); i++)
+    {
+        j = i;
+
+        while((j != 0) && (vetorOrdenadoPeloGrau[j]->getGrau() < vetorOrdenadoPeloGrau[j - 1]->getGrau()))
+        {
+            aux = vetorOrdenadoPeloGrau[j];
+            vetorOrdenadoPeloGrau[j] = vetorOrdenadoPeloGrau[j - 1];
+            vetorOrdenadoPeloGrau[j - 1] = aux;
+            j--;
+        }
+    }
+    return vetorOrdenadoPeloGrau;
+}
+
+vector<No*> Grafo::getPorcentagem(vector<No*> nosCandidatos)
+{
+    int porcentagem = 20;
+    int tam = nosCandidatos.size();
+    int result = (porcentagem * tam)/100;
+    vector<No*> listaDosPrimeiros;
+
+    if(result < 1)
+    {
+        listaDosPrimeiros.push_back(nosCandidatos[0]);
+        return listaDosPrimeiros;
+    }
+
+    for(int i=0; i<result; i++)
+    {
+        listaDosPrimeiros.push_back(nosCandidatos[i]);
+    }
+
+    return listaDosPrimeiros;
+}
+
 void Grafo::preenche(No  *v, stack<No*>& pilha)
 {
     v->setVisitado(true);
@@ -641,10 +721,10 @@ void Grafo::imprimirComponentesFortementeConexas()
     setVisitadoEmTodosNos(false);
 
     // preenche a pilha
-   // for(int i = 0; i < listaNo.size(); i++)
+    // for(int i = 0; i < listaNo.size(); i++)
     //{
-       // if(visitados[i] == false)
-         //   preenche(i, visitados, pilha);
+    // if(visitados[i] == false)
+    //   preenche(i, visitados, pilha);
     //}
 
     for(int i=0; i < listaNo.size(); i++)
@@ -661,14 +741,14 @@ void Grafo::imprimirComponentesFortementeConexas()
     Grafo *t = new Grafo();
     t = obterGrafoTransposto();
 
-    // marca todos como n�o visitados novamente
+    // marca todos como nï¿½o visitados novamente
     setVisitadoEmTodosNos(false);
 
-    // processa os v�rtices de acordo com a pilha
+    // processa os vï¿½rtices de acordo com a pilha
     while(!pilha.empty())
     {
 
-        // obt�m o elemento do topo
+        // obtï¿½m o elemento do topo
         No *v = pilha.top();
 
         //remove o elemento

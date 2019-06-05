@@ -181,5 +181,3 @@ void No::removeAdjacenteSemMsg(No* adjacente)
         return;
     }
 }
-
-
