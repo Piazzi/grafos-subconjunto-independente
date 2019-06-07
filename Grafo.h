@@ -56,13 +56,22 @@ public:
 
     void algoritmoGuloso();
     void algoritmoGulosoRandomizado();
+    void algoritmoGulosoRandomizadoReativo();
     void printSolucaoGulosa(vector<int> solucao);
     void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
     vector<No*> getVetorMenorGrau(vector<No*> nosCandidatos);
-    vector<No*> getPorcentagem(vector<No*> nosCandidatos);
+    vector<No*> getPorcentagem(vector<No*> nosCandidatos, float porcentagem);
     int gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer);
+
+    vector<int> getSolucaoRandomizada(float alfa);
+
+
+    struct Alfa {
+        float probabilidadeDeSerEscolhido;
+        float valorAlfa;
+    };
 
 private:
     int ordem;

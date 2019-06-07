@@ -10,6 +10,7 @@
 #include <vector>
 #include <fstream>
 #include <cstdio>
+#include <chrono>
 
 
 using namespace std;
@@ -358,13 +359,14 @@ int main()
         }
 
         string aux;
-        ifstream myfile ("Instancia1.mis"); // ifstream = padrão ios:in
+        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in
+        auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
             while (!myfile.eof()) //enquanto end of file for false continua
             {
                 getline (myfile, aux, ' ');
-                int id1 = std::atoi (aux.c_str());
+                int id1 = atoi (aux.c_str());
                 //printf("%d", id1);
                 No *vertice = new No(id1);
                 //cout << vertice->id;
@@ -375,7 +377,7 @@ int main()
                 //cout << "DELETOU O NO";
                 //grafo->printNos();
                 getline (myfile, aux);
-                int id2 = std::atoi (aux.c_str());
+                int id2 = atoi (aux.c_str());
                 //printf("%d", id2);
                 No *vertice1 = new No(id2);
                 //cout << vertice->id << endl;
@@ -391,6 +393,12 @@ int main()
         }
 
         cout << "*************************** GRAFO CARREGADO **************************************" << endl;
+        auto finish = std::chrono::high_resolution_clock::now();
+        auto elapsed = finish - start;
+        float tempo = elapsed.count()/1000000000;
+
+        cout << "Tempo levado para ler o arquivo de entrada e popular o grafo: " << tempo << " seconds" << endl;
+
         while(id != -1)
         {
             opcao = noMenuLeitura();

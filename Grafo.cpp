@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <stack> //Biblioteca para pilhas
+#include <iomanip>
 
 using namespace std;
 
@@ -128,7 +129,7 @@ void Grafo::adicionaVertice(No *no)
 {
     if(verificaId(no->id))
     {
-        cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
+        ///cout << "Esse id ja esta sendo utilizado, digite um id valido" << endl;
     }
     else
     {
@@ -525,7 +526,6 @@ void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, par
 
     while(!nosCandidatos.empty())
     {
-        cout << endl;
         No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
         solucaoGulosa->push_back(candidatoAtual);
         nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
@@ -579,30 +579,57 @@ void Grafo::printSolucaoGulosa(vector<int> solucao)
         cout << noSolucao << ", ";
     }
     cout << "]" << endl;
+    cout << "Cardinalidade da solucao gulosa: " << solucao.size() << endl;
+
 }
 
 void Grafo::algoritmoGulosoRandomizado()
 {
-    vector<No*> *solucaoGulosa = new vector<No*>;
-    vector<No*> nosCandidatos = listaNo;
-    vector<int> idsDosNosSolucao;
-    int aux;
+    float alfa;
+    cout << "Digite o parametro alfa (entre 0 e 1): ";
+    cin >> alfa;
+    cout << endl;
 
-    while(!nosCandidatos.empty())
-    {
-        int timer = 0;
-        No* candidatoAtual = getPorcentagem(getVetorMenorGrau(nosCandidatos)).at(gerarNumeroAleatorio(0, getPorcentagem(getVetorMenorGrau(nosCandidatos)).size(), timer));
-        solucaoGulosa->push_back(candidatoAtual);
-        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
-        idsDosNosSolucao.push_back(candidatoAtual->id);
-        timer++;
-    }
+    vector<int> idsDosNosSolucao = getSolucaoRandomizada(alfa);
 
     printSolucaoGulosaRandomizada(idsDosNosSolucao);
 }
 
+vector<int> Grafo::getSolucaoRandomizada(float alfa)
+{
+    vector<No*> *solucaoGulosa = new vector<No*>;
+    vector<No*> nosCandidatos = listaNo;
+    vector<int> idsDosNosSolucao;
+
+    while(!nosCandidatos.empty())
+    {
+        int timer = 0;
+        vector<No*> candidatosOrdenadosPeloGrau = getVetorMenorGrau(nosCandidatos);
+        vector<No*> melhoresCandidatos = getPorcentagem(candidatosOrdenadosPeloGrau, alfa);
+        int tamanhoDosMelhoresCandidatos = melhoresCandidatos.size();
+
+        int indiceAleatorio = gerarNumeroAleatorio(0, tamanhoDosMelhoresCandidatos-1, timer);
+        No* candidatoAtual = melhoresCandidatos.at(indiceAleatorio);
+
+
+        solucaoGulosa->push_back(candidatoAtual);
+        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
+        idsDosNosSolucao.push_back(candidatoAtual->id);
+
+        timer++;
+    }
+
+    return idsDosNosSolucao;
+}
+
+
+
+
 int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
 {
+    if(limite_inf == limite_sup && limite_sup == 0)
+        return 0;
+
     srand(time(NULL)+timer);
     return (limite_inf + (rand() % limite_sup));
 }
@@ -617,6 +644,8 @@ void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
         cout << noSolucao << ", ";
     }
     cout << "]" << endl;
+
+    cout << "Cardinalidade da solucao gulosa randomizada: " << solucao.size() << endl;
 }
 
 vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
@@ -640,26 +669,46 @@ vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
     return vetorOrdenadoPeloGrau;
 }
 
-vector<No*> Grafo::getPorcentagem(vector<No*> nosCandidatos)
-{
-    int porcentagem = 20;
-    int tam = nosCandidatos.size();
-    int result = (porcentagem * tam)/100;
+vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float alfa)  /// a cardinalidade da lista retornada é controlada pelo Alpha:
+{                                                                                       ///     Alpha == 1: retorna apenas o melhor (guloso)
+    int tamanhoCandidatos = candidatosOrdenadosPeloGrau.size();                         ///     Alpha == 0: retorna todos elementos (seleção aleatória)
     vector<No*> listaDosPrimeiros;
 
-    if(result < 1)
-    {
-        listaDosPrimeiros.push_back(nosCandidatos[0]);
-        return listaDosPrimeiros;
+    int indice = static_cast<int> (tamanhoCandidatos * (1-alfa));	///quanto menor o alfa, mais elemento pegamos
+
+    if(alfa == 1) {
+        indice = 0;
     }
 
-    for(int i=0; i<result; i++)
+    for(int i = 0; i <= indice; i++)
     {
-        listaDosPrimeiros.push_back(nosCandidatos[i]);
+        listaDosPrimeiros.push_back(candidatosOrdenadosPeloGrau[i]);
     }
 
     return listaDosPrimeiros;
 }
+
+
+void Grafo::algoritmoGulosoRandomizadoReativo()
+{
+    int numeroDeAlfas;
+    Alfa alfas[numeroDeAlfas];
+    float probabilidadeIgual = 1/numeroDeAlfas;
+
+    for(int i = 0; i < numeroDeAlfas; i++) {
+        alfas[i].valorAlfa = (i+1)*0.05;
+        alfas[i].probabilidadeDeSerEscolhido = probabilidadeIgual;
+    }
+
+    int indiceAlfaInicial = rand() % numeroDeAlfas;
+    float alfaInicial = alfas[indiceAlfaInicial].valorAlfa;
+
+    vector<int> solucaoInicial = getSolucaoInicialRandomizada(alfaInicial);
+    int cardinalidadeDaSolucaoInicial = solucaoInicial.size();
+
+}
+
+
 
 void Grafo::preenche(No  *v, stack<No*>& pilha)
 {
