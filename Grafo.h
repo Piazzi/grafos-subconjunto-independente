@@ -11,6 +11,18 @@ using namespace std;
 class Grafo
 {
 public:
+
+     struct Alfa {
+        float probabilidadeDeSerEscolhido;
+        float valorAlfa;
+        float Qi;
+        int melhorSolucao;
+        float mediaSolucoes;
+        int indice;
+        vector<int> idsMelhorSolucao;
+        int numeroDeVezesEscolhido;
+    };
+
     Grafo();
     ~Grafo();
     vector<No*> listaNo;
@@ -55,8 +67,10 @@ public:
 
 
     void algoritmoGuloso();
-    void algoritmoGulosoRandomizado();
-    void algoritmoGulosoRandomizadoReativo();
+    void iniciaAlgoritmoGulosoRandomizado();
+    vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes);
+    vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaSolucoes);
+    vector<int> getSolucaoRandomizada(float alfa);
     void printSolucaoGulosa(vector<int> solucao);
     void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
@@ -65,13 +79,12 @@ public:
     vector<No*> getPorcentagem(vector<No*> nosCandidatos, float porcentagem);
     int gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer);
 
-    vector<int> getSolucaoRandomizada(float alfa);
+    void preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRandomizado);
+    Alfa getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas);
+    void atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int melhorSolucao);
 
-
-    struct Alfa {
-        float probabilidadeDeSerEscolhido;
-        float valorAlfa;
-    };
+    void algoritmoGulosoRandomizadoReativo();
+    float calculaQi(int atualMaiorCardinalidade, float mediaSolucoes);
 
 private:
     int ordem;

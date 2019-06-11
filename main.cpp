@@ -95,8 +95,9 @@ int noMenuLeitura()
         "[13] Ordenacao topologia",
         "[14] Obter solucao pelo algoritmo guloso",
         "[15] Obter solucao pelo algoritmo guloso randomizado",
-        "[16] Imprimir sequencia de grau",
-        "[17] Componentes fortemente conexas"
+        "[16] Obter solucao pelo algoritmo guloso randomizado reativo",
+        "[17] Componentes fortemente conexas",
+        "[18] Imprimir sequencia de grau"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -320,7 +321,7 @@ int main()
                 break;
             case 18:
                 ///Algoritmo guloso randomizado
-                grafo->algoritmoGulosoRandomizado();
+                grafo->iniciaAlgoritmoGulosoRandomizado();
                 break;
             case 19:
                 /// Algoritmo guloso
@@ -359,7 +360,7 @@ int main()
         }
 
         string aux;
-        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in
+        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
         auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
@@ -478,15 +479,19 @@ int main()
                 break;
             case 15:
                 ///Algoritmo guloso randomizado
-                grafo->algoritmoGulosoRandomizado();
+                grafo->iniciaAlgoritmoGulosoRandomizado();
                 break;
             case 16:
                 /// Algoritmo guloso
-                grafo->printSequenciaDeGraus();
+                grafo->algoritmoGulosoRandomizadoReativo();
                 break;
             case 17:
                 ///Componente fortemente conexa
                 grafo->imprimirComponentesFortementeConexas();
+                break;
+            case 18:
+                ///Componente fortemente conexa
+                grafo->printSequenciaDeGraus();
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
