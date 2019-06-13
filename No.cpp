@@ -87,6 +87,8 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
             }
         }
         cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
+        this->setGrau(this->getGrau()+1);
+        no->setGrau(no->getGrau()+1);
     }
     else
     {
@@ -96,12 +98,44 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 
 }
 
+void No::adicionaNoAdjacenteSemMsg(No *no, bool direcionado, int peso)
+{
+    if(!this->verificaAdjacencia(no))
+    {
+        if(direcionado)
+        {
+            nosAdjacentes.push_back(no);
+            no->setGrau(no->getGrau()+1);
+        }
+        else
+        {
+            if(peso!= 0 )
+            {
+                //no->setPesoAresta(peso);
+                nosAdjacentes.push_back(no);
+                no->nosAdjacentes.push_back(this);
+
+            }
+            else
+            {
+                nosAdjacentes.push_back(no);
+                no->nosAdjacentes.push_back(this);
+            }
+        }
+    }
+    else
+    {
+        return;
+    }
+
+}
+
 void No::printAdjacentes()
 {
     cout << "Nos adjacentes ao no " << this->id << ": ";
-    for(int i = 0; i< nosAdjacentes.size(); i++)
+    for(adjacente : nosAdjacentes)
     {
-        cout << nosAdjacentes[i]->id << " ";
+        cout << adjacente->id << " ";
     }
     cout << endl;
 }
@@ -118,7 +152,25 @@ void No::removeAdjacente(No* adjacente)
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);
         cout << "O no " << adjacente->id << " nao eh mais adjacente ao no " << this->id << "!" << endl;
+        this->setGrau(this->getGrau()-1);
         return;
     }
 }
+
+void No::removeAdjacenteSemMsg(No* adjacente)
+{
+    if(!verificaAdjacencia(adjacente))
+    {
+
+        return;
+    }
+    for(int i = 0; i < nosAdjacentes.size(); i++)
+    {
+        if(nosAdjacentes[i] == adjacente)
+            nosAdjacentes.erase(nosAdjacentes.begin() + i);
+
+        return;
+    }
+}
+
 
