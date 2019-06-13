@@ -358,8 +358,8 @@ void Grafo::imprimePesoVertice()
     cin>> conferePeso;
     if(verificaId(conferePeso))
     {
-        peso = getVertice(conferePeso);
-        cout<<"O peso do vertice "<<conferePeso<<" e: "<<endl;
+        peso = getNo(conferePeso);
+        cout<<"O peso do vertice "<<conferePeso<<" e: "<<peso->getPeso()<<endl;
     }
     else
     {
@@ -374,21 +374,39 @@ void Grafo::imprimePesoAresta()
     cin>>confereId;
     cout<<"Digite o segundo vertice"<<endl;
     cin>>confereIdADj;
-    /*   if(possuiAresta(confereId, confereIdADj))
-       {
-           cout<<"A aresta existe"<<endl;
-           //getAresta(confereId,confereIdADj);
-       }  else
-       {
-           cout<<"Os vertices inseridos no programa nao possui aresta"<<endl;
-       }*/
+    if(possuiAresta(confereId, confereIdADj))
+    {
+        cout<<"O peso da aresta entra os vertices ["<<confereId
+            <<"] ["<<confereIdADj<<"] e: "<<auxImprimePesoAresta(confereId)<<endl;
+    }
+    else
+    {
+        cout<<"Um dos vertices inseridos no programa nao possui aresta"<<endl;
+    }
 }
 
-No * Grafo::getVertice(int id)
+int Grafo::auxImprimePesoAresta(int id1)
 {
+   // No *elemento = getNo(id1);
+ //   return elemento->getPesoAresta();
+}
 
+bool Grafo::possuiAresta(int id1, int id2)
+{
+    No *elemento = getNo(id1);
+    int confereAdjacente;
+    for(int i = 0; i< elemento->nosAdjacentes.size(); i++)
+    {
+        if(elemento->nosAdjacentes[i]->id == id2)
+        {
+            return true;
+        }
+    }
+    return false;
 
 }
+
+
 
 void Grafo::ordenacaoTopologica()
 {
@@ -396,8 +414,8 @@ void Grafo::ordenacaoTopologica()
     int m =0; // arestas
     int grafo[n];
     int grau[n];
-    int lista[n]; // dos vértices de grau zero
-    int listaPos = 0; //posição de inserção na lista
+    int lista[n]; // dos vï¿½rtices de grau zero
+    int listaPos = 0; //posiï¿½ï¿½o de inserï¿½ï¿½o na lista
     No *atual;
     atual = NULL;
     int cont =0;
@@ -412,45 +430,45 @@ void Grafo::ordenacaoTopologica()
 
     while(listaPos < n)
     {
-        ///--------------------------------quando o grau minimo não é 0 -------------------------------------------///
+        ///--------------------------------quando o grau minimo nï¿½o ï¿½ 0 -------------------------------------------///
         while(grauMinimo(grau,n)!= 0 && grauMinimo(grau,n)>0)
         {
             for(int i = 0; i< n; i++)
             {
                 if(grau[i] == grauMinimo(grau,n))  /// se o grau for o grau minimo
                 {
-                    lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
-                    listaPos++; /// atualizo listaPos para a proxima inserção
+                    lista[listaPos] = grafo[i]; ///coloco o vertice na posiï¿½ï¿½o listaPos da lista
+                    listaPos++; /// atualizo listaPos para a proxima inserï¿½ï¿½o
                     for(int t = 0; t < n; t++)
                     {
                         if(listaNo[t]->id == grafo[i])
                             atual = listaNo[t]; /// No atual recebe o No com o id
                     }
 
-                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mínimo
+                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mï¿½nimo
                     {
                         for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                         {
                             if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
-                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estï¿½ na posiï¿½ï¿½o k, sabendo que recebia uma aresta do vertce atual
                         }
 
                     }
 
                     grafo[i] = -1; // retiro o vertice do grafo[]
-                    grau[i] = -1; // coloco um grau nulo para as proximas iterações
+                    grau[i] = -1; // coloco um grau nulo para as proximas iteraï¿½ï¿½es
                 }
             }
         }
 
 
-        ///--------------------------------quando o grau minimo é 0 -------------------------------------------///
+        ///--------------------------------quando o grau minimo ï¿½ 0 -------------------------------------------///
         for(int i = 0; i< n; i++)
         {
             if(grau[i] == 0)  /// se o grau for 0
             {
-                lista[listaPos] = grafo[i]; ///coloco o vertice na posição listaPos da lista
-                listaPos++; /// atualizo listaPos para a proxima inserção
+                lista[listaPos] = grafo[i]; ///coloco o vertice na posiï¿½ï¿½o listaPos da lista
+                listaPos++; /// atualizo listaPos para a proxima inserï¿½ï¿½o
                 for(int t = 0; t < n; t++)
                 {
                     if(listaNo[t]->id == grafo[i])
@@ -462,14 +480,14 @@ void Grafo::ordenacaoTopologica()
                     for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                     {
                         if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
-                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que está na posição k, sabendo que recebia uma aresta do vertce atual
+                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estï¿½ na posiï¿½ï¿½o k, sabendo que recebia uma aresta do vertce atual
                     }
 
                 }
 
 
                 grafo[i] = -1; // retiro o vertice do grafo[]
-                grau[i] = -1; // coloco um grau nulo para as proximas iterações
+                grau[i] = -1; // coloco um grau nulo para as proximas iteraï¿½ï¿½es
             }
         }
     }

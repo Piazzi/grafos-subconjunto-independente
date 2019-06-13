@@ -30,7 +30,6 @@ public:
     void auxRemoveVertice(No* noASerRemovido);
     void removeTodasAdjacenciasDeUmNo(No* noASerRemovido);
     void removeAresta();
-    No *getVertice(int id);
     bool possuiAresta(int id1, int id2);
     Aresta *getAresta(int id1, int id2);
     bool verificaId(int id);
@@ -42,8 +41,9 @@ public:
     void setVisitadoEmTodosNos(bool visitado);
     void caminhaEmLargura(vector<No*> fila);
     void componentesConexas();
-    void imprimePesoVertice();
-    void imprimePesoAresta();
+void imprimePesoVertice();
+        void imprimePesoAresta();
+        int auxImprimePesoAresta(int val);
     void ordenacaoTopologica();
     int grauMinimo(int graus[], int n);
     void printSequenciaDeGraus();

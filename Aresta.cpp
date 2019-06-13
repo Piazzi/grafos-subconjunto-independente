@@ -1,8 +1,10 @@
 #include "No.h"
 #include "Aresta.h"
+#include <iostream>
 
-Aresta::Aresta()
+Aresta::Aresta(int i)
 {
+    id=i;
     peso = 0 ;
 }
 
@@ -30,11 +32,13 @@ void Aresta::setProx(Aresta aresta)
 {
     *prox = aresta;
 }
-/*
-void Aresta::setPeso(int val){
+
+void Aresta::setPeso(int val)
+{
     peso = val;
 }
 
-int Aresta::getPeso(){
-    return peso;
-}*/
+int Aresta::getPeso()
+{
+
+}

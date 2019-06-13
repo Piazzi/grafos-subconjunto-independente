@@ -79,6 +79,7 @@ int tipodeGrafo()
     cout << "[1] Grafo ponderado no vertice" << endl;
     cout << "[2] Grafo ponderado na aresta" << endl;
     cout << "[3] Grafo direcionado" << endl;
+    cout << "[4] Nenhuma das opcoes" <<endl;
     cout << "[-1] Para encerrar o programa" << endl;
     cin >> opcao;
     return opcao;
