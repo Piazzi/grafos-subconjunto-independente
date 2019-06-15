@@ -1,16 +1,28 @@
 #include "No.h"
 #include "Aresta.h"
+#include <vector>
 
-Aresta::Aresta()
+using namespace std;
+
+
+Aresta::Aresta(No *cauda, No *cabeca)
 {
-    peso = 0 ;
+    cauda->arestas.push_back(this);
+    cabeca->arestas.push_back(this);
+
+    cauda->nosAdjacentes.push_back(cabeca);
+    cabeca->nosAdjacentes.push_back(cauda);
+
+    cauda->grau++;
+    cabeca->grau++;
+
+    this->cabeca = cabeca;
+    this->cauda = cauda;
+
 }
 
-Aresta::~Aresta()
-{
 
-}
-
+/*
 int Aresta::getNoAdj()
 {
     return noAdj;
@@ -30,7 +42,7 @@ void Aresta::setProx(Aresta aresta)
 {
     *prox = aresta;
 }
-/*
+
 void Aresta::setPeso(int val){
     peso = val;
 }
