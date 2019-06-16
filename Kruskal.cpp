@@ -8,8 +8,8 @@ using namespace std;
 
 /**
  * Recebe um grafo e gera uma árvore geradora miníma
- *
- *
+ * @param Grafo
+ * @return void
 */
 void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
 {
@@ -56,7 +56,7 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
 /**
  * Imprime a árvore geradora minima encontrada pelo
  * algoritmo de Kruskal
- *
+ * @param Grafo
 */
 void Kruskal::imprimirSolucao(Grafo *grafo) {
     cout << "Arvore Geradora Minima - Kruskal:" << endl;
@@ -69,7 +69,9 @@ void Kruskal::imprimirSolucao(Grafo *grafo) {
 /**
  * Verifica se foi formado um ciclo na solução do
  * algoritmo de Kruskal
- *
+ * @param No
+ * @param No
+ * @return bool
 */
 bool Kruskal::arestaFormaCiclo(No *no1, No *no2) {
     for (auto noAdjacente : no1->nosAdjacentes) {

@@ -100,7 +100,8 @@ int noMenuLeitura()
         "[15] Obter solucao pelo algoritmo guloso randomizado",
         "[16] Obter solucao pelo algoritmo guloso randomizado reativo",
         "[17] Componentes fortemente conexas",
-        "[18] Imprimir sequencia de grau"
+        "[18] Imprimir sequencia de grau",
+        "[19] Árvore geradora mínima - Kruskal"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -500,6 +501,10 @@ int main()
             case 18:
                 ///Componente fortemente conexa
                 grafo->printSequenciaDeGraus();
+                break;
+            case 19:
+                /// Algoritmo de Kruskal
+                kruskal->arvoreGeradoraMinima(grafo);
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
