@@ -1,6 +1,7 @@
 #include "Kruskal.h"
 #include "No.h"
 #include <list>
+#include <vector>
 #include <stdio.h>
 #include <iostream>
 
@@ -16,7 +17,7 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
     /// PRECISA VERICAR SE O GRAFO É CONEXO
 
     auto *arvoreGeradoraMinima = new Grafo;
-    list<Aresta *> arestas(grafo->arestas);
+    vector<Aresta *> arestas(grafo->arestas);
 
     /// ordena a lista de arestas por peso em ordem crescente
     arestas.sort([](Aresta *aresta1, Aresta *aresta2)
