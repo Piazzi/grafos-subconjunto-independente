@@ -14,7 +14,7 @@ using namespace std;
  * @param Grafo
  * @return void
 */
-void Prim::encontrarArvoreGeradoraMinima(Grafo *grafo) {
+void Prim::arvoreGeradoraMinima(Grafo *grafo) {
 
     /// precisa verificar se o grafo é conexo.
     if (true) {
