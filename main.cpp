@@ -7,6 +7,7 @@
 #include "No.h"
 #include "Aresta.h"
 #include "Grafo.h"
+#include "Kruskal.h"
 #include <vector>
 #include <fstream>
 #include <cstdio>
@@ -63,7 +64,9 @@ int noMenu()
         "[17] Obter solucao pelo algoritmo guloso",
         "[18] Obter solucao pelo algoritmo guloso randomizado",
         "[19] Imprimir sequencia de grau",
-        "[20] Componentes fortemente conexas"
+        "[20] Componentes fortemente conexas",
+        "[21] Árvore geradora mínima - Kruskal"
+
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -162,6 +165,7 @@ int main()
     bool ponderadoAresta = 0;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
+    Kruskal *kruskal = new K();
 
 
    ///*************************************** CONSTRUÇÃO DO GRAFO ******************************************************///
@@ -330,6 +334,10 @@ int main()
             case 20:
                 ///Componente fortemente conexa
                 grafo->imprimirComponentesFortementeConexas();
+                break;
+            case 21:
+                /// Algoritmo de Kruskal
+                kruskal->arvoreGeradoraMinima(grafo);
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
