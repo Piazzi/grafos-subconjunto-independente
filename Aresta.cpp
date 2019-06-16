@@ -5,19 +5,19 @@
 using namespace std;
 
 
-Aresta::Aresta(No *cauda, No *cabeca)
+Aresta::Aresta(No *no1, No *no2)
 {
-    cauda->arestas.push_back(this);
-    cabeca->arestas.push_back(this);
+    no1->arestas.push_back(this);
+    no2->arestas.push_back(this);
 
-    cauda->nosAdjacentes.push_back(cabeca);
-    cabeca->nosAdjacentes.push_back(cauda);
+    no1->nosAdjacentes.push_back(no2);
+    no2->nosAdjacentes.push_back(no1);
 
-    cauda->grau++;
-    cabeca->grau++;
+    no1->grau++;
+    no2->grau++;
 
-    this->cabeca = cabeca;
-    this->cauda = cauda;
+    this->no2 = no2;
+    this->no1 = no1;
 
 }
 

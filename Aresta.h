@@ -25,11 +25,11 @@ class Aresta
          Aresta();
         ~Aresta();
 
-        explicit Aresta(No *cauda, No *cabeca);
-        Aresta(No *cauda, No* cabeca, peso);
+        explicit Aresta(No *no1, No *no2);
+        Aresta(No *no1, No* no2, peso);
 
-        No *cauda;
-        No *cabeca;
+        No *no1;
+        No *no2;
         int peso;
 
 
