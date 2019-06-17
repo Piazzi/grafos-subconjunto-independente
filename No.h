@@ -32,7 +32,6 @@ class No
         void removeAdjacente(No* adjacente);
         void removeAdjacenteSemMsg(No* adjacente);
 
-    private:
         int peso;
         int pesoAresta;
         int grau;

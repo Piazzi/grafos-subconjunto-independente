@@ -3,6 +3,8 @@
 
 #include "No.h"
 
+class No;
+
 class Aresta
 {
     public:
@@ -25,12 +27,13 @@ class Aresta
          Aresta();
         ~Aresta();
 
-        explicit Aresta(No *no1, No *no2);
-        Aresta(No *no1, No* no2, peso);
+        explicit Aresta(No* no1, No *no2);
+        Aresta(No *no1, No* no2,int peso);
 
         No *no1;
         No *no2;
         int peso;
+
 
 
 };

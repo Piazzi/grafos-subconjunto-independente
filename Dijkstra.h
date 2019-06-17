@@ -2,14 +2,15 @@
 #define DIJKSTRA_H_INCLUDED
 
 #include "Grafo.h"
-#include "No.h"
+#include <vector>
 
-using namespace std;
-
-class Dijkstra()
+class Dijkstra
 {
-    static void custoCaminhoMinimo(Grafo *grafo, int idNo1, int idNo2);
-    static No *getNoDistanciaMinima(list<No *> Nos);
+    public:
+        static void custoCaminhoMinimo(Grafo *grafo, int idNo1, int idNo2);
+        static No *getNoDistanciaMinima(vector<No *> Nos);
+    private:
+
 };
 
 #endif // DIJKSTRA_H_INCLUDED

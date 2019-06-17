@@ -5,12 +5,12 @@
 
 using namespace std;
 
-class Prim()
+class Prim
 {
 public:
 
-    void arvoreGeradoraMinima();
-    void imprimeSolucao();
+    void arvoreGeradoraMinima(Grafo *grafo);
+    void imprimeSolucao(Grafo *grafo);
     Aresta * getArestaMenorPeso(Grafo *grafo, Grafo *arvoreGeradoraMinima);
 
 

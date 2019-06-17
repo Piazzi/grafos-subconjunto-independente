@@ -1,7 +1,7 @@
 #include "Dijkstra.h"
 #include "Grafo.h"
-#include "No.h"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -9,7 +9,7 @@ using namespace std;
  * Calcula o custo de um caminho mínimo entre dois nós
  *
 */
-void Dijkstra::apresentarCustoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
+void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
     No *NoInicial = grafo->getNo(id1);
     NoInicial->distancia = 0;
 
@@ -27,12 +27,12 @@ void Dijkstra::apresentarCustoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
             }
         }
 
-        Nos.remove(No);
+        Nos.push_back(No);
     }
 
     int custo = grafo->getNo(id2)->distancia;
 
-    if (custo < numeric_limits<int>::max()) {
+    if (custo < 10000000) {
         cout << "O custo do caminho mínimo é: " << grafo->getNo(id2)->distancia << endl;
     } else {
         cout << "Não existe caminho entre os dois vértices." << endl;
@@ -43,7 +43,7 @@ void Dijkstra::apresentarCustoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
  *
  *
 */
-No *Dijkstra::getNoDistanciaMinima(list<No *> Nos) {
+No *Dijkstra::getNoDistanciaMinima(vector<No *> Nos) {
     No *NoDistanciaMinima = Nos.front();
 
     for (auto i = Nos.begin(); i != Nos.end(); i++) {

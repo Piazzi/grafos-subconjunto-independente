@@ -183,6 +183,19 @@ void Grafo::printAdjacentesAoNo()
     No* noDesejado = getNo(id);
     noDesejado->printAdjacentes();
 }
+
+Aresta * Grafo::getAresta(int id1, int id2)
+{
+    for(aresta : this->arestas)
+    {
+        if((aresta->no1->id == id1 ||
+           aresta->no1->id == id2) &&
+           (aresta->no2->id == id1 ||
+            aresta->no2->id == id2))
+                return aresta;
+    }
+}
+
 void Grafo::removeAresta()
 {
     cout << "Digite o id do vertice de uma das extremidades da aresta a ser excluida: " << endl;

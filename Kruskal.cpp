@@ -4,8 +4,10 @@
 #include <vector>
 #include <stdio.h>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
+
 
 /**
  * Recebe um grafo e gera uma árvore geradora miníma
@@ -20,7 +22,7 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
     vector<Aresta *> arestas(grafo->arestas);
 
     /// ordena a lista de arestas por peso em ordem crescente
-    arestas.sort([](Aresta *aresta1, Aresta *aresta2)
+    sort(arestas.begin(), arestas.end(),[](Aresta *aresta1, Aresta *aresta2)
     {
         return aresta1->peso < aresta2->peso;
     });
@@ -30,18 +32,18 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
         Aresta *aresta = *i;
 
         /// Verifica se o No1 e o No2 estão na solução e adiciona eles caso não esteja
-        if (!arvoreGeradoraMinima->verificaId(aresta->No1->id))
+        if (!arvoreGeradoraMinima->verificaId(aresta->no1->id))
         {
-            arvoreGeradoraMinima->listaNo.push_back(new No(aresta->No1->id));
+            arvoreGeradoraMinima->listaNo.push_back(new No(aresta->no1->id));
         }
 
-        if (!arvoreGeradoraMinima->verificaId(aresta->No2->id))
+        if (!arvoreGeradoraMinima->verificaId(aresta->no2->id))
         {
-            arvoreGeradoraMinima->listaNo.push_back(new No(aresta->No2->id));
+            arvoreGeradoraMinima->listaNo.push_back(new No(aresta->no2->id));
         }
 
-        No *No1 = arvoreGeradoraMinima->getNo(aresta->No1->id);
-        No *No2 = arvoreGeradoraMinima->getNo(aresta->No2->id);
+        No *No1 = arvoreGeradoraMinima->getNo(aresta->no1->id);
+        No *No2 = arvoreGeradoraMinima->getNo(aresta->no2->id);
 
         /// adiciona a aresta na solução caso não forme um circulo
         if (!arestaFormaCiclo(No1, No2))

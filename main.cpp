@@ -344,7 +344,7 @@ int main()
                 /// Algoritmo de Kruskal
                 kruskal->arvoreGeradoraMinima(grafo);
                 break;
-            case 22;
+            case 22:
                 /// Algoritmo de Prim
                 prim->arvoreGeradoraMinima(grafo);
                 break;
@@ -514,7 +514,7 @@ int main()
                 /// Algoritmo de Kruskal
                 kruskal->arvoreGeradoraMinima(grafo);
                 break;
-            case 20;
+            case 20:
                 /// Algoritmo de Prim
                 prim->arvoreGeradoraMinima(grafo);
                 break;

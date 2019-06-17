@@ -30,8 +30,8 @@ void Prim::arvoreGeradoraMinima(Grafo *grafo) {
         while (arvoreGeradoraMinima->listaNo.size() < tam) {
             Aresta *aresta = getArestaMenorPeso(grafo, arvoreGeradoraMinima);
 
-            auto *No1 = new No(aresta->No1->id);
-            auto *No2 = new No(aresta->No2->id);
+            auto *No1 = new No(aresta->no1->id);
+            auto *No2 = new No(aresta->no2->id);
 
             if (!arvoreGeradoraMinima->verificaId(No1->id)) {
                 arvoreGeradoraMinima->listaNo.push_back(No1);
@@ -44,7 +44,7 @@ void Prim::arvoreGeradoraMinima(Grafo *grafo) {
             arvoreGeradoraMinima->arestas.push_back(aresta);
         }
 
-        imprimirSolucao(arvoreGeradoraMinima);
+        imprimeSolucao(arvoreGeradoraMinima);
     } else {
         cout << "O grafo eh desconexo." << endl;
     }
@@ -61,8 +61,8 @@ Aresta *Prim::getArestaMenorPeso(Grafo *grafo, Grafo *arvoreGeradoraMinima) {
     int pesoMinimo = numeric_limits<int>::max();
 
     for (auto aresta : grafo->arestas) {
-        if (!(arvoreGeradoraMinima->verificaId(aresta->No1->id) && arvoreGeradoraMinima->verificaId(aresta->No2->id))) {
-            if (arvoreGeradoraMinima->verificaId(aresta->No1->id)|| arvoreGeradoraMinima->verificaId(aresta->No2->id)) {
+        if (!(arvoreGeradoraMinima->verificaId(aresta->no1->id) && arvoreGeradoraMinima->verificaId(aresta->no2->id))) {
+            if (arvoreGeradoraMinima->verificaId(aresta->no1->id)|| arvoreGeradoraMinima->verificaId(aresta->no2->id)) {
                 if (aresta->peso < pesoMinimo) {
                     arestaMenorPeso = aresta;
                     pesoMinimo = aresta->peso;
@@ -82,7 +82,7 @@ Aresta *Prim::getArestaMenorPeso(Grafo *grafo, Grafo *arvoreGeradoraMinima) {
 void Prim::imprimeSolucao(Grafo *grafo) {
     cout << "Arvore Geradora Minima - Prim:" << endl;
     for (auto aresta : grafo->arestas) {
-        cout << "(" << aresta->No1->id << "," << aresta->No2->id << ") ";
+        cout << "(" << aresta->no1->id << "," << aresta->no2->id << ") ";
     }
     cout << endl;
 }

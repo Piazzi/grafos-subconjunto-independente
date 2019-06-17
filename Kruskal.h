@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Kruskal()
+class Kruskal
 {
 public:
 

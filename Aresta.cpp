@@ -4,6 +4,10 @@
 
 using namespace std;
 
+Aresta::Aresta()
+{
+
+}
 
 Aresta::Aresta(No *no1, No *no2)
 {
