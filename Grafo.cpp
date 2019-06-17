@@ -643,9 +643,7 @@ vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, f
             maiorCardinalidade = cardinalidadeAtual;
         }
     }
-    cout << "maiorCardinalidade (randomizado): " << maiorCardinalidade << endl;
     *mediaDasSolucoes = (somaSolucoes/(maximoIteracoes+1));
-    cout << "*mediaDasSolucoes: " << *mediaDasSolucoes << endl;
     return idsDosNosDaMelhorSolucao;
 }
 
@@ -724,10 +722,10 @@ vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float
     int tamanhoCandidatos = candidatosOrdenadosPeloGrau.size();                         ///     Alpha == 0: retorna todos elementos (seleção aleatória)
     vector<No*> listaDosPrimeiros;
 
-    int indice = static_cast<int> (tamanhoCandidatos * (1-alfa));	///quanto menor o alfa, mais elemento pegamos
+    int indice = static_cast<int> (tamanhoCandidatos*alfa);	///quanto menor o alfa, mais elemento pegamos
 
     if(alfa == 1) {
-        indice = 0;
+        indice = tamanhoCandidatos-1;
     }
 
     for(int i = 0; i <= indice; i++)
@@ -802,40 +800,40 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
             cout << "Probabilidade de ser escolhido ate agora era: " << alfas[0].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[0].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 1 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[1].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 1 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[1].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[1].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 2 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[2].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 2 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[2].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[2].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 3 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[3].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 3 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[3].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[3].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 4 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[4].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 4 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[4].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[4].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 5 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[5].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 5 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[5].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[5].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 6 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[6].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 6 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[6].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[6].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 7 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[7].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 7 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[7].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[7].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 8 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[8].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 8 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[8].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[8].numeroDeVezesEscolhido << " vezes." << endl;
 
-            cout << "Alfa " << 9 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[9].probabilidadeDeSerEscolhido << endl;
+            cout << "Alfa " << 9 << ": ";
+            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[9].probabilidadeDeSerEscolhido << ". ";
             cout << "Foi escolhido " << alfas[9].numeroDeVezesEscolhido << " vezes." << endl;
 
 
@@ -872,7 +870,7 @@ Grafo::Alfa Grafo::getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas) {
 void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRandomizado) {
 
     float probabilidadeInicial = 100/numeroDeAlfas;
-    float valorInicial = 0.50;
+    float valorInicial = 0.10;
     float mediaDasSolucoes;
     for(int i=0; i< numeroDeAlfas; i++) {
         Alfa alfa;
@@ -888,7 +886,7 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
         alfa.indice = i;
 
         alfas[i] = alfa;
-        valorInicial += 0.5/numeroDeAlfas;
+        valorInicial += 0.9/numeroDeAlfas;
     }
 }
 
