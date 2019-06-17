@@ -39,6 +39,7 @@ class No
         vector<Aresta *> arestas;
         bool visitado;
         bool direcionado;
+        int distancia;
 
 };
 

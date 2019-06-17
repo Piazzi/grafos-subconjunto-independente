@@ -514,6 +514,10 @@ int main()
                 /// Algoritmo de Kruskal
                 kruskal->arvoreGeradoraMinima(grafo);
                 break;
+            case 20;
+                /// Algoritmo de Prim
+                prim->arvoreGeradoraMinima(grafo);
+                break;
             default:
                 cout << "Digite uma opcao valida" << endl;
                 break;
