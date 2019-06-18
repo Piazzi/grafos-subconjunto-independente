@@ -1,27 +1,40 @@
 #ifndef ARESTA_H_INCLUDED
 #define ARESTA_H_INCLUDED
+
 #include "No.h"
-#include <vector>
-#include <iostream>
+
+class No;
 
 class Aresta
 {
-    public:
-        Aresta(int id);
-        ~Aresta();
-        void setProx(Aresta aresta);
-        Aresta getProx();
-        void setNoAdj(int val);
-        int getNoAdj();
-        int getPeso();
-        void setPeso(int val);
-        void setAresta(int val , int val2);
+public:
 
-    private:
-        Aresta *prox;
-        int noAdj;
-        int peso;
-        int id;
+
+    // Implementação antiga
+    /*
+    void setProx(Aresta aresta);
+    Aresta getProx();
+    void setNoAdj(int val);
+    int getNoAdj();
+    //int getPeso();
+    //void setPeso(int val);
+    Aresta *prox;
+    int noAdj;
+    */
+
+    // Nova implementação
+
+    Aresta();
+    ~Aresta();
+
+    explicit Aresta(No* no1, No *no2);
+    Aresta(No *no1, No* no2,int peso);
+
+    No *no1;
+    No *no2;
+    int peso;
+
+
 
 };
 

@@ -9,36 +9,36 @@ using namespace std;
 
 class No
 {
-    public:
-        No(int id);
-        ~No();
-        int id;
-        int getPeso();
-        void setPeso(int val);
-        int getPesoAresta();
-        void setPesoAresta(int val, int val2);
-        int getGrau();
-        void setGrau(int val);
-        int getVisitado();
-        void setVisitado(bool val);
-        No* getProx();
-        void setProx(No* val);
-        vector<No *> getAdjacentes();
-        void adicionaNoAdjacente(No *no,bool val,int peso);
-        void adicionaNoAdjacenteSemMsg(No *no,bool direcionado,int peso);
-        bool verificaAdjacencia(No *no);
-        vector<No *> nosAdjacentes;
-        void printAdjacentes();
-        void removeAdjacente(No* adjacente);
-        void removeAdjacenteSemMsg(No* adjacente);
+public:
+    No(int id);
+    ~No();
+    int id;
+    int getPeso();
+    void setPeso(int val);
+    int getPesoAresta();
+    void setPesoAresta(int val, int val2);
+    int getGrau();
+    void setGrau(int val);
+    int getVisitado();
+    void setVisitado(bool val);
+    No* getProx();
+    void setProx(No* val);
+    vector<No *> getAdjacentes();
+    void adicionaNoAdjacente(No *no,bool val,int peso);
+    void adicionaNoAdjacenteSemMsg(No *no,bool direcionado,int peso);
+    bool verificaAdjacencia(No *no);
+    vector<No *> nosAdjacentes;
+    void printAdjacentes();
+    void removeAdjacente(No* adjacente);
+    void removeAdjacenteSemMsg(No* adjacente);
 
-    private:
-        int peso;
-        int pesoAresta;
-        int grau;
-        vector<Aresta *> arestas;
-        bool visitado;
-        bool direcionado;
+
+    int peso;
+    int pesoAresta;
+    int grau;
+    vector<Aresta *> arestas;
+    bool visitado;
+    bool direcionado;
 
 };
 

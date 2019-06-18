@@ -41,9 +41,9 @@ public:
     void setVisitadoEmTodosNos(bool visitado);
     void caminhaEmLargura(vector<No*> fila);
     void componentesConexas();
-void imprimePesoVertice();
-        void imprimePesoAresta();
-        int auxImprimePesoAresta(int val);
+    void imprimePesoVertice();
+    void imprimePesoAresta();
+    int auxImprimePesoAresta(int val);
     void ordenacaoTopologica();
     int grauMinimo(int graus[], int n);
     void printSequenciaDeGraus();
@@ -51,11 +51,15 @@ void imprimePesoVertice();
     void DFS(No *v);
     Grafo *obterGrafoTransposto();
     void imprimirComponentesFortementeConexas();
-
     void algoritmoGuloso();
     void printSolucaoGulosa(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
+    vector<vector<long int> > mDistancia; /// matriz para armazenar as distâncias
+    void matrizDistancia();
+    void floyd();
+
+
 private:
     int ordem;
     int grau;
