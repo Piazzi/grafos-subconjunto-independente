@@ -9,6 +9,7 @@
 #include "Grafo.h"
 #include "Kruskal.h"
 #include "Prim.h"
+#include "Dijkstra.h"
 #include <vector>
 #include <fstream>
 #include <cstdio>
@@ -67,7 +68,8 @@ int noMenu()
         "[19] Imprimir sequencia de grau",
         "[20] Componentes fortemente conexas",
         "[21] Árvore geradora mínima - Kruskal",
-        "[22] Árvore geradora mínima - Prim"
+        "[22] Árvore geradora mínima - Prim",
+        "[23] Caminho minimo entre dois nos - Dijkstra"
 
     };
 
@@ -104,7 +106,8 @@ int noMenuLeitura()
         "[17] Componentes fortemente conexas",
         "[18] Imprimir sequencia de grau",
         "[19] Árvore geradora mínima - Kruskal",
-        "[20] Árvore geradora mínima - Prim"
+        "[20] Árvore geradora mínima - Prim",
+        "[21] Caminho minimo entre dois nos - Dijkstra"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -161,6 +164,8 @@ int main()
 
     int pesoVertice;
     int pesoAresta;
+    int idDijkstra1 = 0;
+    int idDijkstra2 = 0;
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
@@ -171,6 +176,7 @@ int main()
     Grafo *grafo = new Grafo();
     Kruskal *kruskal = new Kruskal();
     Prim *prim = new Prim();
+    Dijkstra *dijkistra = new Dijkstra();
 
 
    ///*************************************** CONSTRUÇÃO DO GRAFO ******************************************************///
@@ -347,6 +353,17 @@ int main()
             case 22:
                 /// Algoritmo de Prim
                 prim->arvoreGeradoraMinima(grafo);
+                break;
+            case 23:
+                {
+                    /// Algoritmo de Dijkistra
+                    cout << "Digite o id do No 1: " << endl;
+                    cin >> idDijkstra1;
+                    cout << "Digite o id do No 2: " << endl;
+                    cin >> idDijkstra2
+
+                    dijkstra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
+                }
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
