@@ -1,10 +1,12 @@
 #include "No.h"
+#include "Aresta.h"
 #include <stdio.h>
 #include <string>
 #include <math.h>
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -13,6 +15,7 @@ No::No(int i)
     id=i;
     grau=0;
     visitado=false;
+    distancia = numeric_limits<int>::max();
 }
 
 No::~No()
@@ -64,6 +67,9 @@ bool No::verificaAdjacencia(No *no)
 
 void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 {
+    Aresta *aresta = new Aresta();
+    aresta->no1 = this;
+    aresta->no2 = no;
     if(!this->verificaAdjacencia(no))
     {
         if(direcionado)
@@ -172,5 +178,3 @@ void No::removeAdjacenteSemMsg(No* adjacente)
         return;
     }
 }
-
-

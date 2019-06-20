@@ -34,10 +34,16 @@
 		</Compiler>
 		<Unit filename="Aresta.cpp" />
 		<Unit filename="Aresta.h" />
+		<Unit filename="Dijkstra.cpp" />
+		<Unit filename="Dijkstra.h" />
 		<Unit filename="Grafo.cpp" />
 		<Unit filename="Grafo.h" />
+		<Unit filename="Kruskal.cpp" />
+		<Unit filename="Kruskal.h" />
 		<Unit filename="No.cpp" />
 		<Unit filename="No.h" />
+		<Unit filename="Prim.cpp" />
+		<Unit filename="Prim.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -35,7 +35,6 @@ public:
     int peso;
 
 
-
 };
 
 #endif // ARESTA_H_INCLUDED

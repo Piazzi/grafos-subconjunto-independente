@@ -3,12 +3,17 @@
 #include <sstream>
 #include <string>
 #include <stdlib.h>
+#include <fstream>
 #include "No.h"
 #include "Aresta.h"
 #include "Grafo.h"
+#include "Kruskal.h"
+#include "Prim.h"
+#include "Dijkstra.h"
 #include <vector>
 #include <fstream>
 #include <cstdio>
+#include <chrono>
 
 
 using namespace std;
@@ -40,7 +45,8 @@ int tipoDeRepresentacaoMenu()
 int noMenu()
 {
     int opcao = 0;
-    string opcoesMenu[] = {
+    string opcoesMenu[] =
+    {
         "[1] Adicionar No",
         "[2] Adicionar vizinhos a um No",
         "[3] Adicionar arestas a um no",
@@ -58,8 +64,50 @@ int noMenu()
         "[15] Imprimir peso da aresta",
         "[16] Ordenacao topologia",
         "[17] Obter solucao pelo algoritmo guloso",
+        "[18] Obter solucao pelo algoritmo guloso randomizado",
+        "[19] Imprimir sequencia de grau",
+        "[20] Componentes fortemente conexas",
+        "[21] Árvore geradora mínima - Kruskal",
+        "[22] Árvore geradora mínima - Prim",
+        "[23] Caminho minimo entre dois nos - Dijkstra"
+
+    };
+
+    cout << endl << "Selecione uma das opcoes: " << endl;
+    for(op : opcoesMenu)
+    {
+        cout << op << endl;
+    }
+    cin >> opcao;
+    return opcao;
+}
+
+int noMenuLeitura()
+{
+    int opcao = 0;
+    string opcoesMenu[] =
+    {
+        "[1] Lista de vertices do grafo",
+        "[2] Representar o grafo",
+        "[3] Lista de adjacentes a um no",
+        "[4] Remover uma aresta",
+        "[5] Remover um vertice",
+        "[6] Criar grafo complementar e representa-lo por Lista de Adjacencia",
+        "[7] Criar grafo complementar e representa-lo por Matriz de Adjacencia",
+        "[8] Busca em profundidade",
+        "[9] Busca em largura",
+        "[10] Componentes Conexas",
+        "[11] Imprimir peso do vertice",
+        "[12] Imprimir peso da aresta",
+        "[13] Ordenacao topologia",
+        "[14] Obter solucao pelo algoritmo guloso",
+        "[15] Obter solucao pelo algoritmo guloso randomizado",
+        "[16] Obter solucao pelo algoritmo guloso randomizado reativo",
+        "[17] Componentes fortemente conexas",
         "[18] Imprimir sequencia de grau",
-        "[19] Componentes fortemente conexas"
+        "[19] Árvore geradora mínima - Kruskal",
+        "[20] Árvore geradora mínima - Prim",
+        "[21] Caminho minimo entre dois nos - Dijkstra"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -114,8 +162,11 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 
 int main()
 {
+
     int pesoVertice;
     int pesoAresta;
+    int idDijkstra1 = 0;
+    int idDijkstra2 = 0;
     int id = 0;
     int idAdj = 0;
     int opcao = 0;
@@ -124,6 +175,12 @@ int main()
     bool ponderadoAresta = 0;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
+    Kruskal *kruskal = new Kruskal();
+    Prim *prim = new Prim();
+    Dijkstra *dijkistra = new Dijkstra();
+
+
+   ///*************************************** CONSTRUÇÃO DO GRAFO ******************************************************///
 
     if(lerOuConstruirMenu() == 2)
     {
@@ -279,12 +336,35 @@ int main()
                 grafo->algoritmoGuloso();
                 break;
             case 18:
+                ///Algoritmo guloso randomizado
+                grafo->iniciaAlgoritmoGulosoRandomizado();
+                break;
+            case 19:
                 /// Algoritmo guloso
                 grafo->printSequenciaDeGraus();
                 break;
-            case 19:
+            case 20:
                 ///Componente fortemente conexa
                 grafo->imprimirComponentesFortementeConexas();
+                break;
+            case 21:
+                /// Algoritmo de Kruskal
+                kruskal->arvoreGeradoraMinima(grafo);
+                break;
+            case 22:
+                /// Algoritmo de Prim
+                prim->arvoreGeradoraMinima(grafo);
+                break;
+            case 23:
+                {
+                    /// Algoritmo de Dijkistra
+                    cout << "Digite o id do No 1: " << endl;
+                    cin >> idDijkstra1;
+                    cout << "Digite o id do No 2: " << endl;
+                    cin >> idDijkstra2
+
+                    dijkstra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
+                }
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
@@ -293,5 +373,174 @@ int main()
         }
     }
 
-    return 0;
+    ///*****************************************************************************************////////
+
+
+    ///********************************* LEITURA DO GRAFO *************************************/////
+    else if(lerOuConstruirMenu() == 1)
+    {
+        int opcaorepresenta = tipodeGrafo();
+        /// Menu do tipo de representação do grafo
+        switch(opcaorepresenta)
+        {
+        case 1:
+            cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
+            cin >> ponderadoVertice;
+        case 2:
+            cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
+            cin >> ponderadoAresta;
+        case 3:
+            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+            cin >>direcionado;
+        }
+
+        string aux;
+        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
+        auto start = std::chrono::high_resolution_clock::now();
+        if (myfile.is_open())
+        {
+            while (!myfile.eof()) //enquanto end of file for false continua
+            {
+                getline (myfile, aux, ' ');
+                int id1 = atoi (aux.c_str());
+                //printf("%d", id1);
+                No *vertice = new No(id1);
+                //cout << vertice->id;
+                grafo->adicionaVertice(vertice);
+                //grafo->printNos();
+                //delete vertice;
+                aux.clear();
+                //cout << "DELETOU O NO";
+                //grafo->printNos();
+                getline (myfile, aux);
+                int id2 = atoi (aux.c_str());
+                //printf("%d", id2);
+                No *vertice1 = new No(id2);
+                //cout << vertice->id << endl;
+                grafo->adicionaVertice(vertice1);
+                //grafo->printNos();
+                //delete vertice1;
+                aux.clear();
+                grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta);
+                //cout << "DELETOU O NO";
+                //grafo->printNos();
+            }
+            myfile.close();
+        }
+
+        cout << "*************************** GRAFO CARREGADO **************************************" << endl;
+        auto finish = std::chrono::high_resolution_clock::now();
+        auto elapsed = finish - start;
+        float tempo = elapsed.count()/1000000000;
+
+        cout << "Tempo levado para ler o arquivo de entrada e popular o grafo: " << tempo << " seconds" << endl;
+
+        while(id != -1)
+        {
+            opcao = noMenuLeitura();
+            switch(opcao)
+            {
+            /// Imprime lista de vértices do no
+            case 1:
+                grafo->printNos();
+                break;
+            /// Menu de Representação do Grafo
+            case 2:
+            {
+                int opcaorepresenta = tipoDeRepresentacaoMenu();
+                if(opcaorepresenta == 1)
+                {
+                    cout << "Matriz de adjacencia: " << endl;
+                    grafo->matrizAdjacencia(direcionado);
+                }
+                else if(opcaorepresenta == 2)
+                {
+                    cout<<"Lista de adjacencia: "<<endl;
+                    grafo->printListaAdjacencia();
+                }
+                else if(opcaorepresenta == -1)
+                {
+                    break;
+                }
+            }
+            break;
+            /// Imprime nos adjacentes
+            case 3:
+                grafo->printAdjacentesAoNo();
+                break;
+            /// Remove uma aresta
+            case 4:
+                grafo->removeAresta();
+                break;
+            /// Remover um vértice
+            case 5:
+                grafo->removeVertice();
+                break;
+            /// Cria um grafo complementar e representa o mesmo em lista de adjacência
+            case 6:
+                criaGrafoComplementar(grafo)->printListaAdjacencia();
+                break;
+            /// Cria um grafo complementar e representa o mesmo em matriz de adjacência
+            case 7:
+                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+                break;
+            /// Aplica um algortimo de busca em profundidade
+            case 8:
+                grafo->caminhamentoEmProfundidade(1);
+                break;
+            /// Aplica um algortimo de busca em largura
+            case 9:
+                grafo->caminhamentoEmLargura(1);
+                break;
+            /// Imprime as componentes conexas do grafo
+            case 10:
+                grafo->componentesConexas();
+                break;
+            /// Imprime peso do vertice
+            case 11:
+                grafo->imprimePesoVertice();
+                break;
+            case 12:
+                ///Imprime peso da aresta
+                grafo->imprimePesoAresta();
+                break;
+            case 13:
+                /// Ordenação Topológica
+                grafo->ordenacaoTopologica();
+                break;
+            case 14:
+                /// Algoritmo guloso
+                grafo->algoritmoGuloso();
+                break;
+            case 15:
+                ///Algoritmo guloso randomizado
+                grafo->iniciaAlgoritmoGulosoRandomizado();
+                break;
+            case 16:
+                /// Algoritmo guloso
+                grafo->algoritmoGulosoRandomizadoReativo();
+                break;
+            case 17:
+                ///Componente fortemente conexa
+                grafo->imprimirComponentesFortementeConexas();
+                break;
+            case 18:
+                ///Componente fortemente conexa
+                grafo->printSequenciaDeGraus();
+                break;
+            case 19:
+                /// Algoritmo de Kruskal
+                kruskal->arvoreGeradoraMinima(grafo);
+                break;
+            case 20:
+                /// Algoritmo de Prim
+                prim->arvoreGeradoraMinima(grafo);
+                break;
+            default:
+                cout << "Digite uma opcao valida" << endl;
+                break;
+            }
+        }
+    }
+        return 0;
 }

@@ -4,12 +4,25 @@
 #include <vector>
 #include <iostream>
 #include <stack>
+#include <time.h>
 
 using namespace std;
 
 class Grafo
 {
 public:
+
+     struct Alfa {
+        float probabilidadeDeSerEscolhido;
+        float valorAlfa;
+        float Qi;
+        int melhorSolucao;
+        float mediaSolucoes;
+        int indice;
+        vector<int> idsMelhorSolucao;
+        int numeroDeVezesEscolhido;
+    };
+
     Grafo();
     ~Grafo();
     vector<No*> listaNo;
@@ -52,13 +65,27 @@ public:
     Grafo *obterGrafoTransposto();
     void imprimirComponentesFortementeConexas();
     void algoritmoGuloso();
+    void iniciaAlgoritmoGulosoRandomizado();
+    vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes);
+    vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaSolucoes);
+    vector<int> getSolucaoRandomizada(float alfa);
     void printSolucaoGulosa(vector<int> solucao);
+    void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
     vector<vector<long int> > mDistancia; /// matriz para armazenar as distâncias
     void matrizDistancia();
     void floyd();
+    vector<No*> getVetorMenorGrau(vector<No*> nosCandidatos);
+    vector<No*> getPorcentagem(vector<No*> nosCandidatos, float porcentagem);
+    int gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer);
 
+    void preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRandomizado);
+    Alfa getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas);
+    void atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int melhorSolucao);
+
+    void algoritmoGulosoRandomizadoReativo();
+    float calculaQi(int atualMaiorCardinalidade, float mediaSolucoes);
 
 private:
     int ordem;
