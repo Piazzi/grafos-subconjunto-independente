@@ -2,6 +2,7 @@
 #include "Grafo.h"
 #include <vector>
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
         for (auto NoAdjacente : No->nosAdjacentes) {
             Aresta *aresta = grafo->getAresta(id1, id2);
 
+            /// relaxamento da aresta
             if (NoAdjacente->distancia > No->distancia + aresta->peso) {
                 NoAdjacente->distancia = No->distancia + aresta->peso;
                 grafo->getNo(NoAdjacente->id)->distancia = NoAdjacente->distancia;
@@ -32,7 +34,7 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
 
     int custo = grafo->getNo(id2)->distancia;
 
-    if (custo < 10000000) {
+    if (custo < numeric_limits<int>::max()) {
         cout << "O custo do caminho mínimo é: " << grafo->getNo(id2)->distancia << endl;
     } else {
         cout << "Não existe caminho entre os dois vértices." << endl;
