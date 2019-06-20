@@ -1,4 +1,5 @@
 #include "No.h"
+#include "Aresta.h"
 #include <stdio.h>
 #include <string>
 #include <math.h>
@@ -73,6 +74,9 @@ bool No::verificaAdjacencia(No *no)
 
 void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 {
+    Aresta *aresta = new Aresta();
+    aresta->no1 = this;
+    aresta->no2 = no;
     if(!this->verificaAdjacencia(no))
     {
         if(direcionado)
