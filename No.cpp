@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ No::No(int i)
     id=i;
     grau=0;
     visitado=false;
+    distancia = numeric_limits<int>::max();
 }
 
 No::~No()

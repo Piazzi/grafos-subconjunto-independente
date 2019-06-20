@@ -7,12 +7,13 @@
 using namespace std;
 
 /**
- * Calcula o custo de um caminho mínimo entre dois nós
+ * Calcula o custo de um caminho mínimo entre dois nos
  *
 */
 void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
     No *NoInicial = grafo->getNo(id1);
     NoInicial->distancia = 0;
+    /// o restante dos nos ja estão definidos com a distancia = infinito através do construtor da classe No
 
     vector<No *> Nos(grafo->listaNo);
 
@@ -34,6 +35,7 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
 
     int custo = grafo->getNo(id2)->distancia;
 
+    /// numeric_limits representa o infinito
     if (custo < numeric_limits<int>::max()) {
         cout << "O custo do caminho mínimo é: " << grafo->getNo(id2)->distancia << endl;
     } else {
