@@ -38,31 +38,11 @@ Aresta::Aresta(No *no1, No *no2, int peso)
 
     this->no2 = no2;
     this->no1 = no1;
-
-}
-
-Aresta::Aresta(No *no1, No *no2, int peso)
-{
-    no1->arestas.push_back(this);
-    no2->arestas.push_back(this);
-
-    no1->nosAdjacentes.push_back(no2);
-    no2->nosAdjacentes.push_back(no1);
-
-    no1->grau++;
-    no2->grau++;
-
-    this->no2 = no2;
-    this->no1 = no1;
     this->peso = peso;
 
 }
 
-    this->peso = peso;
-
-}
-
-// IMPLEMENTA«√O ANTIGA
+// IMPLEMENTA√á√ÉO ANTIGA
 
 /*
 int Aresta::getNoAdj()
@@ -81,10 +61,6 @@ void Aresta::setProx(Aresta aresta)
 {
     *prox = aresta;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> Piazzi
 void Aresta::setPeso(int val){
     peso = val;
 }

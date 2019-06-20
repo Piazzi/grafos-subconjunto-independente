@@ -28,7 +28,7 @@ public:
     ~Aresta();
 
     explicit Aresta(No* no1, No *no2);
-    Aresta(No *no1, No* no2,int peso);
+    explicit Aresta(No *no1, No* no2,int peso);
 
     No *no1;
     No *no2;
