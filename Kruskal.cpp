@@ -19,15 +19,15 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
     /// PRECISA VERICAR SE O GRAFO É CONEXO
 
     auto *arvoreGeradoraMinima = new Grafo;
-    vector<Aresta *> arestas(grafo->arestas);
 
     /// ordena a lista de arestas por peso em ordem crescente
-    sort(arestas.begin(), arestas.end(),[](Aresta *aresta1, Aresta *aresta2)
+
+    sort(grafo->arestas.begin(), grafo->arestas.end(),[](Aresta *aresta1, Aresta *aresta2)
     {
         return aresta1->peso < aresta2->peso;
     });
 
-    for (auto i = arestas.begin(); arvoreGeradoraMinima->arestas.size() < grafo->listaNo.size() - 1; i++)
+    for (auto i = grafo->arestas.begin(); arvoreGeradoraMinima->arestas.size() < grafo->listaNo.size() - 1; i++)
     {
         Aresta *aresta = *i;
 

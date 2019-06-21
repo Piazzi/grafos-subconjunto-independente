@@ -26,7 +26,7 @@ public:
         No* getProx();
         void setProx(No* val);
         vector<No *> getAdjacentes();
-        void adicionaNoAdjacente(No *no,bool val,int peso);
+        Aresta * adicionaNoAdjacente(No *no,bool val,int peso);
         void adicionaNoAdjacenteSemMsg(No *no,bool direcionado,int peso);
         bool verificaAdjacencia(No *no);
         vector<No *> nosAdjacentes;

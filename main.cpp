@@ -67,8 +67,8 @@ int noMenu()
         "[18] Obter solucao pelo algoritmo guloso randomizado",
         "[19] Imprimir sequencia de grau",
         "[20] Componentes fortemente conexas",
-        "[21] Árvore geradora mínima - Kruskal",
-        "[22] Árvore geradora mínima - Prim",
+        "[21] Arvore geradora minima - Kruskal",
+        "[22] Arvore geradora minima - Prim",
         "[23] Caminho minimo entre dois nos - Dijkstra"
 
     };
@@ -105,8 +105,8 @@ int noMenuLeitura()
         "[16] Obter solucao pelo algoritmo guloso randomizado reativo",
         "[17] Componentes fortemente conexas",
         "[18] Imprimir sequencia de grau",
-        "[19] Árvore geradora mínima - Kruskal",
-        "[20] Árvore geradora mínima - Prim",
+        "[19] Arvore geradora minima - Kruskal",
+        "[20] Arvore geradora minima - Prim",
         "[21] Caminho minimo entre dois nos - Dijkstra"
     };
 
@@ -178,7 +178,6 @@ int main()
     Kruskal *kruskal = new Kruskal();
     Prim *prim = new Prim();
     Dijkstra *dijkistra = new Dijkstra();
-
 
    ///*************************************** CONSTRUÇÃO DO GRAFO ******************************************************///
 
@@ -252,11 +251,11 @@ int main()
                     {
                         cout<< "Adicione o peso da aresta ["<<id<<"] ["<<idAdj<<"]"<<endl;
                         cin>>pesoAresta;
-                        grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta);
+                        grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
                     }
                     else
                     {
-                        grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta);
+                        grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
                     }
                 }
                 break;
@@ -377,6 +376,7 @@ int main()
 
 
     ///********************************* LEITURA DO GRAFO *************************************/////
+
     else if(lerOuConstruirMenu() == 1)
     {
         int opcaorepresenta = tipodeGrafo();
@@ -542,5 +542,6 @@ int main()
             }
         }
     }
+
         return 0;
 }

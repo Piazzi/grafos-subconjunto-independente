@@ -65,11 +65,16 @@ bool No::verificaAdjacencia(No *no)
 }
 
 
-void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
+Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
 {
     Aresta *aresta = new Aresta();
     aresta->no1 = this;
     aresta->no2 = no;
+    aresta->peso = peso;
+
+    this->arestas.push_back(aresta);
+    no->arestas.push_back(aresta);
+
     if(!this->verificaAdjacencia(no))
     {
         if(direcionado)
@@ -95,11 +100,11 @@ void No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
         this->setGrau(this->getGrau()+1);
         no->setGrau(no->getGrau()+1);
+        return aresta;
     }
     else
     {
         cout << "Este no ja eh adjacente!" << endl;
-        return;
     }
 
 }
