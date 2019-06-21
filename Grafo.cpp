@@ -1256,7 +1256,18 @@ void Grafo:: floyd()
     }
 }
 
+/// Verifica se um grafo eh conexo ou nao
+bool Grafo::ehConexo()
+{
+    for(auto no : this->listaNo)
+    {
+        if(no->arestas.empty())
+            return false;
+        else
+            return true;
+    }
 
+}
 
 
 

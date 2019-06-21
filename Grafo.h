@@ -87,6 +87,8 @@ public:
     void algoritmoGulosoRandomizadoReativo();
     float calculaQi(int atualMaiorCardinalidade, float mediaSolucoes);
 
+    bool ehConexo();
+
 private:
     int ordem;
     int grau;
