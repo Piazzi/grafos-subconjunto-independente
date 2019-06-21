@@ -421,7 +421,7 @@ int main()
                 //grafo->printNos();
                 //delete vertice1;
                 aux.clear();
-                grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta);
+                grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
                 //cout << "DELETOU O NO";
                 //grafo->printNos();
             }

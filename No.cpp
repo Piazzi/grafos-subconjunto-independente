@@ -105,6 +105,7 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
     else
     {
         cout << "Este no ja eh adjacente!" << endl;
+        return aresta;
     }
 
 }
