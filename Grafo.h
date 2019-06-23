@@ -20,7 +20,7 @@ public:
         float mediaSolucoes;
         int indice;
         vector<int> idsMelhorSolucao;
-        int numeroDeVezesEscolhido;
+        int numeroDeVezesEscolhidoTotal;
     };
 
     Grafo();

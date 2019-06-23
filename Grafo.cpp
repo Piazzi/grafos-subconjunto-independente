@@ -898,17 +898,17 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 
         alfa.melhorSolucao = cardinalidadeDaSolucaoAtual;
         alfa.mediaSolucoes = *mediaSolucoes;
-        alfa.numeroDeVezesEscolhido += 1;
+        alfa.numeroDeVezesEscolhidoTotal += 1;
         alfas[alfa.indice] = alfa;  /// atualiza as propriedades do alfa usado
 
-        if(i%100 == 0 && i > 0)  ///BLOCO
+        if(i%1000 == 0 && i > 0)  ///BLOCO
         {
             cout << "Iteracao " << i << endl;
 
             for(int i = 0; i < numeroDeAlfas; i++) {
                 cout << "Alfa " << i << ": ";
                 cout << "Probabilidade de ser escolhido ate agora era: " << alfas[i].probabilidadeDeSerEscolhido << ". ";
-                cout << "Foi escolhido " << alfas[i].numeroDeVezesEscolhido << " vezes." << endl;
+                cout << "Foi escolhido " << alfas[i].numeroDeVezesEscolhidoTotal << " vezes." << endl;
             }
 
             atualizaProbabilidadeDosAlfas(alfas, numeroDeAlfas, atualMaiorCardinalidade);
@@ -937,9 +937,10 @@ Grafo::Alfa Grafo::getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas)
     default_random_engine generator(seed);
 
     vector<int> probabilidades; /// Vetor que irá armazenar a probabilidade de cada Alfa
-    for(int i=0; i<10; i++)
+    for(int i=0; i<numeroDeAlfas; i++)
     {
         probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);  /// Através deste vetor iremos sortear o índice de um dos alfas
+        cout << "Probabilidade do alfa" << i << ": " << alfas[i].probabilidadeDeSerEscolhido << endl;
     }
     discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end()); /// Distribuição discreta utilizada para fazer o sorteio com diferentes probabilidades
     int indiceAleatorio = distribution(generator);  /// Gera o índice aleatório
@@ -959,6 +960,7 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
 {
 
     float probabilidadeInicial = 100/numeroDeAlfas;
+    cout << "Probabilidade inicial: " << probabilidadeInicial << endl;
     float valorInicial = 0.0;
     float mediaDasSolucoes;
     for(int i=0; i< numeroDeAlfas; i++)
@@ -973,7 +975,7 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
         alfa.melhorSolucao = solucaoAlfa.size();
 
         alfa.Qi = 0.0;
-        alfa.numeroDeVezesEscolhido = 0;
+        alfa.numeroDeVezesEscolhidoTotal = 0;
         alfa.indice = i;
 
         alfas[i] = alfa; /// atualiza o array de alfas
@@ -981,31 +983,40 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
     }
 }
 
-float Grafo::calculaQi(int atualMaiorCardinalidade, float mediaSolucoes)
+/**
+ * Calcula o valor Qi, utilizado para atualizar as probabilidades de cada alfa
+ * @param melhorSolucaoGeral cardinalidade da melhor solução geral
+ * @param mediaSolucoes media das soluções para o alfa específico
+ * @return Qi
+*/
+float Grafo::calculaQi(int melhorSolucaoGeral, float mediaSolucoes)
 {
-    int f = atualMaiorCardinalidade;
+    int f = melhorSolucaoGeral;
     float Ai = mediaSolucoes;
-    cout << "f: " << f << endl << "Ai: " << mediaSolucoes << endl;
-    float Qi = pow(f/Ai, 10);   ///Parâmetro de amplificação == 10 (padrão)
+    float Qi = pow(f/Ai, 10);   /// Parâmetro de amplificação == 10 (padrão)
 
     return Qi;
 }
 
+/**
+ * Atualiza a probabilidade de cada alfa ser escolhido
+ * @param alfas
+ * @param numeroDeAlfas
+ * @param melhorSolucaoGeral
+ * @return Qi
+*/
 void Grafo::atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int melhorSolucaoGeral)
 {
     float SomaQi = 0.0;
-    for(int j = 0; j < 10 /*numeroDeAlfas*/; j++)  ///Primeiro, calculamos o Qi de cada Alfa
+    for(int j = 0; j < numeroDeAlfas; j++)  ///Primeiro, calculamos o Qi de cada Alfa
     {
-        cout << "mediaDasSolucoes para o alfa " << j << ": " << alfas[j].mediaSolucoes << endl;
-        cout << "Maior solucao para o alfa " << j << ": " << alfas[j].melhorSolucao << endl;
         alfas[j].Qi = calculaQi(melhorSolucaoGeral, alfas[j].mediaSolucoes);
-        cout << "Qi do alfa " << j << ": " << alfas[j].Qi << endl;
 
         SomaQi += alfas[j].Qi;
     }
     cout << "SomaQi: " << SomaQi << endl;
 
-    for(int j = 0; j < 10/*numeroDeAlfas*/; j++)  /// Agora calculamos a possibilidade de cada Alfa
+    for(int j = 0; j < numeroDeAlfas; j++)  /// Agora calculamos a possibilidade de cada Alfa
     {
         float P = alfas[j].Qi/SomaQi*100;
         alfas[j].probabilidadeDeSerEscolhido = P;
