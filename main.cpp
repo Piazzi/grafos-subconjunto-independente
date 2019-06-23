@@ -163,7 +163,7 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
     return grafoComplementar;
 }
 
-int main()
+int main(int argc, char * argv[])
 {
 
     int pesoVertice;
@@ -404,6 +404,8 @@ int main()
 
         string aux;
         ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
+        ofstream saida;
+        saida.open("saida.txt");
         auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
@@ -414,6 +416,7 @@ int main()
                 //printf("%d", id1);
                 No *vertice = new No(id1);
                 //cout << vertice->id;
+                saida << vertice->id;
                 grafo->adicionaVertice(vertice);
                 //grafo->printNos();
                 //delete vertice;
