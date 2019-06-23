@@ -8,7 +8,10 @@ using namespace std;
 
 /**
  * Calcula o custo de um caminho mínimo entre dois nos
- *
+ * @param Grafo
+ * @param int
+ * @param int
+ * @return void
 */
 void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
     No *NoInicial = grafo->getNo(id1);
@@ -44,7 +47,9 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
 }
 
 /**
- *
+ * Retorna o no mais perto
+ * @param vector
+ * @return No
  *
 */
 No *Dijkstra::getNoDistanciaMinima(vector<No *> Nos) {
