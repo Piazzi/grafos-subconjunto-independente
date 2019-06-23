@@ -278,18 +278,18 @@ void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a 
 void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
-    cout << no->id << " "; ///para busca em profundidade normal, descomentar as linhas com a tag BUSCANORMAL
+    cout << no->id << " ";
     for(adjacente : no->nosAdjacentes)
     {
         No* adjacenteAtual = adjacente;
         if(!adjacenteAtual->getVisitado())
         {
-            /// cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl; *BUSCANORMAL*
+            cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl;
             aprofunda(adjacenteAtual);
         }
         else
         {
-            /// cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl; *BUSCANORMAL*
+            cout << "\tNo " << adjacenteAtual->id << " ja foi visitado!" << endl;
         }
 
     }
@@ -575,6 +575,7 @@ void Grafo::algoritmoGuloso()
 
     printSolucaoGulosa(idsDosNosSolucao);   ///função auxiliar para imprimir os ids dos nós da solução
 }
+
 /**
  * Remove da lista de candidatos aqueles que são adjacentes ao último selecionado
  * @param candidatoSelecionado ultimo candidato adicionado à solução
@@ -840,7 +841,8 @@ vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float
 }
 
 /**
- * Inicializao Guloso Randomizado Reativo, e recebe como input do usuário o numero máximo de iterações pro reativo, pros randomizados que serão chamados e o número de alfas
+ * Inicializa o Randomizado Reativo, e recebe como input do usuário o numero máximo de iterações pro reativo e para os randomizados que serão chamados, além do número de alfas
+ * Possui como bloco padrão 100 iterações
  * @return void
 */
 void Grafo::algoritmoGulosoRandomizadoReativo()
@@ -901,7 +903,7 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
         alfa.numeroDeVezesEscolhidoTotal += 1;
         alfas[alfa.indice] = alfa;  /// atualiza as propriedades do alfa usado
 
-        if(i%1000 == 0 && i > 0)  ///BLOCO
+        if(i%100 == 0 && i > 0)  ///BLOCO
         {
             cout << "Iteracao " << i << endl;
 
@@ -940,7 +942,6 @@ Grafo::Alfa Grafo::getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas)
     for(int i=0; i<numeroDeAlfas; i++)
     {
         probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);  /// Através deste vetor iremos sortear o índice de um dos alfas
-        cout << "Probabilidade do alfa" << i << ": " << alfas[i].probabilidadeDeSerEscolhido << endl;
     }
     discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end()); /// Distribuição discreta utilizada para fazer o sorteio com diferentes probabilidades
     int indiceAleatorio = distribution(generator);  /// Gera o índice aleatório
