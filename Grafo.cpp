@@ -532,7 +532,7 @@ int Grafo::grauMinimo(int graus[], int n)
 
     return grauMin;
 }
-/*
+
 void Grafo::printSequenciaDeGraus()
 {
     vector<int> graus;
@@ -554,25 +554,33 @@ void Grafo::printSequenciaDeGraus()
     cout << ">" << endl;
 }
 
+
+/**
+ * Função principal do algoritmo guloso, que busca os vértices de menores graus, para minimizar a redução da lista de vértices candidatos a cada iteração
+ @return void
 */
-void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, para minimizar a reducao da lista de possiveis vertices
+void Grafo::algoritmoGuloso()
 {
     vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar os nos da solucao
-    vector<No*> nosCandidatos = listaNo;
+    vector<No*> nosCandidatos = listaNo; ///A lista de candidatos inicialmente corresponde a todos os vertices do grafo
     vector<int> idsDosNosSolucao;
 
     while(!nosCandidatos.empty())
     {
-        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
+        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);   ///O melhor candidato é o nó de menor grau
         solucaoGulosa->push_back(candidatoAtual);
-        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
+        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos); ///precisamos atualizar a lista dos nós candidatos a cada iteração
         idsDosNosSolucao.push_back(candidatoAtual->id);
     }
 
-    printSolucaoGulosa(idsDosNosSolucao);
+    printSolucaoGulosa(idsDosNosSolucao);   ///função auxiliar para imprimir os ids dos nós da solução
 }
-
-/// remove da lista de candidatos aqueles que sao adjacentes ao ultimo selecionado
+/**
+ * Remove da lista de candidatos aqueles que são adjacentes ao último selecionado
+ * @param candidatoSelecionado ultimo candidato adicionado à solução
+ * @param nosCandidatos vetor de candidatos, que será atualizado pela função
+ * @return nosCandidatos
+*/
 vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
 {
     for(int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
@@ -595,6 +603,11 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
     return nosCandidatos;
 }
 
+/**
+ * Retorna o vértice de menor grau dentre aqueles que estão na lista de candidatos
+ * @param nosCandidatos
+ * @return noMenorGrau
+*/
 No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 {
     No* noMenorGrau = nosCandidatos[0];
@@ -606,6 +619,11 @@ No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
     return noMenorGrau;
 }
 
+/**
+ * Imprime a solução encontrada pelo algoritmo guloso
+ * @param solucao vetor contendo os id's dos nós da solução
+ * @return void
+*/
 void Grafo::printSolucaoGulosa(vector<int> solucao)
 {
     cout << "Solucao atraves do Algoritmo Guloso: ";
@@ -620,6 +638,10 @@ void Grafo::printSolucaoGulosa(vector<int> solucao)
 
 }
 
+/**
+ * Inicia o Algoritmo Guloso Randomizado, e recebe como input do usuário, via linha de comando, o parâmetro alfa o número máximo de iterações
+ * @return void
+*/
 void Grafo::iniciaAlgoritmoGulosoRandomizado()
 {
     float alfa;
@@ -635,11 +657,17 @@ void Grafo::iniciaAlgoritmoGulosoRandomizado()
     printSolucaoGulosaRandomizada(idsDosNosDaMelhorSolucao);
 }
 
+/**
+ * Função responsável por criar as estruturas e váriaveis necessárias para o Guloso Randomizado
+ * @param alfa
+ * @param maximoIteracoes
+ * @return idsDosNosDaMelhorSolucao
+*/
 vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
 {
-    auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now(); ///Grava o tempo em que o algoritmo começou
 
-    vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa);
+    vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa); ///obtem uma solução inicial aleatoria, de acordo com o parâmetro alfa
     int maiorCardinalidade = idsDosNosDaMelhorSolucao.size();
 
     for(int i = 0; i < maximoIteracoes; i++)
@@ -648,21 +676,28 @@ vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
         vector<int> idsDosNosDaSolucaoAtual = getSolucaoRandomizada(alfa);
         int cardinalidadeAtual = idsDosNosDaSolucaoAtual.size();
 
-        if(cardinalidadeAtual > maiorCardinalidade)
+        if(cardinalidadeAtual > maiorCardinalidade) /// se a cardinalidade da solução atual for maior do que a maior encontrada até agora, passa ser a atual maior
         {
             idsDosNosDaMelhorSolucao = idsDosNosDaSolucaoAtual;
             maiorCardinalidade = cardinalidadeAtual;
         }
     }
 
-    auto finish = std::chrono::high_resolution_clock::now();
-    auto elapsed = finish - start;
+    auto finish = std::chrono::high_resolution_clock::now();    ///Grava o tempo em que o algoritmo terminou
+    auto elapsed = finish - start;  ///Obtem o tempo total, em nanosegundos (10^-9)
     float tempo = elapsed.count()/1000000000;
     cout << "Tempo levado para obter a solucao gulosa randomizada: " << tempo << "s" << endl;
 
     return idsDosNosDaMelhorSolucao;
 }
 
+/**
+ * Overload da função do Randomizado para ser chamada pelo reativo -- a diferença está no fato de que esta recebe e altera a variável mediaDasSolucoes, usada pelo reativo
+ * @param alfa
+ * @param maximoIteracoes
+ * @param mediaDasSolucoes variável passada pela função do Reatiovo, e que será alterada no final dessa função
+ * @return idsDosNosDaMelhorSolucao
+*/
 vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaDasSolucoes)
 {
 
@@ -681,12 +716,15 @@ vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, f
             maiorCardinalidade = cardinalidadeAtual;
         }
     }
-    cout << "maiorCardinalidade (randomizado): " << maiorCardinalidade << endl;
     *mediaDasSolucoes = (somaSolucoes/(maximoIteracoes+1));
-    cout << "*mediaDasSolucoes: " << *mediaDasSolucoes << endl;
     return idsDosNosDaMelhorSolucao;
 }
 
+/**
+ * Função que obtem, de fato, uma solução randomizada, que será retornada a função "algoritmoGulosoRandomizado"
+ * @param alfa
+ * @return idsDosNosSolucao
+*/
 vector<int> Grafo::getSolucaoRandomizada(float alfa)
 {
     vector<No*> *solucaoGulosaRandomizada = new vector<No*>;
@@ -713,6 +751,13 @@ vector<int> Grafo::getSolucaoRandomizada(float alfa)
     return idsDosNosSolucao;
 }
 
+/**
+ * Retorna um número aleatório entre os limites passados como parâmetro
+ * @param limite_inf
+ * @param limite_sup
+ * @param timer semente para gerar número aleatório
+ * @return número inteiro aleatório
+*/
 int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
 {
     if(limite_inf == limite_sup && limite_sup == 0)
@@ -722,6 +767,11 @@ int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
     return (limite_inf + (rand() % limite_sup));
 }
 
+/**
+ * Imprime a solução do Guloso Randomizado
+ * @param solucao vetor contendo os id's dos nós da solução
+ * @return void
+*/
 void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
 {
     cout << "Solucao atraves do Algoritmo Guloso Randomizado: ";
@@ -736,6 +786,11 @@ void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
     cout << "Cardinalidade da solucao gulosa randomizada: " << solucao.size() << endl;
 }
 
+/**
+ * Obtem um vetor com os nós ordenados de acordo com o grau, do menor para o maior
+ * @param nosCandidatos vetor contendo os id's dos nós candidatos
+ * @return vetorOrdenadoPeloGrau
+*/
 vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
 {
     vector<No*> vetorOrdenadoPeloGrau = nosCandidatos;
@@ -757,17 +812,23 @@ vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
     return vetorOrdenadoPeloGrau;
 }
 
-vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float alfa)  /// a cardinalidade da lista retornada é controlada pelo Alpha:
+/**
+ * Obtem uma porção dos nós candidatos ordenados pelo grau, de acordo com o parâmetro alfa
+ * Alfa == 0: retorna apenas o melhor candidato (equivale à função gulosa padrão)
+ * Alfa == 1: retorna todos os elementos (equivale a uma busca completamente aleatória)
+ * @param candidatosOrdenadosPeloGrau
+ * @param alfa
+ * @return vetorOrdenadoPeloGrau
+*/
+vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float alfa)
 {
-    ///     Alpha == 1: retorna apenas o melhor (guloso)
-    int tamanhoCandidatos = candidatosOrdenadosPeloGrau.size();                         ///     Alpha == 0: retorna todos elementos (seleção aleatória)
+    int tamanhoCandidatos = candidatosOrdenadosPeloGrau.size();
     vector<No*> listaDosPrimeiros;
 
-    int indice = static_cast<int> (tamanhoCandidatos * (1-alfa));	///quanto menor o alfa, mais elemento pegamos
+    int indice = static_cast<int> (tamanhoCandidatos *alfa);
 
-    if(alfa == 1)
-    {
-        indice = 0;
+    if(alfa == 1) {
+        indice = tamanhoCandidatos-1;
     }
 
     for(int i = 0; i <= indice; i++)
@@ -778,6 +839,10 @@ vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float
     return listaDosPrimeiros;
 }
 
+/**
+ * Inicializao Guloso Randomizado Reativo, e recebe como input do usuário o numero máximo de iterações pro reativo, pros randomizados que serão chamados e o número de alfas
+ * @return void
+*/
 void Grafo::algoritmoGulosoRandomizadoReativo()
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -802,12 +867,12 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
     cout << "numeroDeAlfas: " << numeroDeAlfas << endl;
 
     Alfa alfas[numeroDeAlfas];   ///Declaração do array de Alfas
-    preencheAlfas(alfas, numeroDeAlfas, maximoIteracoesRandomizado);///Preenche o array com alfas com iguais probabilidades de serem escolhidos
+    preencheAlfas(alfas, numeroDeAlfas, maximoIteracoesRandomizado); ///Preenche o array com alfas com iguais probabilidades de serem escolhidos
 
     vector<int> solucaoInicial = alfas[0].idsMelhorSolucao;
     atualMaiorCardinalidade = alfas[0].melhorSolucao;
 
-    for(int n=1; n< numeroDeAlfas; n++)
+    for(int n = 1; n < numeroDeAlfas; n++)    /// Determina qual dos alfas possui a melhor solução e atualiza o vetor solucaoInicial e a variável atualMaiorCardinalidade
     {
         if(alfas[n].melhorSolucao > atualMaiorCardinalidade)
         {
@@ -816,73 +881,36 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
         }
     }
 
-    cout << "Cardinalidade da solucao inicial: " << atualMaiorCardinalidade << endl;
-
-    cout << endl;
     for(int i = 0; i < maximoIteracoesReativo; i++)
     {
         cout << endl << "**Iteracao do reativo** " << i << endl;
+
         Alfa alfa = getAlfaAleatorio(alfas, numeroDeAlfas);
         vector<int> idsDaSolucaoRandomizada = algoritmoGulosoRandomizado(alfa.valorAlfa, maximoIteracoesRandomizado, mediaSolucoes);
         int cardinalidadeDaSolucaoAtual = idsDaSolucaoRandomizada.size();
-        if(cardinalidadeDaSolucaoAtual > atualMaiorCardinalidade)
+
+        if(cardinalidadeDaSolucaoAtual > atualMaiorCardinalidade)   /// verifica se obtivemos uma solução melhor do que as já encontradas
         {
             atualMaiorCardinalidade = cardinalidadeDaSolucaoAtual;
             solucaoReativa = idsDaSolucaoRandomizada;
+            cout << "Maior cardinalidade atualizada: " << atualMaiorCardinalidade << endl;
         }
-        cout << endl << "atualMaiorCardinalidade: " << atualMaiorCardinalidade << endl;
 
         alfa.melhorSolucao = cardinalidadeDaSolucaoAtual;
         alfa.mediaSolucoes = *mediaSolucoes;
         alfa.numeroDeVezesEscolhido += 1;
-        alfas[alfa.indice] = alfa;
+        alfas[alfa.indice] = alfa;  /// atualiza as propriedades do alfa usado
 
         if(i%100 == 0 && i > 0)  ///BLOCO
         {
             cout << "Iteracao " << i << endl;
 
-            cout << "Alfa " << 0 << ": ";
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[0].probabilidadeDeSerEscolhido << ". ";
-            cout << "Foi escolhido " << alfas[0].numeroDeVezesEscolhido << " vezes." << endl;
+            for(int i = 0; i < numeroDeAlfas; i++) {
+                cout << "Alfa " << i << ": ";
+                cout << "Probabilidade de ser escolhido ate agora era: " << alfas[i].probabilidadeDeSerEscolhido << ". ";
+                cout << "Foi escolhido " << alfas[i].numeroDeVezesEscolhido << " vezes." << endl;
+            }
 
-            cout << "Alfa " << 1 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[1].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[1].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 2 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[2].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[2].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 3 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[3].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[3].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 4 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[4].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[4].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 5 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[5].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[5].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 6 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[6].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[6].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 7 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[7].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[7].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 8 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[8].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[8].numeroDeVezesEscolhido << " vezes." << endl;
-
-            cout << "Alfa " << 9 << endl;
-            cout << "Probabilidade de ser escolhido ate agora era: " << alfas[9].probabilidadeDeSerEscolhido << endl;
-            cout << "Foi escolhido " << alfas[9].numeroDeVezesEscolhido << " vezes." << endl;
-
-
-            cout << "Atualizando probabilidades" << endl;
             atualizaProbabilidadeDosAlfas(alfas, numeroDeAlfas, atualMaiorCardinalidade);
         }
 
@@ -897,114 +925,41 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
     cout << "Tempo levado para obter a solucao gulosa randomizada reativa: " << tempo << "s" << endl;
 }
 
+/**
+ * Sorteia e retorna um Alfa de acordo com probabilidades diferentes
+ * @param alfas array com os alfas
+ * @param numeroDeAlfas
+ * @return Alfa
+*/
 Grafo::Alfa Grafo::getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas)
 {
-    unsigned seed = chrono::steady_clock::now().time_since_epoch().count();
+    unsigned seed = chrono::steady_clock::now().time_since_epoch().count(); /// semente para a geração de um índice
     default_random_engine generator(seed);
 
-    vector<int> probabilidades;
+    vector<int> probabilidades; /// Vetor que irá armazenar a probabilidade de cada Alfa
     for(int i=0; i<10; i++)
     {
-        probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);
+        probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);  /// Através deste vetor iremos sortear o índice de um dos alfas
     }
-    discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end());
-    int indiceAleatorio = distribution(generator);
+    discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end()); /// Distribuição discreta utilizada para fazer o sorteio com diferentes probabilidades
+    int indiceAleatorio = distribution(generator);  /// Gera o índice aleatório
     Alfa alfaAleatorio = alfas[indiceAleatorio];
 
     return alfaAleatorio;
 }
 
-void Grafo::printSequenciaDeGraus()
-{
-    vector<int> graus;
-
-    for(no : listaNo) ///preenche o vector graus com o grau de cada no
-    {
-        graus.push_back(no->getGrau());
-    }
-
-    sort(graus.begin(), graus.end(), greater<int>()); ///ordena o vector graus
-
-    cout << "Sequencia de graus: " << endl;
-
-    cout << "<";
-    for(grau : graus)
-    {
-        cout << grau << ", ";
-    }
-    cout << ">" << endl;
-}
-
-/*
-void Grafo::algoritmoGuloso() ///iremos atras dos vertices de menores graus, para minimizar a reducao da lista de possiveis vertices
-{
-    vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar os nos da solucao
-    vector<No*> nosCandidatos = listaNo;
-    vector<int> idsDosNosSolucao;
-
-    while(!nosCandidatos.empty())
-    {
-        cout << endl;
-        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);
-        solucaoGulosa->push_back(candidatoAtual);
-        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos);
-        idsDosNosSolucao.push_back(candidatoAtual->id);
-    }
-
-    printSolucaoGulosa(idsDosNosSolucao);
-}
-
-/// remove da lista de candidatos aqueles que sao adjacentes ao ultimo selecionado
-vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
-{
-    for(int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
-    {
-        if(nosCandidatos[a]->id == candidatoSelecionado->id)
-            nosCandidatos.erase(nosCandidatos.begin() + a);
-    }
-
-    vector<No*> adjacentesAoSelecionado = candidatoSelecionado->nosAdjacentes;
-    for(int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
-    {
-        for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
-        {
-            if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id)
-            {
-                nosCandidatos.erase(nosCandidatos.begin() + i);
-            }
-        }
-    }
-    return nosCandidatos;
-}
-
-No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
-{
-    No* noMenorGrau = nosCandidatos[0];
-    for(candidato : nosCandidatos)
-    {
-        if(candidato->getGrau() < noMenorGrau->getGrau())
-            noMenorGrau = candidato;
-    }
-    return noMenorGrau;
-}
-
-void Grafo::printSolucaoGulosa(vector<int> solucao)
-{
-    cout << "Solucao atraves do Algoritmo Guloso: ";
-
-    cout << "[ ";
-    for(noSolucao : solucao)
-    {
-        cout << noSolucao << ", ";
-    }
-    cout << "]" << endl;
-}
+/**
+ * Preenche as struct alfa no início do Guoso Randomizado Reativo, com probabilidades iguais
+ * @param alfas array com os alfas
+ * @param numeroDeAlfas
+ * @param maximoIteracoesRandomizado
+ * @return void
 */
 void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRandomizado)
 {
 
     float probabilidadeInicial = 100/numeroDeAlfas;
-    float valorInicial = 0.50;
+    float valorInicial = 0.0;
     float mediaDasSolucoes;
     for(int i=0; i< numeroDeAlfas; i++)
     {
@@ -1016,12 +971,13 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
         alfa.idsMelhorSolucao = solucaoAlfa;
         alfa.mediaSolucoes = mediaDasSolucoes;
         alfa.melhorSolucao = solucaoAlfa.size();
+
         alfa.Qi = 0.0;
         alfa.numeroDeVezesEscolhido = 0;
         alfa.indice = i;
 
-        alfas[i] = alfa;
-        valorInicial += 0.5/numeroDeAlfas;
+        alfas[i] = alfa; /// atualiza o array de alfas
+        valorInicial += (1.0 - valorInicial)/numeroDeAlfas; /// incrementa o valor que será atribuído a cada alfa, de acordo com o número de alfas passado pelo usuário
     }
 }
 
@@ -1030,7 +986,7 @@ float Grafo::calculaQi(int atualMaiorCardinalidade, float mediaSolucoes)
     int f = atualMaiorCardinalidade;
     float Ai = mediaSolucoes;
     cout << "f: " << f << endl << "Ai: " << mediaSolucoes << endl;
-    float Qi = pow(f/Ai, 10);   ///Parâmetro de amplificação == 10
+    float Qi = pow(f/Ai, 10);   ///Parâmetro de amplificação == 10 (padrão)
 
     return Qi;
 }
