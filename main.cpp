@@ -10,6 +10,7 @@
 #include "Kruskal.h"
 #include "Prim.h"
 #include "Dijkstra.h"
+#include "FloydWarshall.h"
 #include <vector>
 #include <fstream>
 #include <cstdio>
@@ -69,7 +70,8 @@ int noMenu()
         "[20] Componentes fortemente conexas",
         "[21] Arvore geradora minima - Kruskal",
         "[22] Arvore geradora minima - Prim",
-        "[23] Caminho minimo entre dois nos - Dijkstra"
+        "[23] Caminho minimo entre dois nos - Dijkstra",
+        "[24] Matriz com menores distancias entre nos  - Floyd Warshall"
 
     };
 
@@ -107,7 +109,8 @@ int noMenuLeitura()
         "[18] Imprimir sequencia de grau",
         "[19] Arvore geradora minima - Kruskal",
         "[20] Arvore geradora minima - Prim",
-        "[21] Caminho minimo entre dois nos - Dijkstra"
+        "[21] Caminho minimo entre dois nos - Dijkstra",
+        "[24] Matriz com menores distancias entre nos  - Floyd Warshall"
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
@@ -160,7 +163,7 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
     return grafoComplementar;
 }
 
-int main()
+int main(int argc, char * argv[])
 {
 
     int pesoVertice;
@@ -178,8 +181,9 @@ int main()
     Kruskal *kruskal = new Kruskal();
     Prim *prim = new Prim();
     Dijkstra *dijkistra = new Dijkstra();
+    FloydWarshall *floydWarshall = new FloydWarshall();
 
-   ///*************************************** CONSTRUÇÃO DO GRAFO ******************************************************///
+    ///************* CONSTRUÇÃO DO GRAFO ******************///
 
     if(lerOuConstruirMenu() == 2)
     {
@@ -355,15 +359,19 @@ int main()
                 prim->arvoreGeradoraMinima(grafo);
                 break;
             case 23:
-                {
-                    /// Algoritmo de Dijkistra
-                    cout << "Digite o id do No 1: " << endl;
-                    cin >> idDijkstra1;
-                    cout << "Digite o id do No 2: " << endl;
-                    cin >> idDijkstra2;
+            {
+                /// Algoritmo de Dijkistra
+                cout << "Digite o id do No 1: " << endl;
+                cin >> idDijkstra1;
+                cout << "Digite o id do No 2: " << endl;
+                cin >> idDijkstra2;
 
-                    dijkistra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
-                }
+                dijkistra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
+            }
+            break;
+            case 24:
+                /// Algoritmo de Floyd Warshall
+                floydWarshall->imprimeFloydWarshall(grafo);
                 break;
             default:
                 cout << "Digite uma opcao valida" << endl;
@@ -372,10 +380,10 @@ int main()
         }
     }
 
-    ///*****************************************************************************************////////
+    ///*******************************////////
 
 
-    ///********************************* LEITURA DO GRAFO *************************************/////
+    ///*********** LEITURA DO GRAFO *************/////
 
     else if(lerOuConstruirMenu() == 1)
     {
@@ -395,7 +403,13 @@ int main()
         }
 
         string aux;
+<<<<<<< HEAD
         ifstream myfile ("teste1.txt"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
+=======
+        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
+        ofstream saida;
+        saida.open("saida.txt");
+>>>>>>> 4136239319226a6a348a5676145ba9a8249cbe5e
         auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
@@ -406,6 +420,7 @@ int main()
                 //printf("%d", id1);
                 No *vertice = new No(id1);
                 //cout << vertice->id;
+                saida << vertice->id;
                 grafo->adicionaVertice(vertice);
                 //grafo->printNos();
                 //delete vertice;
@@ -428,7 +443,7 @@ int main()
             myfile.close();
         }
 
-        cout << "*************************** GRAFO CARREGADO **************************************" << endl;
+        cout << "********* GRAFO CARREGADO **************" << endl;
         auto finish = std::chrono::high_resolution_clock::now();
         auto elapsed = finish - start;
         float tempo = elapsed.count()/1000000000;
@@ -543,5 +558,5 @@ int main()
         }
     }
 
-        return 0;
+    return 0;
 }
