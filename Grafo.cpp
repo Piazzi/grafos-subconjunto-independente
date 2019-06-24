@@ -1058,7 +1058,7 @@ void Grafo::atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int me
 void Grafo::preenche(No  *v, stack<No*>& pilha)
 {
     v->setVisitado(true);
-    for(int i=0; i<v->nosAdjacentes.size(); i++)
+    for(int i=0; i < v->nosAdjacentes.size(); i++)
     {
         No* adjacenteAtual = v->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
@@ -1094,17 +1094,18 @@ Grafo* Grafo::obterGrafoTransposto()
 {
     Grafo *transposto = new Grafo();
 
-    transposto = this;
-
-    for(int i=0; i <(transposto->listaNo.size())-1; i++)
-    {
-        for(int j=0; j < listaNo[i]->nosAdjacentes.size(); j++)
-        {
-            transposto->listaNo[i]->nosAdjacentes[j]->adicionaNoAdjacenteSemMsg(transposto->listaNo[i], true, 0);
-            transposto->listaNo[i]->removeAdjacenteSemMsg((transposto->listaNo[i])->nosAdjacentes[j]);
-        }
-
+    for(int i =0; i < listaNo.size(); i++) {
+        transposto->adicionaVertice(new No(i));
     }
+
+    for(int i =0; i < listaNo.size(); i++) {
+        for(int j =0; j < listaNo.size(); j++) {
+            if(this->getNo(i)->verificaAdjacencia(this->getNo(j))) {
+                transposto->getNo(j)->adicionaNoAdjacente(transposto->getNo(i), true, 0);
+            }
+        }
+    }
+
     return transposto;
 }
 
@@ -1113,13 +1114,6 @@ void Grafo::imprimirComponentesFortementeConexas()
     stack<No*> pilha;
 
     setVisitadoEmTodosNos(false);
-
-    // preenche a pilha
-    // for(int i = 0; i < listaNo.size(); i++)
-    //{
-    // if(visitados[i] == false)
-    //   preenche(i, visitados, pilha);
-    //}
 
     for(int i=0; i < listaNo.size(); i++)
     {

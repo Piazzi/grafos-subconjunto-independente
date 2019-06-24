@@ -403,13 +403,9 @@ int main(int argc, char * argv[])
         }
 
         string aux;
-<<<<<<< HEAD
-        ifstream myfile ("teste1.txt"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
-=======
         ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
         ofstream saida;
         saida.open("saida.txt");
->>>>>>> 4136239319226a6a348a5676145ba9a8249cbe5e
         auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
@@ -417,28 +413,16 @@ int main(int argc, char * argv[])
             {
                 getline (myfile, aux, ' ');
                 int id1 = atoi (aux.c_str());
-                //printf("%d", id1);
                 No *vertice = new No(id1);
-                //cout << vertice->id;
                 saida << vertice->id;
                 grafo->adicionaVertice(vertice);
-                //grafo->printNos();
-                //delete vertice;
                 aux.clear();
-                //cout << "DELETOU O NO";
-                //grafo->printNos();
                 getline (myfile, aux);
                 int id2 = atoi (aux.c_str());
-                //printf("%d", id2);
                 No *vertice1 = new No(id2);
-                //cout << vertice->id << endl;
                 grafo->adicionaVertice(vertice1);
-                //grafo->printNos();
-                //delete vertice1;
                 aux.clear();
                 grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
-                //cout << "DELETOU O NO";
-                //grafo->printNos();
             }
             myfile.close();
         }
