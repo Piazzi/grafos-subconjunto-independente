@@ -308,7 +308,7 @@ int main()
                 break;
             /// Aplica um algortimo de busca em profundidade
             case 11:
-                grafo->caminhamentoEmProfundidade(1);
+                grafo->caminhamentoEmProfundidade();
                 break;
             /// Aplica um algortimo de busca em largura
             case 12:
@@ -395,7 +395,7 @@ int main()
         }
 
         string aux;
-        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
+        ifstream myfile ("teste1.txt"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
         auto start = std::chrono::high_resolution_clock::now();
         if (myfile.is_open())
         {
@@ -486,7 +486,7 @@ int main()
                 break;
             /// Aplica um algortimo de busca em profundidade
             case 8:
-                grafo->caminhamentoEmProfundidade(1);
+                grafo->caminhamentoEmProfundidade();
                 break;
             /// Aplica um algortimo de busca em largura
             case 9:

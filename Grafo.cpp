@@ -262,7 +262,11 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
     }
 }
 
-void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
+/**
+ * Inicia o caminhamento em profundidade, que chama a função auxiliar aprofunda(No* no)
+ * @return void
+*/
+void Grafo::caminhamentoEmProfundidade() ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
     setVisitadoEmTodosNos(false);
     for(i : listaNo)
@@ -278,7 +282,7 @@ void Grafo::caminhamentoEmProfundidade(int id) ///funcao principal, que chama a 
 void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
-    cout << no->id << " ";
+    cout << "Visitando no " << no->id << endl;
     for(adjacente : no->nosAdjacentes)
     {
         No* adjacenteAtual = adjacente;
@@ -295,6 +299,25 @@ void Grafo::aprofunda(No* no)
     }
 }
 
+void Grafo::aprofunda_ComponenteConexa(No* no)
+{
+    no->setVisitado(true);
+    cout << no->id << " - ";
+    for(adjacente : no->nosAdjacentes)
+    {
+        No* adjacenteAtual = adjacente;
+        if(!adjacenteAtual->getVisitado())
+        {
+            aprofunda_ComponenteConexa(adjacenteAtual);
+        }
+    }
+}
+
+/**
+ * Inicia o caminhamento em largura, que chama a função auxiliar caminhaEmLargura(vector<No*> fila)
+ * @param id id do nó a partir do qual o caminhamento começa
+ * @return void
+*/
 void Grafo::caminhamentoEmLargura(int id)   ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
     setVisitadoEmTodosNos(false);
@@ -306,6 +329,11 @@ void Grafo::caminhamentoEmLargura(int id)   ///funcao principal, que chama a fun
     caminhaEmLargura(*fila); ///chama funcao auxiliar, que faz o caminhamento em largura
 }
 
+/**
+ * Função que faz, de fato, o caminhamento
+ * @param fila estrutura que vai armazenar os nós que serão visitados
+ * @return void
+*/
 void Grafo::caminhaEmLargura(vector<No*> fila)
 {
     while(!fila.empty())
@@ -318,7 +346,7 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
         {
             if(!adjacenteAoAtual->getVisitado())
             {
-                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual);
+                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual); /// verifica se adjacenteAoAtual está na fila
                 if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
                 {
                     fila.push_back(adjacenteAoAtual);
@@ -341,12 +369,13 @@ void Grafo::setVisitadoEmTodosNos(bool visitado)
 void Grafo::componentesConexas()
 {
     cout << "Componentes conexas: " << endl;
+    setVisitadoEmTodosNos(false);
     for(no : listaNo)
     {
         if(!no->getVisitado())
         {
-            cout << endl << "Componente conexa comencando em " << no->id << " : ";
-            aprofunda(no);
+            cout << endl << "Componente conexa comencando em " << no->id << ": ";
+            aprofunda_ComponenteConexa(no);
         }
     }
     cout << endl;

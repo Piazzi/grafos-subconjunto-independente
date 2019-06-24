@@ -48,7 +48,8 @@ public:
     bool verificaId(int id);
     No * getNo(int id);
     void printAdjacentesAoNo();
-    void caminhamentoEmProfundidade(int id);
+    void caminhamentoEmProfundidade();
+    void aprofunda_ComponenteConexa(No* no);
     void aprofunda(No* no);
     void caminhamentoEmLargura(int id);
     void setVisitadoEmTodosNos(bool visitado);
