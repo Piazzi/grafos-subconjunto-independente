@@ -880,7 +880,8 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 
     int atualMaiorCardinalidade;
     vector<int> solucaoReativa;
-    float *mediaSolucoes;
+    float pmediaSolucoes;
+    float *mediaSolucoes = &pmediaSolucoes;
     *mediaSolucoes = 0;
 
     int maximoIteracoesReativo;
@@ -944,8 +945,6 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 
             atualizaProbabilidadeDosAlfas(alfas, numeroDeAlfas, atualMaiorCardinalidade);
         }
-
-        cout << endl;
     }
     cout << endl << "-------RESULTADO DO REATIVO-------" << endl;
     cout << "Maior cardinalidade encontrada: " << atualMaiorCardinalidade << endl;
