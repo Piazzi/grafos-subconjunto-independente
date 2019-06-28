@@ -76,9 +76,9 @@ int noMenu()
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
-    for(op : opcoesMenu)
+   for(int i = 0 ; i < 24 ; i++)
     {
-        cout << op << endl;
+        cout << opcoesMenu[i] << endl;
     }
     cin >> opcao;
     return opcao;
@@ -114,9 +114,9 @@ int noMenuLeitura()
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
-    for(op : opcoesMenu)
+    for(int i = 0 ; i < 24 ; i++)
     {
-        cout << op << endl;
+        cout << opcoesMenu[i] << endl;
     }
     cin >> opcao;
     return opcao;
@@ -140,11 +140,11 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 {
     bool direcionado = false; /// grafo->ehDirecionado();
     Grafo* grafoComplementar = new Grafo();
-    for(int i = 0; i < grafo->listaNo.size(); i++)
+    for(unsigned int i = 0; i < grafo->listaNo.size(); i++)
     {
         No* noOriginal = grafo->listaNo[i];
         No* noComplementar = noOriginal;
-        for(int j = 0; j < grafo->listaNo.size() && i!=j; j++)
+        for(unsigned int j = 0; j < grafo->listaNo.size() && i!=j; j++)
         {
             if(noOriginal->verificaAdjacencia(grafo->listaNo[j]))
             {

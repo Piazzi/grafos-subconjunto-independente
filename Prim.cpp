@@ -10,7 +10,7 @@
 using namespace std;
 
 /**
- * Recebe um grafo e gera uma árvore geradora mínima para ele
+ * Recebe um grafo e gera uma ï¿½rvore geradora mï¿½nima para ele
  * @param Grafo
  * @return void
 */
@@ -20,21 +20,21 @@ void Prim::arvoreGeradoraMinima(Grafo *grafo)
     /// verifica se um grafo eh conexo.
     if (grafo->ehConexo())
     {
-        auto *arvoreGeradoraMinima = new Grafo();
+        Grafo *arvoreGeradoraMinima = new Grafo();
 
-        int tam = grafo->listaNo.size();
+        unsigned int tam = grafo->listaNo.size();
 
-        /// pega um vértice aleatório e o insere na AGM.
-        auto *noInicial = new No(grafo->listaNo.at(rand() % tam-1)->id);
+        /// pega um vï¿½rtice aleatï¿½rio e o insere na AGM.
+        No *noInicial = new No(grafo->listaNo.at(rand() % tam-1)->id);
         arvoreGeradoraMinima->listaNo.push_back(noInicial);
 
-        /// adiciona nós e arestas de menor peso enquanto a AGM não possuir todos os vértices.
+        /// adiciona nï¿½s e arestas de menor peso enquanto a AGM nï¿½o possuir todos os vï¿½rtices.
         while (arvoreGeradoraMinima->listaNo.size() < tam)
         {
             Aresta *aresta = getArestaMenorPeso(grafo, arvoreGeradoraMinima);
 
-            auto *No1 = new No(aresta->no1->id);
-            auto *No2 = new No(aresta->no2->id);
+            No *No1 = new No(aresta->no1->id);
+            No *No2 = new No(aresta->no2->id);
 
             if (!arvoreGeradoraMinima->verificaId(No1->id))
             {
@@ -65,7 +65,7 @@ void Prim::arvoreGeradoraMinima(Grafo *grafo)
 */
 Aresta *Prim::getArestaMenorPeso(Grafo *grafo, Grafo *arvoreGeradoraMinima)
 {
-    auto *arestaMenorPeso = new Aresta();
+    Aresta *arestaMenorPeso = new Aresta();
     int pesoMinimo = numeric_limits<int>::max();
 
     for (auto aresta : grafo->arestas)
@@ -81,13 +81,13 @@ Aresta *Prim::getArestaMenorPeso(Grafo *grafo, Grafo *arvoreGeradoraMinima)
                 }
             }
         }
-    }
+    };
 
     return arestaMenorPeso;
 }
 
 /**
- * Imprime uma árvore geradora mínima de um grafo
+ * Imprime uma ï¿½rvore geradora mï¿½nima de um grafo
  * @param Grafo
  * @return void
 */
@@ -97,6 +97,6 @@ void Prim::imprimeSolucao(Grafo *grafo)
     for (auto aresta : grafo->arestas)
     {
         cout << "(" << aresta->no1->id << "," << aresta->no2->id << ") ";
-    }
+    };
     cout << endl;
 }

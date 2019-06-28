@@ -19,7 +19,7 @@ void Kruskal::arvoreGeradoraMinima(Grafo *grafo)
     /// Verifica se o grafo eh conexo
     if(grafo->ehConexo())
     {
-        auto *arvoreGeradoraMinima = new Grafo;
+        Grafo *arvoreGeradoraMinima = new Grafo;
 
         /// ordena a lista de arestas por peso em ordem crescente
 

@@ -7,6 +7,7 @@
 #include <chrono>
 #include <random>
 #include <map>
+#include <limits>
 
 using namespace std;
 
@@ -109,7 +110,6 @@ void Grafo::matrizAdjacencia(bool direcionado)
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
-    int aux = 0 ;
     for(int i = 0; i < tam; i++)
     {
         cout << endl;
@@ -143,12 +143,14 @@ void Grafo::adicionaVertice(No *no)
 
 bool Grafo::verificaId(int id)
 {
-    for(no : listaNo)
+
+    for(unsigned int i = 0 ; i < listaNo.size() ; i++)
     {
-        if(no->id == id)
-        {
-            return true;
-        }
+            if(listaNo[i]->id == id)
+            {
+                return true;
+            }
+        return false;
     }
     return false;
 }
@@ -157,20 +159,21 @@ No * Grafo::getNo(int id)
 {
     if(verificaId(id))
     {
-        for(no : listaNo)
+        for(unsigned int i = 0 ; i < listaNo.size() ; i++)
         {
-            if(no->id == id)
-                return no;
+            if(listaNo[i]->id  == id)
+                return listaNo[i];
         }
     }
+return NULL;
 }
 
 void Grafo::printNos()
 {
     cout << "Lista de vertices do grafo: " << endl;
-    for(no : listaNo)
+    for(unsigned int i = 0 ; i < listaNo.size() ; i++)
     {
-        cout << no->id << " ";
+        cout << listaNo[i]->id << " ";
     }
     cout << endl;
 }
@@ -188,14 +191,15 @@ void Grafo::printAdjacentesAoNo()
 
 Aresta * Grafo::getAresta(int id1, int id2)
 {
-    for(aresta : this->arestas)
+    for(unsigned int i = 0 ; i < this->arestas.size();i++)
     {
-        if((aresta->no1->id == id1 ||
-                aresta->no1->id == id2) &&
-                (aresta->no2->id == id1 ||
-                 aresta->no2->id == id2))
-            return aresta;
+        if((this->arestas[i]->no1->id == id1 ||
+                this->arestas[i]->no1->id == id2) &&
+                (this->arestas[i]->no2->id == id1 ||
+                 this->arestas[i]->no2->id == id2))
+            return this->arestas[i];
     }
+    return NULL;
 }
 
 void Grafo::removeAresta()
@@ -246,7 +250,7 @@ void Grafo::removeVertice()
 
 void Grafo::auxRemoveVertice(No* noASerRemovido)
 {
-    for(int i = 0; i < listaNo.size(); i++)
+    for(unsigned int i = 0; i < listaNo.size(); i++)
     {
         if(listaNo[i] == noASerRemovido)
         {
@@ -269,11 +273,11 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
 void Grafo::caminhamentoEmProfundidade() ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
     setVisitadoEmTodosNos(false);
-    for(i : listaNo)
+    for(unsigned int i = 0; i < listaNo.size(); i++)
     {
-        if(!i->getVisitado())
+        if(!listaNo[i]->getVisitado())
         {
-            aprofunda(i);
+            aprofunda(listaNo[i]);
         }
     }
     cout << endl;
@@ -283,9 +287,9 @@ void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
     cout << "Visitando no " << no->id << endl;
-    for(adjacente : no->nosAdjacentes)
+    for(unsigned int i = 0; i < no->nosAdjacentes.size(); i++)
     {
-        No* adjacenteAtual = adjacente;
+        No* adjacenteAtual = no->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
         {
             cout << "\tNo " << adjacenteAtual->id << " nao foi visitado ainda!" << endl;
@@ -303,9 +307,9 @@ void Grafo::aprofunda_ComponenteConexa(No* no)
 {
     no->setVisitado(true);
     cout << no->id << " - ";
-    for(adjacente : no->nosAdjacentes)
+    for(unsigned int i = 0; i < no->nosAdjacentes.size(); i++)
     {
-        No* adjacenteAtual = adjacente;
+        No* adjacenteAtual = no->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
         {
             aprofunda_ComponenteConexa(adjacenteAtual);
@@ -341,16 +345,15 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
         No *noAtual = fila.front();
         cout << "Visitando o no " << noAtual->id << endl;
         noAtual->setVisitado(true);
-
-        for(adjacenteAoAtual : noAtual->nosAdjacentes)
+        for(unsigned int i = 0 ; i < noAtual->nosAdjacentes.size();i++)
         {
-            if(!adjacenteAoAtual->getVisitado())
+            if(!noAtual->nosAdjacentes[i]->getVisitado())
             {
-                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual); /// verifica se adjacenteAoAtual está na fila
+                int contador = count(fila.begin(), fila.end(), noAtual->nosAdjacentes[i]); /// verifica se adjacenteAoAtual está na fila
                 if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
                 {
-                    fila.push_back(adjacenteAoAtual);
-                    cout << "Adicionando na fila o no " << adjacenteAoAtual->id << endl;
+                    fila.push_back(noAtual->nosAdjacentes[i]);
+                    cout << "Adicionando na fila o no " << noAtual->nosAdjacentes[i]->id << endl;
                 }
             }
         }
@@ -360,9 +363,9 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
 
 void Grafo::setVisitadoEmTodosNos(bool visitado)
 {
-    for(no : listaNo)
+    for(unsigned int i = 0  ; i <listaNo.size(); i++)
     {
-        no->setVisitado(visitado);
+        listaNo[i]->setVisitado(visitado);
     }
 }
 
@@ -370,12 +373,12 @@ void Grafo::componentesConexas()
 {
     cout << "Componentes conexas: " << endl;
     setVisitadoEmTodosNos(false);
-    for(no : listaNo)
+       for(unsigned int i = 0  ; i <listaNo.size(); i++)
     {
-        if(!no->getVisitado())
+        if(!listaNo[i]->getVisitado())
         {
-            cout << endl << "Componente conexa comencando em " << no->id << ": ";
-            aprofunda_ComponenteConexa(no);
+            cout << endl << "Componente conexa comencando em " << listaNo[i]->id << ": ";
+            aprofunda_ComponenteConexa(listaNo[i]);
         }
     }
     cout << endl;
@@ -416,7 +419,7 @@ void Grafo::imprimePesoVertice()
 }
 void Grafo::imprimePesoAresta()
 {
-    int confereIdADj = 0;
+   /* int confereIdADj = 0;
     int confereId = 0 ;
     cout<<"Digite o primeiro vertice"<<endl;
     cin>>confereId;
@@ -430,20 +433,19 @@ void Grafo::imprimePesoAresta()
     else
     {
         cout<<"Um dos vertices inseridos no programa nao possui aresta"<<endl;
-    }
+    }*/
 }
 
-int Grafo::auxImprimePesoAresta(int id1)
+/*int Grafo::auxImprimePesoAresta(int id1)
 {
-    // No *elemento = getNo(id1);
-//   return elemento->getPesoAresta();
-}
+No *elemento = getNo(id1);
+return elemento->getPesoAresta();
+}*/
 
 bool Grafo::possuiAresta(int id1, int id2)
 {
     No *elemento = getNo(id1);
-    int confereAdjacente;
-    for(int i = 0; i< elemento->nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i< elemento->nosAdjacentes.size(); i++)
     {
         if(elemento->nosAdjacentes[i]->id == id2)
         {
@@ -466,7 +468,6 @@ void Grafo::ordenacaoTopologica()
     int listaPos = 0; //posiï¿½ï¿½o de inserï¿½ï¿½o na lista
     No *atual;
     atual = NULL;
-    int cont =0;
 
     for(int i = 0; i<n; i++)
     {
@@ -493,9 +494,9 @@ void Grafo::ordenacaoTopologica()
                             atual = listaNo[t]; /// No atual recebe o No com o id
                     }
 
-                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mï¿½nimo
+                    for(unsigned int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mï¿½nimo
                     {
-                        for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
+                        for( int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                         {
                             if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
                                 grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estï¿½ na posiï¿½ï¿½o k, sabendo que recebia uma aresta do vertce atual
@@ -523,7 +524,7 @@ void Grafo::ordenacaoTopologica()
                         atual = listaNo[t]; /// No atual recebe o No com o id
                 }
 
-                for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
+                for(unsigned int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
                 {
                     for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                     {
@@ -551,7 +552,7 @@ void Grafo::ordenacaoTopologica()
 
 int Grafo::grauMinimo(int graus[], int n)
 {
-    int grauMin =9999999999;
+    int grauMin =numeric_limits<int>::max();
 
     for (int i =0; i<n ; i++)
     {
@@ -565,10 +566,9 @@ int Grafo::grauMinimo(int graus[], int n)
 void Grafo::printSequenciaDeGraus()
 {
     vector<int> graus;
-
-    for(no : listaNo) ///preenche o vector graus com o grau de cada no
+    for(unsigned int i = 0 ; i < listaNo.size() ; i++)///preenche o vector graus com o grau de cada no
     {
-        graus.push_back(no->getGrau());
+        graus.push_back(listaNo[i]->getGrau());
     }
 
     sort(graus.begin(), graus.end(), greater<int>()); ///ordena o vector graus
@@ -576,9 +576,9 @@ void Grafo::printSequenciaDeGraus()
     cout << "Sequencia de graus: " << endl;
 
     cout << "<";
-    for(grau : graus)
+    for(unsigned int j = 0 ; j < graus.size() ; j++)
     {
-        cout << grau << ", ";
+        cout << graus[j] << ", ";
     }
     cout << ">" << endl;
 }
@@ -613,16 +613,16 @@ void Grafo::algoritmoGuloso()
 */
 vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
 {
-    for(int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
+    for(unsigned int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
     {
         if(nosCandidatos[a]->id == candidatoSelecionado->id)
             nosCandidatos.erase(nosCandidatos.begin() + a);
     }
 
     vector<No*> adjacentesAoSelecionado = candidatoSelecionado->nosAdjacentes;
-    for(int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
+    for(unsigned int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
     {
-        for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
+        for(unsigned int j = 0; j < adjacentesAoSelecionado.size(); j++)
         {
             if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id)
             {
@@ -641,10 +641,10 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
 No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 {
     No* noMenorGrau = nosCandidatos[0];
-    for(candidato : nosCandidatos)
+    for(unsigned int i = 0 ; i < nosCandidatos.size();i++)
     {
-        if(candidato->getGrau() < noMenorGrau->getGrau())
-            noMenorGrau = candidato;
+        if(nosCandidatos[i]->getGrau() < noMenorGrau->getGrau())
+            noMenorGrau = nosCandidatos[i];
     }
     return noMenorGrau;
 }
@@ -659,9 +659,9 @@ void Grafo::printSolucaoGulosa(vector<int> solucao)
     cout << "Solucao atraves do Algoritmo Guloso: ";
 
     cout << "[ ";
-    for(noSolucao : solucao)
+    for(unsigned int i = 0 ; i < solucao.size() ; i++)
     {
-        cout << noSolucao << ", ";
+        cout << solucao[i] << ", ";
     }
     cout << "]" << endl;
     cout << "Cardinalidade da solucao gulosa: " << solucao.size() << endl;
@@ -696,7 +696,7 @@ void Grafo::iniciaAlgoritmoGulosoRandomizado()
 vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
 {
     auto start = std::chrono::high_resolution_clock::now(); ///Grava o tempo em que o algoritmo começou
-
+    cout<<start<<endl;
     vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa); ///obtem uma solução inicial aleatoria, de acordo com o parâmetro alfa
     int maiorCardinalidade = idsDosNosDaMelhorSolucao.size();
 
@@ -807,9 +807,9 @@ void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
     cout << "Solucao atraves do Algoritmo Guloso Randomizado: ";
 
     cout << "[ ";
-    for(noSolucao : solucao)
+    for(unsigned int i = 0 ; i < solucao.size() ; i++)
     {
-        cout << noSolucao << ", ";
+        cout << solucao[i] << ", ";
     }
     cout << "]" << endl;
 
@@ -825,7 +825,7 @@ vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
 {
     vector<No*> vetorOrdenadoPeloGrau = nosCandidatos;
     No* aux;
-    int i, j;
+    unsigned int i, j;
 
     for(i = 1; i < vetorOrdenadoPeloGrau.size(); i++)
     {
@@ -857,7 +857,8 @@ vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float
 
     int indice = static_cast<int> (tamanhoCandidatos *alfa);
 
-    if(alfa == 1) {
+    if(alfa == 1)
+    {
         indice = tamanhoCandidatos-1;
     }
 
@@ -937,7 +938,8 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
         {
             cout << "Iteracao " << i << endl;
 
-            for(int i = 0; i < numeroDeAlfas; i++) {
+            for(int i = 0; i < numeroDeAlfas; i++)
+            {
                 cout << "Alfa " << i << ": ";
                 cout << "Probabilidade de ser escolhido ate agora era: " << alfas[i].probabilidadeDeSerEscolhido << ". ";
                 cout << "Foi escolhido " << alfas[i].numeroDeVezesEscolhidoTotal << " vezes." << endl;
@@ -1057,7 +1059,7 @@ void Grafo::atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int me
 void Grafo::preenche(No  *v, stack<No*>& pilha)
 {
     v->setVisitado(true);
-    for(int i=0; i < v->nosAdjacentes.size(); i++)
+    for(unsigned int i=0; i < v->nosAdjacentes.size(); i++)
     {
         No* adjacenteAtual = v->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
@@ -1076,7 +1078,7 @@ void Grafo::DFS(No *v)
     v->setVisitado(true);
     cout << "" << v->id << endl;
 
-    for(int i=0; i<v->nosAdjacentes.size(); i++)
+    for(unsigned int i=0; i<v->nosAdjacentes.size(); i++)
     {
         No* adjacenteAtual = v->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
@@ -1093,13 +1095,17 @@ Grafo* Grafo::obterGrafoTransposto()
 {
     Grafo *transposto = new Grafo();
 
-    for(int i =0; i < listaNo.size(); i++) {
+    for(unsigned int i =0; i < listaNo.size(); i++)
+    {
         transposto->adicionaVertice(new No(i));
     }
 
-    for(int i =0; i < listaNo.size(); i++) {
-        for(int j =0; j < listaNo.size(); j++) {
-            if(this->getNo(i)->verificaAdjacencia(this->getNo(j))) {
+    for(unsigned  int i =0; i < listaNo.size(); i++)
+    {
+        for(unsigned int j =0; j < listaNo.size(); j++)
+        {
+            if(this->getNo(i)->verificaAdjacencia(this->getNo(j)))
+            {
                 transposto->getNo(j)->adicionaNoAdjacente(transposto->getNo(i), true, 0);
             }
         }
@@ -1114,7 +1120,7 @@ void Grafo::imprimirComponentesFortementeConexas()
 
     setVisitadoEmTodosNos(false);
 
-    for(int i=0; i < listaNo.size(); i++)
+    for(unsigned  int i=0; i < listaNo.size(); i++)
     {
         if(!listaNo[i]->getVisitado())
 
@@ -1184,7 +1190,7 @@ void Grafo::matrizDistancia()
             }
             else
             {
-                mDistancia[i][j] = 9999999999;
+                mDistancia[i][j] = numeric_limits<int>::max();
             }
         }
     }
@@ -1256,6 +1262,7 @@ bool Grafo::ehConexo()
         else
             return true;
     }
+    return true;
 
 }
 

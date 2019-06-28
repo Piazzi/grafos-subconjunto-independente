@@ -145,9 +145,9 @@ void No::adicionaNoAdjacenteSemMsg(No *no, bool direcionado, int peso)
 void No::printAdjacentes()
 {
     cout << "Nos adjacentes ao no " << this->id << ": ";
-    for(adjacente : nosAdjacentes)
+    for(unsigned int i = 0 ; i < nosAdjacentes.size() ; i++)
     {
-        cout << adjacente->id << " ";
+        cout << nosAdjacentes[i]->id << " ";
     }
     cout << endl;
 }
@@ -159,7 +159,7 @@ void No::removeAdjacente(No* adjacente)
         cout << "Este no nao eh adjacente!" << endl;
         return;
     }
-    for(int i = 0; i < nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i < nosAdjacentes.size(); i++)
     {
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);
@@ -176,7 +176,7 @@ void No::removeAdjacenteSemMsg(No* adjacente)
 
         return;
     }
-    for(int i = 0; i < nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i < nosAdjacentes.size(); i++)
     {
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);
