@@ -362,7 +362,6 @@ int main()
                     cin >> idDijkstra1;
                     cout << "Digite o id do No 2: " << endl;
                     cin >> idDijkstra2;
-
                     dijkistra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
                 }
                 break;

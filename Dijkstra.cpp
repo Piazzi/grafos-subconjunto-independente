@@ -7,39 +7,45 @@
 using namespace std;
 
 /**
- * Calcula o custo de um caminho mínimo entre dois nos
+ * Calcula o custo de um caminho minimo entre dois nos
  *
 */
-void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
+void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2)
+{
     No *NoInicial = grafo->getNo(id1);
     NoInicial->distancia = 0;
-    /// o restante dos nos ja estão definidos com a distancia = infinito através do construtor da classe No
+
+    /// o restante dos nos ja estao definidos com a distancia = infinito atraves do construtor da classe No
 
     vector<No *> Nos(grafo->listaNo);
-
-    while (!Nos.empty()) {
+   // while (!Nos.empty())
+    //{
         No *No = getNoDistanciaMinima(Nos);
 
-        for (auto NoAdjacente : No->nosAdjacentes) {
+        for (auto NoAdjacente : No->nosAdjacentes)
+        {
+            cout<<No->nosAdjacentes[0]<<endl;
             Aresta *aresta = grafo->getAresta(id1, id2);
-
             /// relaxamento da aresta
-            if (NoAdjacente->distancia > No->distancia + aresta->peso) {
+            if (NoAdjacente->distancia > No->distancia + aresta->peso)
+            {
                 NoAdjacente->distancia = No->distancia + aresta->peso;
                 grafo->getNo(NoAdjacente->id)->distancia = NoAdjacente->distancia;
             }
         }
-
         Nos.push_back(No);
-    }
-
+   // }
+cout<<"1"<<endl;
     int custo = grafo->getNo(id2)->distancia;
 
     /// numeric_limits representa o infinito
-    if (custo < numeric_limits<int>::max()) {
-        cout << "O custo do caminho mínimo é: " << grafo->getNo(id2)->distancia << endl;
-    } else {
-        cout << "Não existe caminho entre os dois vértices." << endl;
+    if (custo < numeric_limits<int>::max())
+    {
+        cout << "O custo do caminho mï¿½nimo ï¿½: " << grafo->getNo(id2)->distancia << endl;
+    }
+    else
+    {
+        cout << "Nao existe caminho entre os dois vertices." << endl;
     }
 }
 
@@ -47,12 +53,15 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
  *
  *
 */
-No *Dijkstra::getNoDistanciaMinima(vector<No *> Nos) {
+No *Dijkstra::getNoDistanciaMinima(vector<No *> Nos)
+{
     No *NoDistanciaMinima = Nos.front();
 
-    for (auto i = Nos.begin(); i != Nos.end(); i++) {
+    for (auto i = Nos.begin(); i != Nos.end(); i++)
+    {
         No *No = *i;
-        if (No->distancia < NoDistanciaMinima->distancia) {
+        if (No->distancia < NoDistanciaMinima->distancia)
+        {
             NoDistanciaMinima = No;
         }
     }
