@@ -696,7 +696,6 @@ void Grafo::iniciaAlgoritmoGulosoRandomizado()
 vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
 {
     auto start = std::chrono::high_resolution_clock::now(); ///Grava o tempo em que o algoritmo começou
-    cout<<start<<endl;
     vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa); ///obtem uma solução inicial aleatoria, de acordo com o parâmetro alfa
     int maiorCardinalidade = idsDosNosDaMelhorSolucao.size();
 
