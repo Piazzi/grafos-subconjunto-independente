@@ -13,51 +13,29 @@ using namespace std;
  * @param int
  * @return void
 */
-void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
-    No *NoInicial = grafo->getNo(id1);
-    NoInicial->distancia = 0;
-    /// o restante dos nos ja estão definidos com a distancia = infinito através do construtor da classe No
-
-    vector<No *> Nos(grafo->listaNo);
-    for(unsigned int i = 0 ; i < grafo->listaNo.size() ; i++) {
-        No *No = getNoDistanciaMinima(Nos);
-        for (auto NoAdjacente : No->nosAdjacentes) {
-            Aresta *aresta = grafo->getAresta(id1, id2);
-            /// relaxamento da aresta
-            if (NoAdjacente->distancia > No->distancia + aresta->peso) {
-                NoAdjacente->distancia = No->distancia + aresta->peso;
-                grafo->getNo(NoAdjacente->id)->distancia = NoAdjacente->distancia;
+void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2)
+{
+    No *NoInicial = grafo->getNo(id1);///Pega o no inicial
+    NoInicial->distancia = 0;///Coloca a distancia do No sendo igual a zero
+    for(unsigned int i = 0 ; i < grafo->listaNo.size(); i++)///Loop para testar todas as possíveis possibilidades
+    {
+        for(auto  adjacente : grafo->listaNo[i]->nosAdjacentes)///Pega somenten os nos adjacentes
+        {
+            Aresta *aresta = grafo->getAresta(grafo->listaNo[i]->id, adjacente->id); ///busca uma aresta ja criada
+            if(grafo->listaNo[i]->distancia != numeric_limits<int>::max())///Testa para ver se a distancia do elemento é igual a infinito
+            {
+                if( adjacente->distancia > aresta->peso + grafo->listaNo[i]->distancia)///Verifica se a distancia atual e menor que a salva no sistema
+                {
+                    adjacente->distancia = aresta->peso + grafo->listaNo[i]->distancia;///Troca o valor da distancia
+                }
             }
+
         }
-
-        Nos.push_back(No);
     }
-
-    int custo = grafo->getNo(id2)->distancia;
-
-    /// numeric_limits representa o infinito
-    if (custo < numeric_limits<int>::max()) {
-        cout << "O custo do caminho mínimo é: " << grafo->getNo(id2)->distancia << endl;
-    } else {
-        cout << "Não existe caminho entre os dois vértices." << endl;
+    cout<<"A distancia minima e :"<<grafo->listaNo[id2-1]->distancia<<endl;///Imprime a distancia minima na posição referida
+    for(unsigned int j =  0; j < grafo->listaNo.size() ; j++)///Loop para percorrer todos os elementos e depois colocar a distancia deles sendo inifinito
+    {
+        grafo->listaNo[j]->distancia = numeric_limits<int>::max();///Retorna o valor das distancia pra proxima busca
     }
 }
 
-/**
- * Retorna o no mais perto
- * @param vector
- * @return No
- *
-*/
-No *Dijkstra::getNoDistanciaMinima(vector<No *> Nos) {
-    No *NoDistanciaMinima = Nos.front();
-
-    for (auto i = Nos.begin(); i != Nos.end(); i++) {
-        No *No = *i;
-        if (No->distancia < NoDistanciaMinima->distancia) {
-            NoDistanciaMinima = No;
-        }
-    }
-
-    return NoDistanciaMinima;
-}
