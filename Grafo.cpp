@@ -593,7 +593,7 @@ void Grafo::algoritmoGuloso(ofstream &arquivoDeSaida)
     vector<No*> nosCandidatos = listaNo; ///A lista de candidatos inicialmente corresponde a todos os vertices do grafo
     vector<int> idsDosNosSolucao;
 
-//    chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
     while(!nosCandidatos.empty())
     {
@@ -603,11 +603,12 @@ void Grafo::algoritmoGuloso(ofstream &arquivoDeSaida)
         idsDosNosSolucao.push_back(candidatoAtual->id);
     }
 
-    /*chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
-    chrono::high_resolution_clock::time_point elapsed = finish - start;
-    float tempo = elapsed.count()/1000000000;*/
+    chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
+    auto elapsed = finish - start;
+    float tempo = elapsed.count()/1000000000;
+    cout << tempo << endl;
 
-    printSolucaoGulosa(idsDosNosSolucao, arquivoDeSaida);   ///fun��o auxiliar para imprimir os ids dos n�s da solu��o
+    printSolucaoGulosa(idsDosNosSolucao, arquivoDeSaida, tempo);   ///fun��o auxiliar para imprimir os ids dos n�s da solu��o
 }
 
 /**
@@ -659,7 +660,7 @@ No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
  * @param solucao vetor contendo os id's dos nós da solução
  * @return void
 */
-void Grafo::printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida)
+void Grafo::printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida, float tempo)
 {
     cout << "Solucao atraves do Algoritmo Guloso: ";
 
@@ -672,7 +673,8 @@ void Grafo::printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida)
     cout << "Cardinalidade da solucao gulosa: " << solucao.size() << endl;
 
     //arquivoDeSaida << "Cardinalidade da solucao Wgulosa,\n";
-    arquivoDeSaida << solucao.size();
+    //cout << tempo << endl;
+    arquivoDeSaida << solucao.size() << "," << tempo;
     arquivoDeSaida << "\n";
 
 }

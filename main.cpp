@@ -556,19 +556,18 @@ int main(int argc, char * argv[])
     {
         getline (myfile, aux, ' ');
         int id1 = atoi (aux.c_str());
-        //cout << id1 << endl;
         No *vertice = new No(id1);
-        //saida << vertice->id;
         grafo->adicionaVertice(vertice);
         aux.clear();
         getline (myfile, aux);
         int id2 = atoi (aux.c_str());
-        //cout << id2 << endl;
         No *vertice1 = new No(id2);
         grafo->adicionaVertice(vertice1);
         aux.clear();
         grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
     }
+
+    myfile.close();
 
     cout << "********* GRAFO CARREGADO **************" << endl;
 
@@ -578,7 +577,9 @@ int main(int argc, char * argv[])
     }
     if(atoi(argv[4]) != 0)
     {
-
+        //float alfa = 0.1;
+        //int iteracoes = 100;
+        //grafo->randomizado(alfa, iteracoes, outfile);
     }
     if(atoi(argv[5]) != 0)
     {

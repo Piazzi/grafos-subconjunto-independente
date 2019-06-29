@@ -71,7 +71,7 @@ public:
     vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes);
     vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaSolucoes);
     vector<int> getSolucaoRandomizada(float alfa);
-    void printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida);
+    void printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida, float tempo);
     void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
