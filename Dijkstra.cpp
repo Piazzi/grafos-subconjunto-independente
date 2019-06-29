@@ -19,13 +19,10 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2) {
     /// o restante dos nos ja estão definidos com a distancia = infinito através do construtor da classe No
 
     vector<No *> Nos(grafo->listaNo);
-
-    while (!Nos.empty()) {
+    for(unsigned int i = 0 ; i < grafo->listaNo.size() ; i++) {
         No *No = getNoDistanciaMinima(Nos);
-
         for (auto NoAdjacente : No->nosAdjacentes) {
             Aresta *aresta = grafo->getAresta(id1, id2);
-
             /// relaxamento da aresta
             if (NoAdjacente->distancia > No->distancia + aresta->peso) {
                 NoAdjacente->distancia = No->distancia + aresta->peso;

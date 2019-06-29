@@ -71,7 +71,6 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
     aresta->no1 = this;
     aresta->no2 = no;
     aresta->peso = peso;
-
     this->arestas.push_back(aresta);
     no->arestas.push_back(aresta);
 
@@ -86,6 +85,7 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         {
             if(peso!= 0 )
             {
+
 //                no->setPesoAresta(peso);
                 nosAdjacentes.push_back(no);
                 no->nosAdjacentes.push_back(this);
@@ -97,14 +97,14 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
                 no->nosAdjacentes.push_back(this);
             }
         }
-        cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
+        //cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
         this->setGrau(this->getGrau()+1);
         no->setGrau(no->getGrau()+1);
         return aresta;
     }
     else
     {
-        cout << "Este no ja eh adjacente!" << endl;
+        //cout << "Este no ja eh adjacente!" << endl;
         return aresta;
     }
 

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stack>
 #include <time.h>
+#include <fstream>
 
 using namespace std;
 
@@ -65,12 +66,12 @@ public:
     void DFS(No *v);
     Grafo *obterGrafoTransposto();
     void imprimirComponentesFortementeConexas();
-    void algoritmoGuloso();
+    void algoritmoGuloso(ofstream &arquivoDeSaida);
     void iniciaAlgoritmoGulosoRandomizado();
     vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes);
     vector<int> algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaSolucoes);
     vector<int> getSolucaoRandomizada(float alfa);
-    void printSolucaoGulosa(vector<int> solucao);
+    void printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida);
     void printSolucaoGulosaRandomizada(vector<int> solucao);
     vector<No*> atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos);
     No* getNoDeMenorGrau(vector<No*>);
@@ -80,14 +81,11 @@ public:
     vector<No*> getVetorMenorGrau(vector<No*> nosCandidatos);
     vector<No*> getPorcentagem(vector<No*> nosCandidatos, float porcentagem);
     int gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer);
-
     void preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRandomizado);
     Alfa getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas);
     void atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int melhorSolucao);
-
     void algoritmoGulosoRandomizadoReativo();
     float calculaQi(int atualMaiorCardinalidade, float mediaSolucoes);
-
     bool ehConexo();
 
 private:
