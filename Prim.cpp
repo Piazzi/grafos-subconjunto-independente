@@ -22,7 +22,7 @@ void Prim::arvoreGeradoraMinima(Grafo *grafo)
     {
         auto *arvoreGeradoraMinima = new Grafo();
 
-        int tam = grafo->listaNo.size();
+        unsigned int tam = grafo->listaNo.size();
 
         /// pega um vértice aleatório e o insere na AGM.
         auto *noInicial = new No(grafo->listaNo.at(rand() % tam-1)->id);

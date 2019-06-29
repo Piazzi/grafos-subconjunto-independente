@@ -1,7 +1,7 @@
 #include "Grafo.h"
 #include <vector>
 #include "FloydWarshall.h"
-
+#include <limits>
 using namespace std;
 
 /**
@@ -43,7 +43,7 @@ void FloydWarshall::matrizDistancia(Grafo *grafo)
             }
             else
             {
-                mDistancia[i][j] = 9999999999;
+                mDistancia[i][j] = numeric_limits<int>::max();
             }
         }
     }
