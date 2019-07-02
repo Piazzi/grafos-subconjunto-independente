@@ -32,7 +32,13 @@ void Dijkstra::custoCaminhoMinimo(Grafo *grafo, int id1, int id2)
 
         }
     }
-    cout<<"A distancia minima e :"<<grafo->listaNo[id2-1]->distancia<<endl;///Imprime a distancia minima na posição referida
+    int custo = grafo->listaNo[id2-1]->distancia;
+    if( custo < numeric_limits<int>::max()){
+        cout<<"A distancia minima e :"<<custo<<endl;///Imprime a distancia minima na posição referida
+    }else{
+        cout << "Não existe caminho entre os dois vértices." << endl;///Imprime um aviso ao usuario
+    }
+
     for(unsigned int j =  0; j < grafo->listaNo.size() ; j++)///Loop para percorrer todos os elementos e depois colocar a distancia deles sendo inifinito
     {
         grafo->listaNo[j]->distancia = numeric_limits<int>::max();///Retorna o valor das distancia pra proxima busca
