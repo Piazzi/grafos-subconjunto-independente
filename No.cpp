@@ -71,7 +71,6 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
     aresta->no1 = this;
     aresta->no2 = no;
     aresta->peso = peso;
-
     this->arestas.push_back(aresta);
     no->arestas.push_back(aresta);
 
@@ -86,6 +85,7 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
         {
             if(peso!= 0 )
             {
+
 //                no->setPesoAresta(peso);
                 nosAdjacentes.push_back(no);
                 no->nosAdjacentes.push_back(this);
@@ -97,14 +97,14 @@ Aresta * No::adicionaNoAdjacente(No *no, bool direcionado, int peso)
                 no->nosAdjacentes.push_back(this);
             }
         }
-        cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
+        //cout << "No " << no->id << " adicionado as adjacencias do no " << this->id << "!" << endl;
         this->setGrau(this->getGrau()+1);
         no->setGrau(no->getGrau()+1);
         return aresta;
     }
     else
     {
-        cout << "Este no ja eh adjacente!" << endl;
+        //cout << "Este no ja eh adjacente!" << endl;
         return aresta;
     }
 
@@ -145,7 +145,7 @@ void No::adicionaNoAdjacenteSemMsg(No *no, bool direcionado, int peso)
 void No::printAdjacentes()
 {
     cout << "Nos adjacentes ao no " << this->id << ": ";
-    for(adjacente : nosAdjacentes)
+    for(auto adjacente : nosAdjacentes)
     {
         cout << adjacente->id << " ";
     }
@@ -159,7 +159,7 @@ void No::removeAdjacente(No* adjacente)
         cout << "Este no nao eh adjacente!" << endl;
         return;
     }
-    for(int i = 0; i < nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i < nosAdjacentes.size(); i++)
     {
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);
@@ -176,7 +176,7 @@ void No::removeAdjacenteSemMsg(No* adjacente)
 
         return;
     }
-    for(int i = 0; i < nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i < nosAdjacentes.size(); i++)
     {
         if(nosAdjacentes[i] == adjacente)
             nosAdjacentes.erase(nosAdjacentes.begin() + i);

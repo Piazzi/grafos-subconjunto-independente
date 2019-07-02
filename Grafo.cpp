@@ -109,7 +109,6 @@ void Grafo::matrizAdjacencia(bool direcionado)
 void Grafo::printListaAdjacencia()
 {
     int tam = listaNo.size();
-    int aux = 0 ;
     for(int i = 0; i < tam; i++)
     {
         cout << endl;
@@ -137,13 +136,13 @@ void Grafo::adicionaVertice(No *no)
     else
     {
         listaNo.push_back(no);
-        cout << "****** No adicionado com sucesso *****" << endl;
+        //cout << "****** No adicionado com sucesso *****" << endl;
     }
 }
 
 bool Grafo::verificaId(int id)
 {
-    for(no : listaNo)
+    for(auto no : listaNo)
     {
         if(no->id == id)
         {
@@ -157,18 +156,19 @@ No * Grafo::getNo(int id)
 {
     if(verificaId(id))
     {
-        for(no : listaNo)
+        for(auto no : listaNo)
         {
             if(no->id == id)
                 return no;
         }
     }
+    return NULL;
 }
 
 void Grafo::printNos()
 {
     cout << "Lista de vertices do grafo: " << endl;
-    for(no : listaNo)
+    for(auto no : listaNo)
     {
         cout << no->id << " ";
     }
@@ -188,7 +188,7 @@ void Grafo::printAdjacentesAoNo()
 
 Aresta * Grafo::getAresta(int id1, int id2)
 {
-    for(aresta : this->arestas)
+    for(auto aresta : this->arestas)
     {
         if((aresta->no1->id == id1 ||
                 aresta->no1->id == id2) &&
@@ -196,6 +196,7 @@ Aresta * Grafo::getAresta(int id1, int id2)
                  aresta->no2->id == id2))
             return aresta;
     }
+    return NULL;
 }
 
 void Grafo::removeAresta()
@@ -246,7 +247,7 @@ void Grafo::removeVertice()
 
 void Grafo::auxRemoveVertice(No* noASerRemovido)
 {
-    for(int i = 0; i < listaNo.size(); i++)
+    for(unsigned int i = 0; i < listaNo.size(); i++)
     {
         if(listaNo[i] == noASerRemovido)
         {
@@ -263,13 +264,13 @@ void Grafo::removeTodasAdjacenciasDeUmNo(No* noASerRemovido)
 }
 
 /**
- * Inicia o caminhamento em profundidade, que chama a função auxiliar aprofunda(No* no)
+ * Inicia o caminhamento em profundidade, que chama a funÃ§Ã£o auxiliar aprofunda(No* no)
  * @return void
 */
 void Grafo::caminhamentoEmProfundidade() ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
 {
     setVisitadoEmTodosNos(false);
-    for(i : listaNo)
+    for(auto i : listaNo)
     {
         if(!i->getVisitado())
         {
@@ -283,7 +284,7 @@ void Grafo::aprofunda(No* no)
 {
     no->setVisitado(true);
     cout << "Visitando no " << no->id << endl;
-    for(adjacente : no->nosAdjacentes)
+    for(auto adjacente : no->nosAdjacentes)
     {
         No* adjacenteAtual = adjacente;
         if(!adjacenteAtual->getVisitado())
@@ -303,7 +304,7 @@ void Grafo::aprofunda_ComponenteConexa(No* no)
 {
     no->setVisitado(true);
     cout << no->id << " - ";
-    for(adjacente : no->nosAdjacentes)
+    for(auto adjacente : no->nosAdjacentes)
     {
         No* adjacenteAtual = adjacente;
         if(!adjacenteAtual->getVisitado())
@@ -314,8 +315,8 @@ void Grafo::aprofunda_ComponenteConexa(No* no)
 }
 
 /**
- * Inicia o caminhamento em largura, que chama a função auxiliar caminhaEmLargura(vector<No*> fila)
- * @param id id do nó a partir do qual o caminhamento começa
+ * Inicia o caminhamento em largura, que chama a funÃ§Ã£o auxiliar caminhaEmLargura(vector<No*> fila)
+ * @param id id do nÃ³ a partir do qual o caminhamento comeÃ§a
  * @return void
 */
 void Grafo::caminhamentoEmLargura(int id)   ///funcao principal, que chama a funcao que, de fato, faz o caminhamento
@@ -330,8 +331,8 @@ void Grafo::caminhamentoEmLargura(int id)   ///funcao principal, que chama a fun
 }
 
 /**
- * Função que faz, de fato, o caminhamento
- * @param fila estrutura que vai armazenar os nós que serão visitados
+ * FunÃ§Ã£o que faz, de fato, o caminhamento
+ * @param fila estrutura que vai armazenar os nÃ³s que serÃ£o visitados
  * @return void
 */
 void Grafo::caminhaEmLargura(vector<No*> fila)
@@ -342,11 +343,11 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
         cout << "Visitando o no " << noAtual->id << endl;
         noAtual->setVisitado(true);
 
-        for(adjacenteAoAtual : noAtual->nosAdjacentes)
+        for(auto adjacenteAoAtual : noAtual->nosAdjacentes)
         {
             if(!adjacenteAoAtual->getVisitado())
             {
-                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual); /// verifica se adjacenteAoAtual está na fila
+                int contador = count(fila.begin(), fila.end(), adjacenteAoAtual); /// verifica se adjacenteAoAtual estÃ¡ na fila
                 if(contador == 0) /// nao permite adicionar um mesmo elemento mais de uma vez na fila
                 {
                     fila.push_back(adjacenteAoAtual);
@@ -360,7 +361,7 @@ void Grafo::caminhaEmLargura(vector<No*> fila)
 
 void Grafo::setVisitadoEmTodosNos(bool visitado)
 {
-    for(no : listaNo)
+    for(auto no : listaNo)
     {
         no->setVisitado(visitado);
     }
@@ -370,7 +371,7 @@ void Grafo::componentesConexas()
 {
     cout << "Componentes conexas: " << endl;
     setVisitadoEmTodosNos(false);
-    for(no : listaNo)
+    for(auto no : listaNo)
     {
         if(!no->getVisitado())
         {
@@ -437,13 +438,13 @@ int Grafo::auxImprimePesoAresta(int id1)
 {
     // No *elemento = getNo(id1);
 //   return elemento->getPesoAresta();
+    return 2;
 }
 
 bool Grafo::possuiAresta(int id1, int id2)
 {
     No *elemento = getNo(id1);
-    int confereAdjacente;
-    for(int i = 0; i< elemento->nosAdjacentes.size(); i++)
+    for(unsigned int i = 0; i< elemento->nosAdjacentes.size(); i++)
     {
         if(elemento->nosAdjacentes[i]->id == id2)
         {
@@ -462,12 +463,10 @@ void Grafo::ordenacaoTopologica()
     int m =0; // arestas
     int grafo[n];
     int grau[n];
-    int lista[n]; // dos vï¿½rtices de grau zero
-    int listaPos = 0; //posiï¿½ï¿½o de inserï¿½ï¿½o na lista
+    int lista[n]; // dos vÃ¯Â¿Â½rtices de grau zero
+    int listaPos = 0; //posiÃ¯Â¿Â½Ã¯Â¿Â½o de inserÃ¯Â¿Â½Ã¯Â¿Â½o na lista
     No *atual;
     atual = NULL;
-    int cont =0;
-
     for(int i = 0; i<n; i++)
     {
         m = m+ listaNo[i]->getGrau();
@@ -478,64 +477,64 @@ void Grafo::ordenacaoTopologica()
 
     while(listaPos < n)
     {
-        ///--------------------------------quando o grau minimo nï¿½o ï¿½ 0 -------------------------------------------///
+        ///--------------------------------quando o grau minimo nÃ¯Â¿Â½o Ã¯Â¿Â½ 0 -------------------------------------------///
         while(grauMinimo(grau,n)!= 0 && grauMinimo(grau,n)>0)
         {
             for(int i = 0; i< n; i++)
             {
                 if(grau[i] == grauMinimo(grau,n))  /// se o grau for o grau minimo
                 {
-                    lista[listaPos] = grafo[i]; ///coloco o vertice na posiï¿½ï¿½o listaPos da lista
-                    listaPos++; /// atualizo listaPos para a proxima inserï¿½ï¿½o
+                    lista[listaPos] = grafo[i]; ///coloco o vertice na posiÃ¯Â¿Â½Ã¯Â¿Â½o listaPos da lista
+                    listaPos++; /// atualizo listaPos para a proxima inserÃ¯Â¿Â½Ã¯Â¿Â½o
                     for(int t = 0; t < n; t++)
                     {
                         if(listaNo[t]->id == grafo[i])
                             atual = listaNo[t]; /// No atual recebe o No com o id
                     }
 
-                    for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mï¿½nimo
+                    for(unsigned int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau mÃ¯Â¿Â½nimo
                     {
                         for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                         {
                             if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
-                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estï¿½ na posiï¿½ï¿½o k, sabendo que recebia uma aresta do vertce atual
+                                grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estÃ¯Â¿Â½ na posiÃ¯Â¿Â½Ã¯Â¿Â½o k, sabendo que recebia uma aresta do vertce atual
                         }
 
                     }
 
                     grafo[i] = -1; // retiro o vertice do grafo[]
-                    grau[i] = -1; // coloco um grau nulo para as proximas iteraï¿½ï¿½es
+                    grau[i] = -1; // coloco um grau nulo para as proximas iteraÃ¯Â¿Â½Ã¯Â¿Â½es
                 }
             }
         }
 
 
-        ///--------------------------------quando o grau minimo ï¿½ 0 -------------------------------------------///
+        ///--------------------------------quando o grau minimo Ã¯Â¿Â½ 0 -------------------------------------------///
         for(int i = 0; i< n; i++)
         {
             if(grau[i] == 0)  /// se o grau for 0
             {
-                lista[listaPos] = grafo[i]; ///coloco o vertice na posiï¿½ï¿½o listaPos da lista
-                listaPos++; /// atualizo listaPos para a proxima inserï¿½ï¿½o
+                lista[listaPos] = grafo[i]; ///coloco o vertice na posiÃ¯Â¿Â½Ã¯Â¿Â½o listaPos da lista
+                listaPos++; /// atualizo listaPos para a proxima inserÃ¯Â¿Â½Ã¯Â¿Â½o
                 for(int t = 0; t < n; t++)
                 {
                     if(listaNo[t]->id == grafo[i])
                         atual = listaNo[t]; /// No atual recebe o No com o id
                 }
 
-                for(int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
+                for(unsigned int j = 0; j< atual->nosAdjacentes.size(); j++) /// para todos os adjacentes ao no com grau 0
                 {
                     for(int k =0; k<n; k++)  ///percorro todos os vevrtices do grafo[] procurando alguem com aquele id
                     {
                         if(grafo[k] == atual->nosAdjacentes[j]->id)/// se o vetice tiver aquele id
-                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estï¿½ na posiï¿½ï¿½o k, sabendo que recebia uma aresta do vertce atual
+                            grau[k] = grau[k]- 1;///diminuo 1 do grau do vertice que estÃ¯Â¿Â½ na posiÃ¯Â¿Â½Ã¯Â¿Â½o k, sabendo que recebia uma aresta do vertce atual
                     }
 
                 }
 
 
                 grafo[i] = -1; // retiro o vertice do grafo[]
-                grau[i] = -1; // coloco um grau nulo para as proximas iteraï¿½ï¿½es
+                grau[i] = -1; // coloco um grau nulo para as proximas iteraÃ¯Â¿Â½Ã¯Â¿Â½es
             }
         }
     }
@@ -551,7 +550,7 @@ void Grafo::ordenacaoTopologica()
 
 int Grafo::grauMinimo(int graus[], int n)
 {
-    int grauMin =9999999999;
+    int grauMin =numeric_limits<int>::max();
 
     for (int i =0; i<n ; i++)
     {
@@ -566,7 +565,7 @@ void Grafo::printSequenciaDeGraus()
 {
     vector<int> graus;
 
-    for(no : listaNo) ///preenche o vector graus com o grau de cada no
+    for(auto no : listaNo) ///preenche o vector graus com o grau de cada no
     {
         graus.push_back(no->getGrau());
     }
@@ -576,7 +575,7 @@ void Grafo::printSequenciaDeGraus()
     cout << "Sequencia de graus: " << endl;
 
     cout << "<";
-    for(grau : graus)
+    for(auto grau : graus)
     {
         cout << grau << ", ";
     }
@@ -585,44 +584,50 @@ void Grafo::printSequenciaDeGraus()
 
 
 /**
- * Função principal do algoritmo guloso, que busca os vértices de menores graus, para minimizar a redução da lista de vértices candidatos a cada iteração
+ * FunÃ§Ã£o principal do algoritmo guloso, que busca os vÃ©rtices de menores graus, para minimizar a reduÃ§Ã£o da lista de vÃ©rtices candidatos a cada iteraÃ§Ã£o
  @return void
 */
-void Grafo::algoritmoGuloso()
+void Grafo::algoritmoGuloso(ofstream &arquivoDeSaida)
 {
     vector<No*> *solucaoGulosa = new vector<No*>; ///vector que vai armazenar os nos da solucao
     vector<No*> nosCandidatos = listaNo; ///A lista de candidatos inicialmente corresponde a todos os vertices do grafo
     vector<int> idsDosNosSolucao;
 
+    chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+
     while(!nosCandidatos.empty())
     {
-        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);   ///O melhor candidato é o nó de menor grau
+        No* candidatoAtual = getNoDeMenorGrau(nosCandidatos);   ///O melhor candidato ï¿½ o nï¿½ de menor grau
         solucaoGulosa->push_back(candidatoAtual);
-        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos); ///precisamos atualizar a lista dos nós candidatos a cada iteração
+        nosCandidatos = atualizaNosCandidatos(candidatoAtual, nosCandidatos); ///precisamos atualizar a lista dos nï¿½s candidatos a cada iteraï¿½ï¿½o
         idsDosNosSolucao.push_back(candidatoAtual->id);
     }
 
-    printSolucaoGulosa(idsDosNosSolucao);   ///função auxiliar para imprimir os ids dos nós da solução
+    chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
+    auto elapsed = finish - start;
+    float tempo = elapsed.count()/1000000000;
+
+    printSolucaoGulosa(idsDosNosSolucao, arquivoDeSaida, tempo);   ///funï¿½ï¿½o auxiliar para imprimir os ids dos nï¿½s da soluï¿½ï¿½o
 }
 
 /**
- * Remove da lista de candidatos aqueles que são adjacentes ao último selecionado
- * @param candidatoSelecionado ultimo candidato adicionado à solução
- * @param nosCandidatos vetor de candidatos, que será atualizado pela função
+ * Remove da lista de candidatos aqueles que sÃ£o adjacentes ao Ãºltimo selecionado
+ * @param candidatoSelecionado ultimo candidato adicionado Ã  soluÃ§Ã£o
+ * @param nosCandidatos vetor de candidatos, que serÃ¡ atualizado pela funÃ§Ã£o
  * @return nosCandidatos
 */
 vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> nosCandidatos)
 {
-    for(int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
+    for(unsigned int a = 0; a < nosCandidatos.size(); a++)   ///tira o ultimo candidato selecionado da lista de candidatos
     {
         if(nosCandidatos[a]->id == candidatoSelecionado->id)
             nosCandidatos.erase(nosCandidatos.begin() + a);
     }
 
     vector<No*> adjacentesAoSelecionado = candidatoSelecionado->nosAdjacentes;
-    for(int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
+    for(unsigned int i = 0; i < nosCandidatos.size(); i++) /// o conjunto deve ser independente: nao pode conter elementos adjacentes!
     {
-        for(int j = 0; j < adjacentesAoSelecionado.size(); j++)
+        for(unsigned int j = 0; j < adjacentesAoSelecionado.size(); j++)
         {
             if(nosCandidatos[i]->id == adjacentesAoSelecionado[j]->id)
             {
@@ -634,14 +639,14 @@ vector<No*> Grafo::atualizaNosCandidatos(No* candidatoSelecionado, vector<No*> n
 }
 
 /**
- * Retorna o vértice de menor grau dentre aqueles que estão na lista de candidatos
+ * Retorna o vÃ©rtice de menor grau dentre aqueles que estÃ£o na lista de candidatos
  * @param nosCandidatos
  * @return noMenorGrau
 */
 No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 {
     No* noMenorGrau = nosCandidatos[0];
-    for(candidato : nosCandidatos)
+    for(auto candidato : nosCandidatos)
     {
         if(candidato->getGrau() < noMenorGrau->getGrau())
             noMenorGrau = candidato;
@@ -650,29 +655,33 @@ No* Grafo::getNoDeMenorGrau(vector<No*> nosCandidatos)
 }
 
 /**
- * Imprime a solução encontrada pelo algoritmo guloso
- * @param solucao vetor contendo os id's dos nós da solução
+ * Imprime a soluÃ§Ã£o encontrada pelo algoritmo guloso
+ * @param solucao vetor contendo os id's dos nÃ³s da soluÃ§Ã£o
  * @return void
 */
-void Grafo::printSolucaoGulosa(vector<int> solucao)
+void Grafo::printSolucaoGulosa(vector<int> solucao, ofstream &arquivoDeSaida, float tempo)
 {
-    cout << "Solucao atraves do Algoritmo Guloso: ";
+    /*cout << "Solucao atraves do Algoritmo Guloso: ";
 
     cout << "[ ";
-    for(noSolucao : solucao)
+    for(auto noSolucao : solucao)
     {
         cout << noSolucao << ", ";
     }
     cout << "]" << endl;
-    cout << "Cardinalidade da solucao gulosa: " << solucao.size() << endl;
+    cout << "Cardinalidade da solucao gulosa: " << solucao.size() << endl;*/
+
+    //arquivoDeSaida << "Cardinalidade da solucao Wgulosa,\n";
+    arquivoDeSaida << solucao.size() << "," << tempo;
+    arquivoDeSaida << "\n";
 
 }
 
 /**
- * Inicia o Algoritmo Guloso Randomizado, e recebe como input do usuário, via linha de comando, o parâmetro alfa o número máximo de iterações
+ * Inicia o Algoritmo Guloso Randomizado, e recebe como input do usuÃ¡rio, via linha de comando, o parÃ¢metro alfa o nÃºmero mÃ¡ximo de iteraÃ§Ãµes
  * @return void
 */
-void Grafo::iniciaAlgoritmoGulosoRandomizado()
+/*void Grafo::iniciaAlgoritmoGulosoRandomizado()
 {
     float alfa;
     int maximoIteracoes;
@@ -685,28 +694,28 @@ void Grafo::iniciaAlgoritmoGulosoRandomizado()
     vector<int> idsDosNosDaMelhorSolucao = algoritmoGulosoRandomizado(alfa, maximoIteracoes);
 
     printSolucaoGulosaRandomizada(idsDosNosDaMelhorSolucao);
-}
+}*/
 
 /**
- * Função responsável por criar as estruturas e váriaveis necessárias para o Guloso Randomizado
+ * FunÃ§Ã£o responsÃ¡vel por criar as estruturas e vÃ¡riaveis necessÃ¡rias para o Guloso Randomizado
  * @param alfa
  * @param maximoIteracoes
  * @return idsDosNosDaMelhorSolucao
 */
-vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
+vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, ofstream &arquivoDeSaida)
 {
-    auto start = std::chrono::high_resolution_clock::now(); ///Grava o tempo em que o algoritmo começou
+    auto start = std::chrono::high_resolution_clock::now(); ///Grava o tempo em que o algoritmo comeÃ§ou
 
-    vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa); ///obtem uma solução inicial aleatoria, de acordo com o parâmetro alfa
+    vector<int> idsDosNosDaMelhorSolucao = getSolucaoRandomizada(alfa); ///obtem uma soluÃ§Ã£o inicial aleatoria, de acordo com o parÃ¢metro alfa
     int maiorCardinalidade = idsDosNosDaMelhorSolucao.size();
 
     for(int i = 0; i < maximoIteracoes; i++)
     {
-        cout << "Iteracao " << i << endl;
+        //cout << "Iteracao " << i << endl;
         vector<int> idsDosNosDaSolucaoAtual = getSolucaoRandomizada(alfa);
         int cardinalidadeAtual = idsDosNosDaSolucaoAtual.size();
 
-        if(cardinalidadeAtual > maiorCardinalidade) /// se a cardinalidade da solução atual for maior do que a maior encontrada até agora, passa ser a atual maior
+        if(cardinalidadeAtual > maiorCardinalidade) /// se a cardinalidade da soluÃ§Ã£o atual for maior do que a maior encontrada atÃ© agora, passa ser a atual maior
         {
             idsDosNosDaMelhorSolucao = idsDosNosDaSolucaoAtual;
             maiorCardinalidade = cardinalidadeAtual;
@@ -716,16 +725,19 @@ vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes)
     auto finish = std::chrono::high_resolution_clock::now();    ///Grava o tempo em que o algoritmo terminou
     auto elapsed = finish - start;  ///Obtem o tempo total, em nanosegundos (10^-9)
     float tempo = elapsed.count()/1000000000;
-    cout << "Tempo levado para obter a solucao gulosa randomizada: " << tempo << "s" << endl;
+    //cout << "Tempo levado para obter a solucao gulosa randomizada: " << tempo << "s" << endl;
+
+    arquivoDeSaida << maiorCardinalidade << "," << tempo;
+    arquivoDeSaida << "\n";
 
     return idsDosNosDaMelhorSolucao;
 }
 
 /**
- * Overload da função do Randomizado para ser chamada pelo reativo -- a diferença está no fato de que esta recebe e altera a variável mediaDasSolucoes, usada pelo reativo
+ * Overload da funÃ§Ã£o do Randomizado para ser chamada pelo reativo -- a diferenÃ§a estÃ¡ no fato de que esta recebe e altera a variÃ¡vel mediaDasSolucoes, usada pelo reativo
  * @param alfa
  * @param maximoIteracoes
- * @param mediaDasSolucoes variável passada pela função do Reatiovo, e que será alterada no final dessa função
+ * @param mediaDasSolucoes variÃ¡vel passada pela funÃ§Ã£o do Reatiovo, e que serÃ¡ alterada no final dessa funÃ§Ã£o
  * @return idsDosNosDaMelhorSolucao
 */
 vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, float *mediaDasSolucoes)
@@ -747,11 +759,12 @@ vector<int> Grafo::algoritmoGulosoRandomizado(float alfa, int maximoIteracoes, f
         }
     }
     *mediaDasSolucoes = (somaSolucoes/(maximoIteracoes+1));
+
     return idsDosNosDaMelhorSolucao;
 }
 
 /**
- * Função que obtem, de fato, uma solução randomizada, que será retornada a função "algoritmoGulosoRandomizado"
+ * FunÃ§Ã£o que obtem, de fato, uma soluÃ§Ã£o randomizada, que serÃ¡ retornada a funÃ§Ã£o "algoritmoGulosoRandomizado"
  * @param alfa
  * @return idsDosNosSolucao
 */
@@ -782,11 +795,11 @@ vector<int> Grafo::getSolucaoRandomizada(float alfa)
 }
 
 /**
- * Retorna um número aleatório entre os limites passados como parâmetro
+ * Retorna um nÃºmero aleatÃ³rio entre os limites passados como parÃ¢metro
  * @param limite_inf
  * @param limite_sup
- * @param timer semente para gerar número aleatório
- * @return número inteiro aleatório
+ * @param timer semente para gerar nÃºmero aleatÃ³rio
+ * @return nÃºmero inteiro aleatÃ³rio
 */
 int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
 {
@@ -798,8 +811,8 @@ int Grafo::gerarNumeroAleatorio(int limite_inf, int limite_sup, int timer)
 }
 
 /**
- * Imprime a solução do Guloso Randomizado
- * @param solucao vetor contendo os id's dos nós da solução
+ * Imprime a soluÃ§Ã£o do Guloso Randomizado
+ * @param solucao vetor contendo os id's dos nÃ³s da soluÃ§Ã£o
  * @return void
 */
 void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
@@ -807,7 +820,7 @@ void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
     cout << "Solucao atraves do Algoritmo Guloso Randomizado: ";
 
     cout << "[ ";
-    for(noSolucao : solucao)
+    for(auto noSolucao : solucao)
     {
         cout << noSolucao << ", ";
     }
@@ -817,15 +830,15 @@ void Grafo::printSolucaoGulosaRandomizada(vector<int> solucao)
 }
 
 /**
- * Obtem um vetor com os nós ordenados de acordo com o grau, do menor para o maior
- * @param nosCandidatos vetor contendo os id's dos nós candidatos
+ * Obtem um vetor com os nÃ³s ordenados de acordo com o grau, do menor para o maior
+ * @param nosCandidatos vetor contendo os id's dos nÃ³s candidatos
  * @return vetorOrdenadoPeloGrau
 */
 vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
 {
     vector<No*> vetorOrdenadoPeloGrau = nosCandidatos;
     No* aux;
-    int i, j;
+    unsigned int i, j;
 
     for(i = 1; i < vetorOrdenadoPeloGrau.size(); i++)
     {
@@ -843,9 +856,9 @@ vector<No*> Grafo::getVetorMenorGrau(vector<No*> nosCandidatos)
 }
 
 /**
- * Obtem uma porção dos nós candidatos ordenados pelo grau, de acordo com o parâmetro alfa
- * Alfa == 0: retorna apenas o melhor candidato (equivale à função gulosa padrão)
- * Alfa == 1: retorna todos os elementos (equivale a uma busca completamente aleatória)
+ * Obtem uma porÃ§Ã£o dos nÃ³s candidatos ordenados pelo grau, de acordo com o parÃ¢metro alfa
+ * Alfa == 0: retorna apenas o melhor candidato (equivale Ã  funÃ§Ã£o gulosa padrÃ£o)
+ * Alfa == 1: retorna todos os elementos (equivale a uma busca completamente aleatÃ³ria)
  * @param candidatosOrdenadosPeloGrau
  * @param alfa
  * @return vetorOrdenadoPeloGrau
@@ -870,12 +883,13 @@ vector<No*> Grafo::getPorcentagem(vector<No*> candidatosOrdenadosPeloGrau, float
 }
 
 /**
- * Inicializa o Randomizado Reativo, e recebe como input do usuário o numero máximo de iterações pro reativo e para os randomizados que serão chamados, além do número de alfas
- * Possui como bloco padrão 100 iterações
+ * Inicializa o Randomizado Reativo, e recebe como input do usuÃ¡rio o numero mÃ¡ximo de iteraÃ§Ãµes pro reativo e para os randomizados que serÃ£o chamados, alÃ©m do nÃºmero de alfas
+ * Possui como bloco padrÃ£o 100 iteraÃ§Ãµes
  * @return void
 */
-void Grafo::algoritmoGulosoRandomizadoReativo()
+void Grafo::algoritmoGulosoRandomizadoReativo(int maximoIteracoesReativo, int maximoIteracoesRandomizado, int numeroDeAlfas, ofstream &arquivoDeSaida)
 {
+
     auto start = std::chrono::high_resolution_clock::now();
 
     int atualMaiorCardinalidade;
@@ -884,7 +898,7 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
     float *mediaSolucoes = &pmediaSolucoes;
     *mediaSolucoes = 0;
 
-    int maximoIteracoesReativo;
+    /*int maximoIteracoesReativo;
     cout << "Digite o numero maximo de iteracoes do reativo: ";
     cin >> maximoIteracoesReativo;
 
@@ -896,15 +910,15 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
     cout << "Digite o numero de alfas: ";
     cin >> numeroDeAlfas;
 
-    cout << "numeroDeAlfas: " << numeroDeAlfas << endl;
+    cout << "numeroDeAlfas: " << numeroDeAlfas << endl; */
 
-    Alfa alfas[numeroDeAlfas];   ///Declaração do array de Alfas
+    Alfa alfas[numeroDeAlfas];   ///DeclaraÃ§Ã£o do array de Alfas
     preencheAlfas(alfas, numeroDeAlfas, maximoIteracoesRandomizado); ///Preenche o array com alfas com iguais probabilidades de serem escolhidos
 
     vector<int> solucaoInicial = alfas[0].idsMelhorSolucao;
     atualMaiorCardinalidade = alfas[0].melhorSolucao;
 
-    for(int n = 1; n < numeroDeAlfas; n++)    /// Determina qual dos alfas possui a melhor solução e atualiza o vetor solucaoInicial e a variável atualMaiorCardinalidade
+    for(int n = 1; n < numeroDeAlfas; n++)    /// Determina qual dos alfas possui a melhor soluÃ§Ã£o e atualiza o vetor solucaoInicial e a variÃ¡vel atualMaiorCardinalidade
     {
         if(alfas[n].melhorSolucao > atualMaiorCardinalidade)
         {
@@ -915,17 +929,17 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 
     for(int i = 0; i < maximoIteracoesReativo; i++)
     {
-        cout << endl << "**Iteracao do reativo** " << i << endl;
+       // cout << endl << "**Iteracao do reativo** " << i << endl;
 
         Alfa alfa = getAlfaAleatorio(alfas, numeroDeAlfas);
         vector<int> idsDaSolucaoRandomizada = algoritmoGulosoRandomizado(alfa.valorAlfa, maximoIteracoesRandomizado, mediaSolucoes);
         int cardinalidadeDaSolucaoAtual = idsDaSolucaoRandomizada.size();
 
-        if(cardinalidadeDaSolucaoAtual > atualMaiorCardinalidade)   /// verifica se obtivemos uma solução melhor do que as já encontradas
+        if(cardinalidadeDaSolucaoAtual > atualMaiorCardinalidade)   /// verifica se obtivemos uma soluÃ§Ã£o melhor do que as jÃ¡ encontradas
         {
             atualMaiorCardinalidade = cardinalidadeDaSolucaoAtual;
             solucaoReativa = idsDaSolucaoRandomizada;
-            cout << "Maior cardinalidade atualizada: " << atualMaiorCardinalidade << endl;
+            //cout << "Maior cardinalidade atualizada: " << atualMaiorCardinalidade << endl;
         }
 
         alfa.melhorSolucao = cardinalidadeDaSolucaoAtual;
@@ -935,24 +949,29 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 
         if(i%100 == 0 && i > 0)  ///BLOCO
         {
-            cout << "Iteracao " << i << endl;
+           /* cout << "Iteracao " << i << endl;
 
             for(int i = 0; i < numeroDeAlfas; i++) {
                 cout << "Alfa " << i << ": ";
                 cout << "Probabilidade de ser escolhido ate agora era: " << alfas[i].probabilidadeDeSerEscolhido << ". ";
                 cout << "Foi escolhido " << alfas[i].numeroDeVezesEscolhidoTotal << " vezes." << endl;
-            }
+            } */
 
             atualizaProbabilidadeDosAlfas(alfas, numeroDeAlfas, atualMaiorCardinalidade);
         }
     }
+    /*
     cout << endl << "-------RESULTADO DO REATIVO-------" << endl;
-    cout << "Maior cardinalidade encontrada: " << atualMaiorCardinalidade << endl;
+    cout << "Maior cardinalidade encontrada: " << atualMaiorCardinalidade << endl;*/
 
     auto finish = std::chrono::high_resolution_clock::now();
     auto elapsed = finish - start;
     float tempo = elapsed.count()/1000000000;
-    cout << "Tempo levado para obter a solucao gulosa randomizada reativa: " << tempo << "s" << endl;
+
+    arquivoDeSaida << atualMaiorCardinalidade << "," << tempo;
+    arquivoDeSaida << "\n";
+
+    //cout << "Tempo levado para obter a solucao gulosa randomizada reativa: " << tempo << "s" << endl;
 }
 
 /**
@@ -963,23 +982,23 @@ void Grafo::algoritmoGulosoRandomizadoReativo()
 */
 Grafo::Alfa Grafo::getAlfaAleatorio(Alfa *alfas, int numeroDeAlfas)
 {
-    unsigned seed = chrono::steady_clock::now().time_since_epoch().count(); /// semente para a geração de um índice
+    unsigned seed = chrono::steady_clock::now().time_since_epoch().count(); /// semente para a geraÃ§Ã£o de um Ã­ndice
     default_random_engine generator(seed);
 
-    vector<int> probabilidades; /// Vetor que irá armazenar a probabilidade de cada Alfa
+    vector<int> probabilidades; /// Vetor que irÃ¡ armazenar a probabilidade de cada Alfa
     for(int i=0; i<numeroDeAlfas; i++)
     {
-        probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);  /// Através deste vetor iremos sortear o índice de um dos alfas
+        probabilidades.insert(probabilidades.begin()+i, alfas[i].probabilidadeDeSerEscolhido);  /// AtravÃ©s deste vetor iremos sortear o Ã­ndice de um dos alfas
     }
-    discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end()); /// Distribuição discreta utilizada para fazer o sorteio com diferentes probabilidades
-    int indiceAleatorio = distribution(generator);  /// Gera o índice aleatório
+    discrete_distribution<> distribution(probabilidades.begin(), probabilidades.end()); /// DistribuiÃ§Ã£o discreta utilizada para fazer o sorteio com diferentes probabilidades
+    int indiceAleatorio = distribution(generator);  /// Gera o Ã­ndice aleatÃ³rio
     Alfa alfaAleatorio = alfas[indiceAleatorio];
 
     return alfaAleatorio;
 }
 
 /**
- * Preenche as struct alfa no início do Guoso Randomizado Reativo, com probabilidades iguais
+ * Preenche as struct alfa no inÃ­cio do Guoso Randomizado Reativo, com probabilidades iguais
  * @param alfas array com os alfas
  * @param numeroDeAlfas
  * @param maximoIteracoesRandomizado
@@ -989,7 +1008,7 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
 {
 
     float probabilidadeInicial = 100/numeroDeAlfas;
-    cout << "Probabilidade inicial: " << probabilidadeInicial << endl;
+    //cout << "Probabilidade inicial: " << probabilidadeInicial << endl;
     float valorInicial = 0.0;
     float mediaDasSolucoes;
     for(int i=0; i< numeroDeAlfas; i++)
@@ -1008,21 +1027,21 @@ void Grafo::preencheAlfas(Alfa *alfas, int numeroDeAlfas, int maximoIteracoesRan
         alfa.indice = i;
 
         alfas[i] = alfa; /// atualiza o array de alfas
-        valorInicial += (1.0 - valorInicial)/numeroDeAlfas; /// incrementa o valor que será atribuído a cada alfa, de acordo com o número de alfas passado pelo usuário
+        valorInicial += (1.0 - valorInicial)/numeroDeAlfas; /// incrementa o valor que serÃ¡ atribuÃ­do a cada alfa, de acordo com o nÃºmero de alfas passado pelo usuÃ¡rio
     }
 }
 
 /**
  * Calcula o valor Qi, utilizado para atualizar as probabilidades de cada alfa
- * @param melhorSolucaoGeral cardinalidade da melhor solução geral
- * @param mediaSolucoes media das soluções para o alfa específico
+ * @param melhorSolucaoGeral cardinalidade da melhor soluÃ§Ã£o geral
+ * @param mediaSolucoes media das soluÃ§Ãµes para o alfa especÃ­fico
  * @return Qi
 */
 float Grafo::calculaQi(int melhorSolucaoGeral, float mediaSolucoes)
 {
     int f = melhorSolucaoGeral;
     float Ai = mediaSolucoes;
-    float Qi = pow(f/Ai, 10);   /// Parâmetro de amplificação == 10 (padrão)
+    float Qi = pow(f/Ai, 10);   /// ParÃ¢metro de amplificaÃ§Ã£o == 10 (padrÃ£o)
 
     return Qi;
 }
@@ -1043,13 +1062,13 @@ void Grafo::atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int me
 
         SomaQi += alfas[j].Qi;
     }
-    cout << "SomaQi: " << SomaQi << endl;
+    //cout << "SomaQi: " << SomaQi << endl;
 
     for(int j = 0; j < numeroDeAlfas; j++)  /// Agora calculamos a possibilidade de cada Alfa
     {
         float P = alfas[j].Qi/SomaQi*100;
         alfas[j].probabilidadeDeSerEscolhido = P;
-        cout << "DEPOIS DE ATUALIZAR:Probabilidade do alfa "<< j << ": " << alfas[j].probabilidadeDeSerEscolhido << endl;
+        //cout << "DEPOIS DE ATUALIZAR:Probabilidade do alfa "<< j << ": " << alfas[j].probabilidadeDeSerEscolhido << endl;
     }
 }
 
@@ -1057,7 +1076,7 @@ void Grafo::atualizaProbabilidadeDosAlfas(Alfa *alfas, int numeroDeAlfas, int me
 void Grafo::preenche(No  *v, stack<No*>& pilha)
 {
     v->setVisitado(true);
-    for(int i=0; i < v->nosAdjacentes.size(); i++)
+    for(unsigned int i=0; i < v->nosAdjacentes.size(); i++)
     {
         No* adjacenteAtual = v->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
@@ -1076,7 +1095,7 @@ void Grafo::DFS(No *v)
     v->setVisitado(true);
     cout << "" << v->id << endl;
 
-    for(int i=0; i<v->nosAdjacentes.size(); i++)
+    for(unsigned int i=0; i<v->nosAdjacentes.size(); i++)
     {
         No* adjacenteAtual = v->nosAdjacentes[i];
         if(!adjacenteAtual->getVisitado())
@@ -1093,12 +1112,12 @@ Grafo* Grafo::obterGrafoTransposto()
 {
     Grafo *transposto = new Grafo();
 
-    for(int i =0; i < listaNo.size(); i++) {
+    for(unsigned int i =0; i < listaNo.size(); i++) {
         transposto->adicionaVertice(new No(i));
     }
 
-    for(int i =0; i < listaNo.size(); i++) {
-        for(int j =0; j < listaNo.size(); j++) {
+    for(unsigned int i =0; i < listaNo.size(); i++) {
+        for(unsigned int j =0; j < listaNo.size(); j++) {
             if(this->getNo(i)->verificaAdjacencia(this->getNo(j))) {
                 transposto->getNo(j)->adicionaNoAdjacente(transposto->getNo(i), true, 0);
             }
@@ -1114,7 +1133,7 @@ void Grafo::imprimirComponentesFortementeConexas()
 
     setVisitadoEmTodosNos(false);
 
-    for(int i=0; i < listaNo.size(); i++)
+    for(unsigned int i=0; i < listaNo.size(); i++)
     {
         if(!listaNo[i]->getVisitado())
 
@@ -1128,14 +1147,14 @@ void Grafo::imprimirComponentesFortementeConexas()
     Grafo *t = new Grafo();
     t = obterGrafoTransposto();
 
-    // marca todos como nï¿½o visitados novamente
+    // marca todos como nÃ¯Â¿Â½o visitados novamente
     setVisitadoEmTodosNos(false);
 
-    // processa os vï¿½rtices de acordo com a pilha
+    // processa os vÃ¯Â¿Â½rtices de acordo com a pilha
     while(!pilha.empty())
     {
 
-        // obtï¿½m o elemento do topo
+        // obtÃ¯Â¿Â½m o elemento do topo
         No *v = pilha.top();
 
         //remove o elemento
@@ -1159,10 +1178,10 @@ void Grafo::matrizDistancia()
     Aresta* aresta;
     int pesoAresta=0;
 
-    /// ------------------------Entendendo o cÃ³digo abaixo -----------------------------------------------------------------
+    /// ------------------------Entendendo o cÃƒÂ³digo abaixo -----------------------------------------------------------------
     /// caso seja adjacente, pega a distancia (peso) da aresta entre 2 nohs, caso nao seja, seta 9999999999
-    /// com grafos orientados, quando um nÃ³ a, Ã© direcionado ao b, se tentarmos pegar a adjacencia de b para a, seria como se
-    /// fossem nÃ£o adjacentes, sendo assim, a distancia serÃ¡ setada como 9999999999
+    /// com grafos orientados, quando um nÃƒÂ³ a, ÃƒÂ© direcionado ao b, se tentarmos pegar a adjacencia de b para a, seria como se
+    /// fossem nÃƒÂ£o adjacentes, sendo assim, a distancia serÃƒÂ¡ setada como 9999999999
     /// caminho de um noh ao mesmo noh recebem 0
     /// --------------------------------------------------------------------------------------------------------------------
     for(int i=0; i<n; i++)
@@ -1184,21 +1203,21 @@ void Grafo::matrizDistancia()
             }
             else
             {
-                mDistancia[i][j] = 9999999999;
+                mDistancia[i][j] = numeric_limits<int>::max();
             }
         }
     }
 }
 
-/// Encontra o menor caminho entre todos os pares usando o algorÃ­tmo de Floyd Warshall
+/// Encontra o menor caminho entre todos os pares usando o algorÃƒÂ­tmo de Floyd Warshall
 void Grafo:: floyd()
 {
     int V = listaNo.size();
 
-    ///primeiro chamamos a funÃ§Ã£o matrizDistancia para popular a matriz mDistancia
+    ///primeiro chamamos a funÃƒÂ§ÃƒÂ£o matrizDistancia para popular a matriz mDistancia
     matrizDistancia();
 
-    ///matriz que conterÃ¡ as menores distÃ¢ncias entre todos os pares de vÃ©rtices
+    ///matriz que conterÃƒÂ¡ as menores distÃƒÂ¢ncias entre todos os pares de vÃƒÂ©rtices
     int dist[V][V], i, j, k;
 
     ///inicializando os valores de dist com os mesmos valores de mDistancia
@@ -1206,13 +1225,13 @@ void Grafo:: floyd()
         for (j = 0; j < V; j++)
             dist[i][j] = mDistancia[i][j];
 
-    /*Adiciona todos os vÃ©rtices, um por um, no set de vertices intermediarios
+    /*Adiciona todos os vÃƒÂ©rtices, um por um, no set de vertices intermediarios
 
-    --->antes de comeÃ§ar a iteraÃ§Ã£o, nos temos menores distancias entre todos os pares de
-    vÃ©rtices de forma que as menores distancias consederam apenas os vÃ©rtices no set {0, 1, 2, .. k-1} como
-     vÃ©rtices intermediarios
+    --->antes de comeÃƒÂ§ar a iteraÃƒÂ§ÃƒÂ£o, nos temos menores distancias entre todos os pares de
+    vÃƒÂ©rtices de forma que as menores distancias consederam apenas os vÃƒÂ©rtices no set {0, 1, 2, .. k-1} como
+     vÃƒÂ©rtices intermediarios
 
-     ---> ApÃ³s o fim de uma iteraÃ§Ã£o, o vertice k eh adicionado ao set de vertices intemediario e o set
+     ---> ApÃƒÂ³s o fim de uma iteraÃƒÂ§ÃƒÂ£o, o vertice k eh adicionado ao set de vertices intemediario e o set
      se torna {0, 1, 2, .. k} */
 
 
@@ -1256,7 +1275,7 @@ bool Grafo::ehConexo()
         else
             return true;
     }
-
+    return true;
 }
 
 

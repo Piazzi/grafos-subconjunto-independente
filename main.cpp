@@ -76,7 +76,7 @@ int noMenu()
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
-    for(op : opcoesMenu)
+    for(auto op : opcoesMenu)
     {
         cout << op << endl;
     }
@@ -114,7 +114,7 @@ int noMenuLeitura()
     };
 
     cout << endl << "Selecione uma das opcoes: " << endl;
-    for(op : opcoesMenu)
+    for(auto op : opcoesMenu)
     {
         cout << op << endl;
     }
@@ -140,11 +140,11 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 {
     bool direcionado = false; /// grafo->ehDirecionado();
     Grafo* grafoComplementar = new Grafo();
-    for(int i = 0; i < grafo->listaNo.size(); i++)
+    for(unsigned int i = 0; i < grafo->listaNo.size(); i++)
     {
         No* noOriginal = grafo->listaNo[i];
         No* noComplementar = noOriginal;
-        for(int j = 0; j < grafo->listaNo.size() && i!=j; j++)
+        for(unsigned int j = 0; j < grafo->listaNo.size() && i!=j; j++)
         {
             if(noOriginal->verificaAdjacencia(grafo->listaNo[j]))
             {
@@ -166,380 +166,442 @@ Grafo* criaGrafoComplementar(Grafo* grafo)
 int main(int argc, char * argv[])
 {
 
-    int pesoVertice;
-    int pesoAresta;
-    int idDijkstra1 = 0;
-    int idDijkstra2 = 0;
-    int id = 0;
-    int idAdj = 0;
-    int opcao = 0;
+    //int pesoVertice;
+    int pesoAresta = 0;
+    //int idDijkstra1 = 0;
+    //int idDijkstra2 = 0;
+    //int id = 0;
+    //int idAdj = 0;
+    //int opcao = 0;
     bool direcionado = 0;
-    bool ponderadoVertice = 0 ;
-    bool ponderadoAresta = 0;
+    //bool ponderadoVertice = 0 ;
+    //bool ponderadoAresta = 0;
     vector< No > vertices;
     Grafo *grafo = new Grafo();
-    Kruskal *kruskal = new Kruskal();
-    Prim *prim = new Prim();
-    Dijkstra *dijkistra = new Dijkstra();
-    FloydWarshall *floydWarshall = new FloydWarshall();
+    //Kruskal *kruskal = new Kruskal();
+    //Prim *prim = new Prim();
+    //Dijkstra *dijkistra = new Dijkstra();
+    //FloydWarshall *floydWarshall = new FloydWarshall();
 
-    ///************* CONSTRUÇÃO DO GRAFO ******************///
-
-    if(lerOuConstruirMenu() == 2)
-    {
-        int opcaorepresenta = tipodeGrafo();
-        /// Menu do tipo de representação do grafo
-        switch(opcaorepresenta)
+    ///************* CONSTRUï¿½ï¿½O DO GRAFO ******************///
+    /*
+        if(lerOuConstruirMenu() == 2)
         {
-        case 1:
-            cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoVertice;
-        case 2:
-            cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoAresta;
-        case 3:
-            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
-            cin >>direcionado;
-        }
-
-        /// Menu de opções para o grafo
-        cout << "Criando seu Grafo " << endl;
-        while(id != -1)
-        {
-            opcao = noMenu();
-            switch(opcao)
+            int opcaorepresenta = tipodeGrafo();
+            /// Menu do tipo de representaï¿½ï¿½o do grafo
+            switch(opcaorepresenta)
             {
-            /// Adicionar Nó
             case 1:
-            {
-                cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
-                cin >> id;
-                if(id == -1)
-                    break;
-                if(ponderadoVertice == 1)
-                {
-                    No *vertice = new No(id);
-                    cout<< "Adiciono um peso ao vertice " <<id<<endl;
-                    cin>>pesoVertice;
-                    grafo->adicionaVerticePonderado(vertice,pesoVertice);
-                }
-                else
-                {
-                    No *vertice = new No(id);
-                    grafo->adicionaVertice(vertice);
-                }
-            }
-            break;
-            /// Adicionar vizinho a um No
+                cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
+                cin >> ponderadoVertice;
             case 2:
-                cout << "Digite o id do no que voce quer acessar: " << endl;
-                cin >> id;
-                if(id == -1)
-                    break;
-                while(!grafo->verificaId(id))
+                cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
+                cin >> ponderadoAresta;
+            case 3:
+                cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+                cin >>direcionado;
+            }
+
+            /// Menu de opï¿½ï¿½es para o grafo
+            cout << "Criando seu Grafo " << endl;
+            while(id != -1)
+            {
+                opcao = noMenu();
+                switch(opcao)
                 {
-                    cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
+                /// Adicionar Nï¿½
+                case 1:
+                {
+                    cout << "Adicione um vertice informando seu id ou aperte [-1] para terminar o grafo" << endl;
                     cin >> id;
                     if(id == -1)
                         break;
-                }
-                cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
-                cin >> idAdj;
-                if(id == idAdj)
-                {
-                    cout<<"Nao e permitido self-loop"<<endl;
-                }
-                else
-                {
-                    if(ponderadoAresta)
+                    if(ponderadoVertice == 1)
                     {
-                        cout<< "Adicione o peso da aresta ["<<id<<"] ["<<idAdj<<"]"<<endl;
-                        cin>>pesoAresta;
-                        grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
+                        No *vertice = new No(id);
+                        cout<< "Adiciono um peso ao vertice " <<id<<endl;
+                        cin>>pesoVertice;
+                        grafo->adicionaVerticePonderado(vertice,pesoVertice);
                     }
                     else
                     {
-                        grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
+                        No *vertice = new No(id);
+                        grafo->adicionaVertice(vertice);
                     }
                 }
                 break;
-            /// Adicionar Aresta a um no
-            case 3:
-                break;
-            /// Imprime lista de vértices do no
-            case 4:
-                grafo->printNos();
-                break;
-            /// Menu de Representação do Grafo
-            case 5:
-            {
-                int opcaorepresenta = tipoDeRepresentacaoMenu();
-                if(opcaorepresenta == 1)
+                /// Adicionar vizinho a um No
+                case 2:
+                    cout << "Digite o id do no que voce quer acessar: " << endl;
+                    cin >> id;
+                    if(id == -1)
+                        break;
+                    while(!grafo->verificaId(id))
+                    {
+                        cout << "Id invalido, esse no nao foi encontrado no grafo, digite outro id: " << endl;
+                        cin >> id;
+                        if(id == -1)
+                            break;
+                    }
+                    cout << "Voce esta no vertice " << grafo->getNo(id)->id << ", digite um vertice adjacente a esse: " << endl;
+                    cin >> idAdj;
+                    if(id == idAdj)
+                    {
+                        cout<<"Nao e permitido self-loop"<<endl;
+                    }
+                    else
+                    {
+                        if(ponderadoAresta)
+                        {
+                            cout<< "Adicione o peso da aresta ["<<id<<"] ["<<idAdj<<"]"<<endl;
+                            cin>>pesoAresta;
+                            grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
+                        }
+                        else
+                        {
+                            grafo->arestas.push_back(grafo->getNo(id)->adicionaNoAdjacente(grafo->getNo(idAdj),direcionado,pesoAresta));
+                        }
+                    }
+                    break;
+                /// Adicionar Aresta a um no
+                case 3:
+                    break;
+                /// Imprime lista de vï¿½rtices do no
+                case 4:
+                    grafo->printNos();
+                    break;
+                /// Menu de Representaï¿½ï¿½o do Grafo
+                case 5:
                 {
-                    cout << "Matriz de adjacencia: " << endl;
-                    grafo->matrizAdjacencia(direcionado);
+                    int opcaorepresenta = tipoDeRepresentacaoMenu();
+                    if(opcaorepresenta == 1)
+                    {
+                        cout << "Matriz de adjacencia: " << endl;
+                        grafo->matrizAdjacencia(direcionado);
+                    }
+                    else if(opcaorepresenta == 2)
+                    {
+                        cout<<"Lista de adjacencia: "<<endl;
+                        grafo->printListaAdjacencia();
+                    }
+                    else if(opcaorepresenta == -1)
+                    {
+                        break;
+                    }
                 }
-                else if(opcaorepresenta == 2)
+                break;
+                /// Imprime nos adjacentes
+                case 6:
+                    grafo->printAdjacentesAoNo();
+                    break;
+                /// Remove uma aresta
+                case 7:
+                    grafo->removeAresta();
+                    break;
+                /// Remover um vï¿½rtice
+                case 8:
+                    grafo->removeVertice();
+                    break;
+                /// Cria um grafo complementar e representa o mesmo em lista de adjacï¿½ncia
+                case 9:
+                    criaGrafoComplementar(grafo)->printListaAdjacencia();
+                    break;
+                /// Cria um grafo complementar e representa o mesmo em matriz de adjacï¿½ncia
+                case 10:
+                    criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+                    break;
+                /// Aplica um algortimo de busca em profundidade
+                case 11:
+                    grafo->caminhamentoEmProfundidade();
+                    break;
+                /// Aplica um algortimo de busca em largura
+                case 12:
+                    grafo->caminhamentoEmLargura(1);
+                    break;
+                /// Imprime as componentes conexas do grafo
+                case 13:
+                    grafo->componentesConexas();
+                    break;
+                /// Imprime peso do vertice
+                case 14:
+                    grafo->imprimePesoVertice();
+                    break;
+                case 15:
+                    ///Imprime peso da aresta
+                    grafo->imprimePesoAresta();
+                    break;
+                case 16:
+                    /// Ordenaï¿½ï¿½o Topolï¿½gica
+                    grafo->ordenacaoTopologica();
+                    break;
+                case 17:
+                    /// Algoritmo guloso
+                    grafo->algoritmoGuloso();
+                    break;
+                case 18:
+                    ///Algoritmo guloso randomizado
+                    grafo->iniciaAlgoritmoGulosoRandomizado();
+                    break;
+                case 19:
+                    /// Algoritmo guloso
+                    grafo->printSequenciaDeGraus();
+                    break;
+                case 20:
+                    ///Componente fortemente conexa
+                    grafo->imprimirComponentesFortementeConexas();
+                    break;
+                case 21:
+                    /// Algoritmo de Kruskal
+                    kruskal->arvoreGeradoraMinima(grafo);
+                    break;
+                case 22:
+                    /// Algoritmo de Prim
+                    prim->arvoreGeradoraMinima(grafo);
+                    break;
+                case 23:
                 {
-                    cout<<"Lista de adjacencia: "<<endl;
-                    grafo->printListaAdjacencia();
+                    /// Algoritmo de Dijkistra
+                    cout << "Digite o id do No 1: " << endl;
+                    cin >> idDijkstra1;
+                    cout << "Digite o id do No 2: " << endl;
+                    cin >> idDijkstra2;
+
+                    dijkistra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
                 }
-                else if(opcaorepresenta == -1)
-                {
+                break;
+                case 24:
+                    /// Algoritmo de Floyd Warshall
+                    floydWarshall->imprimeFloydWarshall(grafo);
+                    break;
+                default:
+                    cout << "Digite uma opcao valida" << endl;
                     break;
                 }
             }
-            break;
-            /// Imprime nos adjacentes
-            case 6:
-                grafo->printAdjacentesAoNo();
-                break;
-            /// Remove uma aresta
-            case 7:
-                grafo->removeAresta();
-                break;
-            /// Remover um vértice
-            case 8:
-                grafo->removeVertice();
-                break;
-            /// Cria um grafo complementar e representa o mesmo em lista de adjacência
-            case 9:
-                criaGrafoComplementar(grafo)->printListaAdjacencia();
-                break;
-            /// Cria um grafo complementar e representa o mesmo em matriz de adjacência
-            case 10:
-                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
-                break;
-            /// Aplica um algortimo de busca em profundidade
-            case 11:
-                grafo->caminhamentoEmProfundidade();
-                break;
-            /// Aplica um algortimo de busca em largura
-            case 12:
-                grafo->caminhamentoEmLargura(1);
-                break;
-            /// Imprime as componentes conexas do grafo
-            case 13:
-                grafo->componentesConexas();
-                break;
-            /// Imprime peso do vertice
-            case 14:
-                grafo->imprimePesoVertice();
-                break;
-            case 15:
-                ///Imprime peso da aresta
-                grafo->imprimePesoAresta();
-                break;
-            case 16:
-                /// Ordenação Topológica
-                grafo->ordenacaoTopologica();
-                break;
-            case 17:
-                /// Algoritmo guloso
-                grafo->algoritmoGuloso();
-                break;
-            case 18:
-                ///Algoritmo guloso randomizado
-                grafo->iniciaAlgoritmoGulosoRandomizado();
-                break;
-            case 19:
-                /// Algoritmo guloso
-                grafo->printSequenciaDeGraus();
-                break;
-            case 20:
-                ///Componente fortemente conexa
-                grafo->imprimirComponentesFortementeConexas();
-                break;
-            case 21:
-                /// Algoritmo de Kruskal
-                kruskal->arvoreGeradoraMinima(grafo);
-                break;
-            case 22:
-                /// Algoritmo de Prim
-                prim->arvoreGeradoraMinima(grafo);
-                break;
-            case 23:
-            {
-                /// Algoritmo de Dijkistra
-                cout << "Digite o id do No 1: " << endl;
-                cin >> idDijkstra1;
-                cout << "Digite o id do No 2: " << endl;
-                cin >> idDijkstra2;
-
-                dijkistra->custoCaminhoMinimo(grafo,idDijkstra1, idDijkstra2);
-            }
-            break;
-            case 24:
-                /// Algoritmo de Floyd Warshall
-                floydWarshall->imprimeFloydWarshall(grafo);
-                break;
-            default:
-                cout << "Digite uma opcao valida" << endl;
-                break;
-            }
         }
-    }
-
+    */
     ///*******************************////////
 
 
     ///*********** LEITURA DO GRAFO *************/////
-
-    else if(lerOuConstruirMenu() == 1)
-    {
-        int opcaorepresenta = tipodeGrafo();
-        /// Menu do tipo de representação do grafo
-        switch(opcaorepresenta)
+    /*
+        else if(lerOuConstruirMenu() == 1)
         {
-        case 1:
-            cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoVertice;
-        case 2:
-            cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
-            cin >> ponderadoAresta;
-        case 3:
-            cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
-            cin >>direcionado;
-        }
-
-        string aux;
-        ifstream myfile ("instancia1.MIS"); // ifstream = padrão ios:in     teste1.txt      instancia1.MIS
-        ofstream saida;
-        saida.open("saida.txt");
-        auto start = std::chrono::high_resolution_clock::now();
-        if (myfile.is_open())
-        {
-            while (!myfile.eof()) //enquanto end of file for false continua
+            int opcaorepresenta = tipodeGrafo();
+            /// Menu do tipo de representaï¿½ï¿½o do grafo
+            switch(opcaorepresenta)
             {
-                getline (myfile, aux, ' ');
-                int id1 = atoi (aux.c_str());
-                No *vertice = new No(id1);
-                saida << vertice->id;
-                grafo->adicionaVertice(vertice);
-                aux.clear();
-                getline (myfile, aux);
-                int id2 = atoi (aux.c_str());
-                No *vertice1 = new No(id2);
-                grafo->adicionaVertice(vertice1);
-                aux.clear();
-                grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
-            }
-            myfile.close();
-        }
-
-        cout << "********* GRAFO CARREGADO **************" << endl;
-        auto finish = std::chrono::high_resolution_clock::now();
-        auto elapsed = finish - start;
-        float tempo = elapsed.count()/1000000000;
-
-        cout << "Tempo levado para ler o arquivo de entrada e popular o grafo: " << tempo << " seconds" << endl;
-
-        while(id != -1)
-        {
-            opcao = noMenuLeitura();
-            switch(opcao)
-            {
-            /// Imprime lista de vértices do no
             case 1:
-                grafo->printNos();
-                break;
-            /// Menu de Representação do Grafo
+                cout<< "Digite [1] para grafo ponderado no vertice ou [0] para grafo nao ponderado" << endl ;
+                cin >> ponderadoVertice;
             case 2:
+                cout<< "Digite [1] para grafo ponderado na aresta ou [0] para grafo nao ponderado" << endl ;
+                cin >> ponderadoAresta;
+            case 3:
+                cout<< "Digite [1] para grafo direcionado ou [0] para grafo nao direcionado" << endl;
+                cin >>direcionado;
+            }
+
+            string aux;
+            ifstream myfile ("instancia1.MIS"); // ifstream = padrï¿½o ios:in     teste1.txt      instancia1.MIS
+            ofstream saida;
+            saida.open("saida.txt");
+            auto start = std::chrono::high_resolution_clock::now();
+            if (myfile.is_open())
             {
-                int opcaorepresenta = tipoDeRepresentacaoMenu();
-                if(opcaorepresenta == 1)
+                while (!myfile.eof()) //enquanto end of file for false continua
                 {
-                    cout << "Matriz de adjacencia: " << endl;
-                    grafo->matrizAdjacencia(direcionado);
+                    getline (myfile, aux, ' ');
+                    int id1 = atoi (aux.c_str());
+                    No *vertice = new No(id1);
+                    saida << vertice->id;
+                    grafo->adicionaVertice(vertice);
+                    aux.clear();
+                    getline (myfile, aux);
+                    int id2 = atoi (aux.c_str());
+                    No *vertice1 = new No(id2);
+                    grafo->adicionaVertice(vertice1);
+                    aux.clear();
+                    grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
                 }
-                else if(opcaorepresenta == 2)
+                myfile.close();
+            }
+
+            cout << "********* GRAFO CARREGADO **************" << endl;
+            auto finish = std::chrono::high_resolution_clock::now();
+            auto elapsed = finish - start;
+            float tempo = elapsed.count()/1000000000;
+
+            cout << "Tempo levado para ler o arquivo de entrada e popular o grafo: " << tempo << " seconds" << endl;
+
+            while(id != -1)
+            {
+                opcao = noMenuLeitura();
+                switch(opcao)
                 {
-                    cout<<"Lista de adjacencia: "<<endl;
-                    grafo->printListaAdjacencia();
+                /// Imprime lista de vï¿½rtices do no
+                case 1:
+                    grafo->printNos();
+                    break;
+                /// Menu de Representaï¿½ï¿½o do Grafo
+                case 2:
+                {
+                    int opcaorepresenta = tipoDeRepresentacaoMenu();
+                    if(opcaorepresenta == 1)
+                    {
+                        cout << "Matriz de adjacencia: " << endl;
+                        grafo->matrizAdjacencia(direcionado);
+                    }
+                    else if(opcaorepresenta == 2)
+                    {
+                        cout<<"Lista de adjacencia: "<<endl;
+                        grafo->printListaAdjacencia();
+                    }
+                    else if(opcaorepresenta == -1)
+                    {
+                        break;
+                    }
                 }
-                else if(opcaorepresenta == -1)
-                {
+                break;
+                /// Imprime nos adjacentes
+                case 3:
+                    grafo->printAdjacentesAoNo();
+                    break;
+                /// Remove uma aresta
+                case 4:
+                    grafo->removeAresta();
+                    break;
+                /// Remover um vï¿½rtice
+                case 5:
+                    grafo->removeVertice();
+                    break;
+                /// Cria um grafo complementar e representa o mesmo em lista de adjacï¿½ncia
+                case 6:
+                    criaGrafoComplementar(grafo)->printListaAdjacencia();
+                    break;
+                /// Cria um grafo complementar e representa o mesmo em matriz de adjacï¿½ncia
+                case 7:
+                    criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
+                    break;
+                /// Aplica um algortimo de busca em profundidade
+                case 8:
+                    grafo->caminhamentoEmProfundidade();
+                    break;
+                /// Aplica um algortimo de busca em largura
+                case 9:
+                    grafo->caminhamentoEmLargura(1);
+                    break;
+                /// Imprime as componentes conexas do grafo
+                case 10:
+                    grafo->componentesConexas();
+                    break;
+                /// Imprime peso do vertice
+                case 11:
+                    grafo->imprimePesoVertice();
+                    break;
+                case 12:
+                    ///Imprime peso da aresta
+                    grafo->imprimePesoAresta();
+                    break;
+                case 13:
+                    /// Ordenaï¿½ï¿½o Topolï¿½gica
+                    grafo->ordenacaoTopologica();
+                    break;
+                case 14:
+                    /// Algoritmo guloso
+                    grafo->algoritmoGuloso();
+                    break;
+                case 15:
+                    ///Algoritmo guloso randomizado
+                    grafo->iniciaAlgoritmoGulosoRandomizado();
+                    break;
+                case 16:
+                    /// Algoritmo guloso
+                    grafo->algoritmoGulosoRandomizadoReativo();
+                    break;
+                case 17:
+                    ///Componente fortemente conexa
+                    grafo->imprimirComponentesFortementeConexas();
+                    break;
+                case 18:
+                    ///Componente fortemente conexa
+                    grafo->printSequenciaDeGraus();
+                    break;
+                case 19:
+                    /// Algoritmo de Kruskal
+                    kruskal->arvoreGeradoraMinima(grafo);
+                    break;
+                case 20:
+                    /// Algoritmo de Prim
+                    prim->arvoreGeradoraMinima(grafo);
+                    break;
+                default:
+                    cout << "Digite uma opcao valida" << endl;
                     break;
                 }
             }
-            break;
-            /// Imprime nos adjacentes
-            case 3:
-                grafo->printAdjacentesAoNo();
-                break;
-            /// Remove uma aresta
-            case 4:
-                grafo->removeAresta();
-                break;
-            /// Remover um vértice
-            case 5:
-                grafo->removeVertice();
-                break;
-            /// Cria um grafo complementar e representa o mesmo em lista de adjacência
-            case 6:
-                criaGrafoComplementar(grafo)->printListaAdjacencia();
-                break;
-            /// Cria um grafo complementar e representa o mesmo em matriz de adjacência
-            case 7:
-                criaGrafoComplementar(grafo)->matrizAdjacencia(direcionado);
-                break;
-            /// Aplica um algortimo de busca em profundidade
-            case 8:
-                grafo->caminhamentoEmProfundidade();
-                break;
-            /// Aplica um algortimo de busca em largura
-            case 9:
-                grafo->caminhamentoEmLargura(1);
-                break;
-            /// Imprime as componentes conexas do grafo
-            case 10:
-                grafo->componentesConexas();
-                break;
-            /// Imprime peso do vertice
-            case 11:
-                grafo->imprimePesoVertice();
-                break;
-            case 12:
-                ///Imprime peso da aresta
-                grafo->imprimePesoAresta();
-                break;
-            case 13:
-                /// Ordenação Topológica
-                grafo->ordenacaoTopologica();
-                break;
-            case 14:
-                /// Algoritmo guloso
-                grafo->algoritmoGuloso();
-                break;
-            case 15:
-                ///Algoritmo guloso randomizado
-                grafo->iniciaAlgoritmoGulosoRandomizado();
-                break;
-            case 16:
-                /// Algoritmo guloso
-                grafo->algoritmoGulosoRandomizadoReativo();
-                break;
-            case 17:
-                ///Componente fortemente conexa
-                grafo->imprimirComponentesFortementeConexas();
-                break;
-            case 18:
-                ///Componente fortemente conexa
-                grafo->printSequenciaDeGraus();
-                break;
-            case 19:
-                /// Algoritmo de Kruskal
-                kruskal->arvoreGeradoraMinima(grafo);
-                break;
-            case 20:
-                /// Algoritmo de Prim
-                prim->arvoreGeradoraMinima(grafo);
-                break;
-            default:
-                cout << "Digite uma opcao valida" << endl;
-                break;
-            }
         }
+
+
+    */
+
+    cout << argv[1] << endl;
+
+    ifstream myfile (argv[1]);
+    ofstream outfile;
+    outfile.open(argv[2], std::ofstream::app);
+    string aux;
+
+
+    while(!myfile.eof())
+    {
+        getline (myfile, aux, ' ');
+        int id1 = atoi (aux.c_str());
+        No *vertice = new No(id1);
+        grafo->adicionaVertice(vertice);
+        aux.clear();
+        getline (myfile, aux);
+        int id2 = atoi (aux.c_str());
+        No *vertice1 = new No(id2);
+        grafo->adicionaVertice(vertice1);
+        aux.clear();
+        grafo->arestas.push_back(grafo->getNo(vertice->id)->adicionaNoAdjacente(grafo->getNo(vertice1->id),direcionado,pesoAresta));
+    }
+
+    cout << "********* GRAFO CARREGADO **************" << endl;
+
+    if(atoi(argv[3]) != 0)
+    {
+        grafo->algoritmoGuloso(outfile);
+    }
+
+    if(atoi(argv[4]) != 0)
+    {
+        float alfa1 = 0.1;
+        int maximoIteracoesRandomizado = 80;
+        grafo->algoritmoGulosoRandomizado(alfa1, maximoIteracoesRandomizado, outfile);
+    }
+
+    if(atoi(argv[5]) != 0)
+    {
+        float alfa2 = 0.2;
+        int maximoIteracoesRandomizado = 100;
+        grafo->algoritmoGulosoRandomizado(alfa2, maximoIteracoesRandomizado, outfile);
+    }
+
+    if(atoi(argv[6]) != 0)
+    {
+        float alfa3 = 0.3;
+        int maximoIteracoesRandomizado = 120;
+        grafo->algoritmoGulosoRandomizado(alfa3, maximoIteracoesRandomizado, outfile);
+    }
+
+    if(atoi(argv[7]) != 0)
+    {
+        int maximoIteracoesRandomizado = 10;
+        int maximoIteracoesReativo = 101;
+        int numeroDeAlfas = 10;
+        grafo->algoritmoGulosoRandomizadoReativo(maximoIteracoesReativo, maximoIteracoesRandomizado, numeroDeAlfas, outfile);
     }
 
     return 0;
